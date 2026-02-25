@@ -1,0 +1,52 @@
+{% extends "base_admin.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/messages.css' %}?v=2">
+{% endblock %}
+
+
+{% block page_title %}Messages{% endblock %}
+
+{% block content %}
+
+<div class="a-messages-card">
+
+  <table class="a-messages-table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Sujet</th>
+        <th>Email</th>
+        <th>Date</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for m in messages %}
+      <tr>
+        <td>{{ m.name }}</td>
+        <td>{{ m.get_subject_display }}</td>
+        <td>{{ m.email }}</td>
+        <td>{{ m.created_at|date:"d/m/Y H:i" }}</td>
+        <td>
+          <a href="{% url 'contact:admin_detail' m.id %}"
+             class="a-messages-btn">
+            Voir
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5" class="a-messages-empty">
+          Aucun message
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+
+  </table>
+
+</div>
+{% endblock %}
+

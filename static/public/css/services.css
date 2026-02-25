@@ -1,0 +1,143 @@
+
+
+
+/* Layout général */
+.cp-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.cp-home-section {
+    padding: 100px 0;
+}
+
+.cp-section-light {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+/* Section headings */
+.cp-section-head {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.cp-section-subtitle {
+    display: inline-block;
+    color: #4c6fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    padding: 8px 20px;
+    background: rgba(76, 111, 255, 0.1);
+    border-radius: 50px;
+}
+
+.cp-section-head h2 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: #1a1a2e;
+    line-height: 1.2;
+}
+
+.cp-section-head p {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Services Grid */
+.cp-services-grid-premium {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+/* Hero buttons */
+.cp-services-hero-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+/* FAQ Grid */
+.cp-faq-grid {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .cp-services-grid-premium {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .cp-services-hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .cp-services-hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .cp-section-head h2 {
+        font-size: 2.2rem;
+    }
+    
+    .cp-services-grid-premium {
+        grid-template-columns: 1fr;
+    }
+    
+    .cp-services-hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cp-services-hero-buttons a {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .cp-home-section {
+        padding: 60px 0;
+    }
+    
+    .cp-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .cp-table th,
+    .cp-table td {
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .cp-services-hero-title {
+        font-size: 2rem;
+    }
+    
+    .cp-section-head h2 {
+        font-size: 1.8rem;
+    }
+    
+    .cp-faq-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .cp-faq-icon {
+        margin: 0 auto;
+    }
+}

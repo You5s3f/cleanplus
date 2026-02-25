@@ -1,0 +1,57 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Déconnexion | Clean Plus</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" referrerpolicy="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'admin/css/auth.css' %}">
+</head>
+
+<body class="auth-body">
+  <main class="logout-wrap">
+    <section class="auth-card logout-card">
+
+      <div class="auth-brand">
+       
+        <div class="auth-brand-text">
+          <div class="auth-title">Clean Plus</div>
+          <div class="auth-sub">Espace Administration</div>
+        </div>
+        <span class="auth-badge">PRO</span>
+      </div>
+
+      <div class="auth-head">
+        <h1>Déconnexion</h1>
+        <p>Tu veux vraiment te déconnecter ?</p>
+      </div>
+
+      <form method="post" class="logout-actions" id="logoutForm">
+        {% csrf_token %}
+        <button class="auth-btn" type="submit" id="logoutBtn">
+            <i class="fas fa-right-from-bracket"></i> Se déconnecter
+        </button>
+
+        <a class="auth-btn auth-btn-soft" href="{% url 'dashboard:index' %}">
+            Annuler
+        </a>
+        </form>
+
+      <div class="auth-foot">
+        <span><i class="fas fa-lock"></i> Session protégée</span>
+        <span class="auth-dot">•</span>
+        <span>Clean Plus</span>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="{% static 'admin/js/auth.js' %}?v=1"></script>
+</body>
+</html>

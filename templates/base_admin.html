@@ -1,0 +1,356 @@
+{% load static %}
+<!doctype html>
+<html lang="fr" class="no-js">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>{% block title %}Admin - Clean Plus{% endblock %}</title>
+
+  <!-- Fonts + Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" referrerpolicy="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+ <!-- CSS (base obligatoire) -->
+<link rel="stylesheet" href="{% static 'admin/css/admin.css' %}?v=2.0.3">
+
+<!-- CSS spécifique page (optionnel) -->
+{% block extra_css %}{% endblock %}
+  <!-- Pré-chargement thème -->
+  <script>
+    (function () {
+      document.documentElement.classList.remove('no-js');
+      try {
+        const saved = localStorage.getItem('cp_theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.classList.add('theme-' + theme);
+      } catch (e) {}
+    })();
+
+
+
+
+  </script>
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body class="a-body">
+  
+  <!-- Skip link -->
+  <a class="a-skip" href="#mainContent">Aller au contenu</a>
+
+  <!-- Sidebar -->
+  <aside class="a-sidebar" id="sidebar" aria-label="Navigation principale">
+    <!-- Brand avec effet de profondeur -->
+
+<div class="a-brand">
+  <a class="a-brand-link" href="{% url 'dashboard:index' %}" aria-label="Dashboard Clean Plus">
+    
+    <div class="a-brand-icon-wrapper">
+      <img 
+        src="{% static 'img/logo-v2.png' %}" 
+        alt="Clean Plus"
+        class="a-brand-logo"
+      >
+    </div>
+
+    <div class="a-brand-text">
+      <div class="a-brand-title">Clean Plus</div>
+      <div class="a-brand-sub">Espace Administration</div>
+    </div>
+
+    <div class="a-brand-badge">PRO</div>
+  </a>
+</div>
+
+
+    <!-- Menu utilisateur mobile -->
+    <div class="a-user-mobile">
+      <div class="a-avatar-circle" aria-label="{{ request.user.username }}">
+        <span class="a-avatar-initial">{{ request.user.username|slice:":1"|upper }}</span>
+        <div class="a-status-indicator"></div>
+      </div>
+      <div class="a-user-mobile-info">
+        <span class="a-user-mobile-name">{{ request.user.username }}</span>
+        <span class="a-user-mobile-role">Administrateur</span>
+      </div>
+    </div>
+
+    <!-- Navigation principale -->
+    <nav class="a-nav" aria-label="Menu de navigation">
+      <div class="a-nav-section">
+        <div class="a-nav-section-label">PRINCIPAL</div>
+        {% with app=request.resolver_match.app_name urln=request.resolver_match.url_name %}
+        <a class="a-nav-item {% if app == 'dashboard' %}is-active{% endif %}"
+           href="{% url 'dashboard:index' %}">
+          <div class="a-nav-icon">
+            <i class="fas fa-gauge-high"></i>
+          </div>
+          <span class="a-nav-text">Tableau de bord</span>
+          <div class="a-nav-badge" id="dashboard-badge"></div>
+        </a>
+      </div>
+
+      <div class="a-nav-section">
+        <div class="a-nav-section-label">PILOTAGE</div>
+        
+       
+
+        <a class="a-nav-item {% if app == 'demandes' %}is-active{% endif %}"
+           href="{% url 'demandes:list' %}">
+          <div class="a-nav-icon">
+            <i class="fas fa-file-lines"></i>
+          </div>
+          <span class="a-nav-text">Demandes</span>
+          <div class="a-nav-badge" id="demandes-badge"></div>
+        </a>
+
+        <a class="a-nav-item {% if app == 'contact' %}is-active{% endif %}"
+   href="{% url 'contact:admin_list' %}">
+  <div class="a-nav-icon">
+    <i class="fas fa-envelope-open-text"></i>
+  </div>
+  <span class="a-nav-text">Messages</span>
+</a>
+
+      </div>
+
+      <div class="a-nav-section">
+        <div class="a-nav-section-label">PLANNING</div>
+        
+        <a class="a-nav-item {% if app == 'rdv' and urln == 'list' %}is-active{% endif %}"
+           href="{% url 'rdv:list' %}">
+          <div class="a-nav-icon">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+          <span class="a-nav-text">Rendez-vous</span>
+          <div class="a-nav-badge" id="rdv-badge"></div>
+        </a>
+
+        <a class="a-nav-item {% if app == 'rdv' and urln == 'calendar' %}is-active{% endif %}"
+           href="{% url 'rdv:calendar' %}">
+          <div class="a-nav-icon">
+            <i class="fas fa-calendar-week"></i>
+          </div>
+          <span class="a-nav-text">Calendrier</span>
+          <div class="a-nav-tooltip">Vue semaine</div>
+        </a>
+
+        <a class="a-nav-item {% if app == 'rdv' and urln == 'day' %}is-active{% endif %}"
+           href="{% url 'rdv:day' %}">
+          <div class="a-nav-icon">
+            <i class="fas fa-calendar-day"></i>
+          </div>
+          <span class="a-nav-text">Vue jour</span>
+          <div class="a-nav-tooltip">Planning quotidien</div>
+        </a>
+      </div>
+
+      <div class="a-nav-section">
+        <div class="a-nav-section-label">RESSOURCES</div>
+        
+        <a class="a-nav-item {% if app == 'staff' %}is-active{% endif %}"
+           href="{% url 'staff:list' %}">
+          <div class="a-nav-icon">
+            <i class="fas fa-user-group"></i>
+          </div>
+          <span class="a-nav-text">Équipe</span>
+          <div class="a-nav-tooltip">Femmes de ménage</div>
+        </a>
+
+        <a class="a-nav-item {% if app == 'services' %}is-active{% endif %}"
+           href="{% url 'services:list' %}">
+          <div class="a-nav-icon">
+            <i class="fas fa-spray-can-sparkles"></i>
+          </div>
+          <span class="a-nav-text">Services</span>
+          <div class="a-nav-tooltip">Catalogue</div>
+        </a>
+      </div>
+
+      <div class="a-nav-footer">
+        <div class="a-quick-stats">
+          <div class="a-stat-item">
+            <i class="fas fa-bell"></i>
+            <span class="a-stat-badge" id="notif-badge">0</span>
+          </div>
+          <div class="a-stat-item">
+            <i class="fas fa-clock"></i>
+            <span class="a-stat-text" id="live-clock">--:--</span>
+          </div>
+        </div>
+
+        <a class="a-nav-item a-nav-item-logout" href="{% url 'accounts:logout' %}">
+          <div class="a-nav-icon">
+            <i class="fas fa-right-from-bracket"></i>
+          </div>
+          <span class="a-nav-text">Déconnexion</span>
+          <div class="a-nav-tooltip">Se déconnecter</div>
+        </a>
+        {% endwith %}
+      </div>
+    </nav>
+
+    <!-- User info sidebar -->
+
+  </aside>
+
+  <!-- Overlay mobile -->
+  <div class="a-overlay" id="overlay" aria-hidden="true"></div>
+
+  <!-- Quick settings panel -->
+  
+
+  <!-- Main content -->
+  <div class="a-content" id="content">
+    <!-- Top bar -->
+    <header class="a-topbar">
+      <!-- Left section -->
+      <div class="a-topbar-left">
+        <button class="a-nav-toggle" id="toggleSidebar" type="button" aria-label="Basculer la navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+        
+        <div class="a-breadcrumb-wrapper">
+          <nav class="a-breadcrumb" aria-label="Navigation hiérarchique">
+            <ol>
+              <li><a href="{% url 'dashboard:index' %}">Clean Plus</a></li>
+              {% block breadcrumb %}<li class="a-breadcrumb-active">Admin</li>{% endblock %}
+            </ol>
+          </nav>
+          <h1 class="a-page-title">{% block page_title %}{% endblock %}</h1>
+        </div>
+      </div>
+
+      <!-- Right section -->
+      <div class="a-topbar-right">
+        <!-- Search with suggestions -->
+        
+
+        <!-- Notifications -->
+        
+        <!-- Quick actions -->
+    
+        <!-- User menu -->
+        <div class="a-user-menu-wrapper">
+          <button class="a-user-menu-btn" id="userMenuBtn" aria-label="Menu utilisateur">
+            <div class="a-user-avatar">
+              {{ request.user.username|slice:":1"|upper }}
+            </div>
+            <span class="a-user-name">{{ request.user.username }}</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="a-user-dropdown" id="userDropdown">
+            <div class="a-user-dropdown-header">
+              <div class="a-user-dropdown-avatar">
+                {{ request.user.username|slice:":1"|upper }}
+              </div>
+              <div class="a-user-dropdown-info">
+                <strong>{{ request.user.username }}</strong>
+                <span>Administrateur</span>
+              </div>
+            </div>
+            <div class="a-user-dropdown-menu">
+      
+              <div class="a-user-dropdown-divider"></div>
+              <a href="{% url 'accounts:logout' %}" class="a-user-dropdown-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Déconnexion</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main content area -->
+    <main class="a-main" id="mainContent" tabindex="-1">
+     
+       
+
+      <!-- Page header -->
+      <div class="a-page-header">
+        <div class="a-page-header-left">
+          <h2 class="a-page-title-large">
+              
+          </h2>
+          <p class="a-page-subtitle">{% block page_subtitle %}Gestion complète de votre activité{% endblock %}</p>
+        </div>
+        <div class="a-page-header-right">
+          
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="a-content-wrapper">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="a-footer">
+      <div class="a-footer-left">
+        <span>© {% now "Y" %} Clean Plus Admin</span>
+        <span class="a-footer-sep">•</span>
+        <span>v2.0.0</span>
+      </div>
+      <div class="a-footer-right">
+        <span id="serverStatus" class="a-status-online">
+          <i class="fas fa-circle"></i>
+          Serveur en ligne
+        </span>
+        <span class="a-footer-sep">•</span>
+        <span id="dataUpdated">Dernière mise à jour: <span id="lastUpdateTime">{% now "H:i" %}</span></span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Floating Action Button -->
+  <button class="a-fab" id="fab" aria-label="Actions rapides">
+    <i class="fas fa-plus"></i>
+    <div class="a-fab-menu">
+      <a href="{% url 'rdv:list' %}" class="a-fab-item">
+        <i class="fas fa-calendar-plus"></i>
+        <span>Nouveau RDV</span>
+      </a>
+      <a href="{% url 'demandes:list' %}" class="a-fab-item">
+        <i class="fas fa-file-circle-plus"></i>
+        <span>Nouvelle demande</span>
+      </a>
+      <a href="{% url 'staff:list' %}" class="a-fab-item">
+        <i class="fas fa-user-plus"></i>
+        <span>Nouvel employé</span>
+      </a>
+    </div>
+  </button>
+
+  <!-- JS -->
+   <!-- JS global obligatoire -->
+<script src="{% static 'admin/js/admin.js' %}"></script>
+
+<!-- JS spécifique par page -->
+{% block extra_js %}{% endblock %}
+</body>
+</html>

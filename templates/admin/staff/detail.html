@@ -1,0 +1,155 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+{% block page_title %}{{ femme.nom_complet }}{% endblock %}
+{% block page_subtitle %}Profil, disponibilité, infos et historique des rendez-vous.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/staff_detail.css' %}?v=2">
+{% endblock %}
+
+{% block content %}
+
+<!-- WRAPPER FULL WIDTH (IMPORTANT) -->
+<div class="staff-detail-page">
+
+  <div class="staff-detail-grid">
+
+    <!-- LEFT : Profil -->
+    <div class="a-card staff-profile-card">
+
+      <div class="staff-head">
+        <div class="staff-head-left">
+          {% if femme.photo %}
+            <img src="{{ femme.photo.url }}" class="staff-avatar-lg" alt="photo">
+          {% else %}
+            <div class="staff-avatar-lg staff-avatar-empty">
+              {{ femme.nom_complet|slice:":1"|upper|default:"—" }}
+            </div>
+          {% endif %}
+
+          <div class="staff-head-meta">
+            <h2 class="staff-name">{{ femme.nom_complet }}</h2>
+            <div class="staff-phone">
+              <i class="fas fa-phone"></i> {{ femme.telephone }}
+            </div>
+          </div>
+        </div>
+
+        <div class="staff-head-right">
+          <span class="staff-badge {% if femme.disponible %}is-ok{% else %}is-no{% endif %}">
+            {% if femme.disponible %}
+              <i class="fas fa-check"></i> Disponible
+            {% else %}
+              <i class="fas fa-xmark"></i> Indisponible
+            {% endif %}
+          </span>
+
+          <span class="staff-badge {% if femme.statut == 'ACTIVE' %}is-ok{% else %}is-no{% endif %}">
+            {{ femme.get_statut_display }}
+          </span>
+        </div>
+      </div>
+
+      <div class="a-sep"></div>
+
+      <div class="staff-kv">
+        <div class="staff-k"><i class="fas fa-location-dot"></i> Ville / Zone</div>
+        <div class="staff-v">{{ femme.ville_zone|default:"-" }}</div>
+
+        <div class="staff-k"><i class="fas fa-map"></i> Zones couvertes</div>
+        <div class="staff-v">{{ femme.zones_couvertes|default:"-" }}</div>
+
+        <div class="staff-k"><i class="fas fa-briefcase"></i> Expérience</div>
+        <div class="staff-v">{{ femme.experience }} ans</div>
+
+        <div class="staff-k"><i class="fas fa-coins"></i> Tarif horaire</div>
+        <div class="staff-v">{{ femme.tarif_horaire|default:"-" }}</div>
+      </div>
+
+      {% if femme.notes %}
+        <div class="a-sep"></div>
+        <h3 class="staff-h3">Notes</h3>
+        <pre class="staff-pre">{{ femme.notes }}</pre>
+      {% endif %}
+
+      <div class="a-sep"></div>
+
+      <div class="staff-actions">
+        <a class="a-btn a-btn-primary" href="{% url 'staff:edit' femme.id %}">
+          <i class="fas fa-pen"></i> Modifier
+        </a>
+
+        <form method="post" action="{% url 'staff:toggle' femme.id %}">
+          {% csrf_token %}
+          <button class="a-btn a-btn-soft" type="submit">
+            {% if femme.statut == "ACTIVE" %}
+              <i class="fas fa-ban"></i> Désactiver
+            {% else %}
+              <i class="fas fa-circle-check"></i> Activer
+            {% endif %}
+          </button>
+        </form>
+
+        <a class="a-btn a-btn-soft" href="{% url 'staff:list' %}">
+          ← Retour
+        </a>
+      </div>
+
+    </div>
+
+    <!-- RIGHT : Historique -->
+    <div class="a-card staff-history-card">
+
+      <div class="staff-history-head">
+        <h3 class="staff-h3">
+          <i class="fas fa-calendar-check"></i> Historique RDV
+        </h3>
+        <div class="staff-count">{{ rdv_list|length }} RDV</div>
+      </div>
+
+      <div class="a-sep"></div>
+
+      <div class="staff-table-wrap">
+        <table class="staff-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Adresse</th>
+              <th>Service</th>
+              <th class="th-right">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in rdv_list %}
+            <tr>
+              <td class="td-strong">{{ r.date_heure|date:"Y-m-d H:i" }}</td>
+              <td class="td-muted">{{ r.adresse }}</td>
+              <td class="td-muted">{{ r.service|default:"-" }}</td>
+              <td class="td-right">
+                <a class="a-btn a-btn-soft" href="{% url 'rdv:detail' r.id %}">
+                  <i class="fas fa-eye"></i> Voir
+                </a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="4" class="staff-empty-td">
+                <i class="fas fa-calendar-xmark"></i>
+                <div>
+                  <strong>Aucun RDV</strong>
+                  <p>Cette intervenante n’a pas encore de rendez-vous.</p>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,987 @@
+{% extends "base_public.html" %}
+{% load static %}
+
+{% block title %}Services Premium | Clean Plus{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'public/css/services.css' %}">
+<style>
+    /* Hero premium avec photo */
+    .cp-services-hero {
+        position: relative;
+        height: 70vh;
+        min-height: 600px;
+        overflow: hidden;
+        border-radius: 0 0 40px 40px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .cp-services-hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .cp-services-hero-bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        animation: heroZoom 20s infinite alternate ease-in-out;
+    }
+    
+    @keyframes heroZoom {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.05); }
+    }
+    
+    .cp-services-hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, 
+            rgba(23, 37, 84, 0.85) 0%, 
+            rgba(23, 37, 84, 0.7) 50%, 
+            rgba(23, 37, 84, 0.4) 100%);
+    }
+    
+    .cp-services-hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        color: white;
+        text-align: center;
+    }
+    
+    .cp-services-hero-pill {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        margin-bottom: 2rem;
+        letter-spacing: 0.5px;
+    }
+    
+    .cp-services-hero-title {
+        font-size: 4rem;
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        color:white;
+    }
+    
+    .cp-services-hero-subtitle {
+        font-size: 1.3rem;
+        font-weight: 300;
+        max-width: 700px;
+        margin: 0 auto 3rem;
+        line-height: 1.6;
+        opacity: 0.9;
+    }
+    
+    .cp-services-hero-features {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-top: 3rem;
+        flex-wrap: wrap;
+    }
+    
+    .cp-hero-feature {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 12px 24px;
+        border-radius: 50px;
+        backdrop-filter: blur(5px);
+    }
+    
+    .cp-hero-feature i {
+        color: #6c8eff;
+        font-size: 1.2rem;
+    }
+    
+    /* Service Cards avec images */
+    .cp-service-card-premium {
+        background: white;
+        border-radius: 25px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .cp-service-card-premium:hover {
+        transform: translateY(-20px);
+        box-shadow: 0 40px 80px rgba(76, 111, 255, 0.15);
+    }
+    
+    .cp-service-image {
+        height: 250px;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .cp-service-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+    }
+    
+    .cp-service-card-premium:hover .cp-service-image img {
+        transform: scale(1.1);
+    }
+    
+    .cp-service-image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.6));
+        display: flex;
+        align-items: flex-end;
+        padding: 2rem;
+    }
+    
+    .cp-service-icon {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 10px 30px rgba(76, 111, 255, 0.3);
+    }
+    
+    .cp-service-content {
+        padding: 2.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .cp-service-content h3 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: #1a1a2e;
+        font-weight: 700;
+    }
+    
+    .cp-service-content p {
+        color: #666;
+        line-height: 1.7;
+        margin-bottom: 2rem;
+        flex-grow: 1;
+    }
+    
+    .cp-service-meta {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        padding: 1.5rem 0;
+        border-top: 2px solid #f0f4ff;
+        border-bottom: 2px solid #f0f4ff;
+    }
+    
+    .cp-service-meta span {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #555;
+        font-weight: 500;
+    }
+    
+    .cp-service-meta i {
+        color: #4c6fff;
+        font-size: 1.1rem;
+    }
+    
+    .cp-service-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: auto;
+    }
+    
+    .cp-service-btn {
+        flex: 1;
+        padding: 1rem;
+        border-radius: 12px;
+        text-decoration: none;
+        text-align: center;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    
+    .cp-service-btn-primary {
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        color: white;
+    }
+    
+    .cp-service-btn-secondary {
+        background: #f0f4ff;
+        color: #4c6fff;
+    }
+    
+    /* Table premium */
+    .cp-comparison-table {
+        background: white;
+        border-radius: 25px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    }
+    
+    .cp-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .cp-table thead {
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+    }
+    
+    .cp-table th {
+        padding: 1.5rem;
+        text-align: left;
+        color: white;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .cp-table th:last-child {
+        border-right: none;
+    }
+    
+    .cp-table tbody tr {
+        border-bottom: 1px solid #f0f4ff;
+        transition: background 0.3s ease;
+    }
+    
+    .cp-table tbody tr:hover {
+        background: #f8faff;
+    }
+    
+    .cp-table td {
+        padding: 1.5rem;
+        color: #555;
+        border-right: 1px solid #f0f4ff;
+    }
+    
+    .cp-table td:first-child {
+        font-weight: 700;
+        color: #1a1a2e;
+        font-size: 1.1rem;
+    }
+    
+    .cp-table td:last-child {
+        border-right: none;
+    }
+    
+    /* FAQ Section */
+    .cp-faq-section {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        border-radius: 40px;
+        padding: 5rem 0;
+    }
+    
+    .cp-faq-item {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    
+    .cp-faq-item:hover {
+        transform: translateX(10px);
+    }
+    
+    .cp-faq-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+    
+    .cp-faq-content {
+        flex-grow: 1;
+    }
+    
+    .cp-faq-question {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #1a1a2e;
+        margin-bottom: 0.5rem;
+    }
+    
+    .cp-faq-answer {
+        color: #666;
+        line-height: 1.6;
+    }
+    
+    .cp-faq-answer strong {
+        color: #4c6fff;
+    }
+    
+    /* CTA Premium */
+    .cp-services-cta {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        border-radius: 40px;
+        padding: 6rem 0;
+        position: relative;
+        overflow: hidden;
+        margin: 5rem 0;
+    }
+    
+    .cp-services-cta-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.1;
+        background-size: cover;
+        background-position: center;
+    }
+    
+    .cp-services-cta-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: white;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    .cp-services-cta-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+    }
+    
+    .cp-services-cta-subtitle {
+        font-size: 1.3rem;
+        opacity: 0.9;
+        margin-bottom: 3rem;
+        line-height: 1.6;
+    }
+    
+    .cp-services-cta-buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .cp-cta-btn {
+        padding: 1.2rem 3rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+    
+    .cp-cta-btn-primary {
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        color: white;
+        box-shadow: 0 10px 30px rgba(76, 111, 255, 0.3);
+    }
+    
+    .cp-cta-btn-outline {
+        background: transparent;
+        border-color: rgba(255, 255, 255, 0.3);
+        color: white;
+    }
+    
+    .cp-cta-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(76, 111, 255, 0.4);
+    }
+    
+    /* Animation */
+    .cp-fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    
+    .cp-fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .cp-services-hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .cp-services-hero-subtitle {
+            font-size: 1.1rem;
+        }
+        
+        .cp-services-hero-features {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .cp-hero-feature {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .cp-services-cta-title {
+            font-size: 2.5rem;
+        }
+        
+        .cp-services-cta-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .cp-cta-btn {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .cp-service-actions {
+            flex-direction: column;
+        }
+        
+        .cp-service-btn {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="cp-services-hero">
+    <div class="cp-services-hero-bg">
+        <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&auto=format&fit=crop&w=2032&q=80" 
+             alt="Intérieur moderne impeccablement propre"
+             loading="eager">
+    </div>
+    <div class="cp-services-hero-overlay"></div>
+    
+    <div class="cp-services-hero-content">
+        <div class="cp-services-hero-pill">
+            <i class="fa-solid fa-gem"></i> Services Premium
+        </div>
+        <h1 class="cp-services-hero-title">
+            Excellence en Nettoyage Professionnel
+        </h1>
+        <p class="cp-services-hero-subtitle">
+            Des solutions sur mesure pour chaque espace. Que ce soit pour votre domicile, 
+            votre entreprise ou après des travaux, nous garantissons des résultats impeccables.
+        </p>
+        
+        <div class="cp-services-hero-buttons">
+            <a href="{% url 'public:devis' %}" class="cp-cta-btn cp-cta-btn-primary">
+                <i class="fa-solid fa-file-invoice"></i> Soumission personnalisée
+            </a>
+            <a href="#services" class="cp-cta-btn cp-cta-btn-outline">
+                <i class="fa-solid fa-list-check"></i> Explorer nos services
+            </a>
+        </div>
+        
+        <div class="cp-services-hero-features">
+            <div class="cp-hero-feature">
+                <i class="fa-solid fa-clock"></i>
+                <span>Flexible 7j/7</span>
+            </div>
+            <div class="cp-hero-feature">
+                <i class="fa-solid fa-user-check"></i>
+                <span>Équipe certifiée</span>
+            </div>
+            <div class="cp-hero-feature">
+                <i class="fa-solid fa-shield-check"></i>
+                <span>Garantie satisfaction</span>
+            </div>
+            <div class="cp-hero-feature">
+                <i class="fa-solid fa-leaf"></i>
+                <span>Option écologique</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES GRID -->
+<section class="cp-home-section" id="services">
+    <div class="cp-container">
+        <div class="cp-section-head">
+            <span class="cp-section-subtitle">Nos prestations</span>
+            <h2>Services de nettoyage d'exception</h2>
+            <p>Chaque espace mérite une attention particulière</p>
+        </div>
+        
+        <div class="cp-services-grid-premium">
+            <!-- Service 1 -->
+            <div class="cp-service-card-premium cp-fade-in">
+                <div class="cp-service-image">
+                    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2058&q=80" 
+                         alt="Appartement moderne et parfaitement nettoyé"
+                         loading="lazy">
+                    <div class="cp-service-image-overlay">
+                        <div class="cp-service-icon">
+                            <i class="fa-solid fa-home"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="cp-service-content">
+                    <h3>Ménage Résidentiel </h3>
+                    <p>
+                        Entretien régulier ou ponctuel de votre domicile. Sols brillants, 
+                        sanitaires étincelants, cuisine impeccable et dépoussiérage complet.
+                    </p>
+                    <div class="cp-service-meta">
+                        <span>
+                            <i class="fa-solid fa-clock"></i>
+                            <strong>Durée:</strong> Dès 2 heures
+                        </span>
+                        <span>
+                            <i class="fa-solid fa-tag"></i>
+                            <strong>Tarif:</strong> Soumission
+                        </span>
+                    </div>
+                    <div class="cp-service-actions">
+                        <a href="{% url 'public:devis' %}" class="cp-service-btn cp-service-btn-primary">
+                            <i class="fa-solid fa-bolt"></i> Soumission gratuitte
+                        </a>
+                        <a href="{% url 'contact:contact' %}" class="cp-service-btn cp-service-btn-secondary">
+                            <i class="fa-solid fa-question-circle"></i> Question
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 2 -->
+            <div class="cp-service-card-premium cp-fade-in">
+                <div class="cp-service-image">
+                    <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80" 
+                         alt="Bureaux d'entreprise modernes et impeccables"
+                         loading="lazy">
+                    <div class="cp-service-image-overlay">
+                        <div class="cp-service-icon">
+                            <i class="fa-solid fa-building"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="cp-service-content">
+                    <h3>Ménage Commercial</h3>
+                    <p>
+                        Solutions sur mesure pour bureaux, commerces et espaces professionnels. 
+                        Intervention selon vos horaires avec équipe discrète et efficace.
+                    </p>
+                    <div class="cp-service-meta">
+                        <span>
+                            <i class="fa-solid fa-ruler-combined"></i>
+                            <strong>Type:</strong> Sur mesure
+                        </span>
+                        <span>
+                            <i class="fa-solid fa-file-signature"></i>
+                            <strong>Devis:</strong> Soumission
+                        </span>
+                    </div>
+                    <div class="cp-service-actions">
+                        <a href="{% url 'public:devis' %}" class="cp-service-btn cp-service-btn-primary">
+                            <i class="fa-solid fa-bolt"></i> Soumission gratuitte
+                        </a>
+                        <a href="{% url 'contact:contact' %}" class="cp-service-btn cp-service-btn-secondary">
+                            <i class="fa-solid fa-question-circle"></i> Question
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 3 -->
+            <div class="cp-service-card-premium cp-fade-in">
+                <div class="cp-service-image">
+                    <img src="{% static 'img/post3.png' %}" >
+                    <div class="cp-service-image-overlay">
+                        <div class="cp-service-icon">
+                            <i class="fa-solid fa-broom"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="cp-service-content">
+                    <h3>Grand Ménage de saison</h3>
+                    <p>
+                        Nettoyage en profondeur de votre espace. Zones difficiles, placards, 
+                        derrière les appareils, détails et recoins méticuleusement nettoyés.
+                    </p>
+                    <div class="cp-service-meta">
+                        <span>
+                            <i class="fa-solid fa-clock"></i>
+                            <strong>Durée:</strong>Dès 4 heures
+                        </span>
+                        <span>
+                            <i class="fa-solid fa-box"></i>
+                            <strong>Option:</strong> Forfaits disponibles
+                        </span>
+                    </div>
+                    <div class="cp-service-actions">
+                        <a href="{% url 'public:devis' %}" class="cp-service-btn cp-service-btn-primary">
+                            <i class="fa-solid fa-bolt"></i> Soumission gratuitte
+                        </a>
+                        <a href="{% url 'contact:contact' %}" class="cp-service-btn cp-service-btn-secondary">
+                            <i class="fa-solid fa-question-circle"></i> Question
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 4 -->
+            <div class="cp-service-card-premium cp-fade-in">
+                <div class="cp-service-image">
+                    <img src="{% static 'img/post2.png' %}" >
+                    <div class="cp-service-image-overlay">
+                        <div class="cp-service-icon">
+                            <i class="fa-solid fa-paint-roller"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="cp-service-content">
+                    <h3>Ménage Rénovation</h3>
+                    <p>
+                        Après travaux ou construction. Élimination complète des poussières, 
+                        plâtre, résidus de peinture pour une remise des clés impeccable.
+                    </p>
+                    <div class="cp-service-meta">
+                        <span>
+                            <i class="fa-solid fa-helmet-safety"></i>
+                            <strong>Type:</strong> Sur mesure
+                        </span>
+                        <span>
+                            <i class="fa-solid fa-maximize"></i>
+                            <strong>Tarif:</strong> Soumission
+                        </span>
+                    </div>
+                    <div class="cp-service-actions">
+                        <a href="{% url 'public:devis' %}" class="cp-service-btn cp-service-btn-primary">
+                            <i class="fa-solid fa-bolt"></i> Soumission gratuitte
+                        </a>
+                        <a href="{% url 'contact:contact' %}" class="cp-service-btn cp-service-btn-secondary">
+                            <i class="fa-solid fa-question-circle"></i> Question
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 5 -->
+            <div class="cp-service-card-premium cp-fade-in">
+                <div class="cp-service-image">
+                    <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
+                         alt="Nettoyage spécialisé de tapis et meubles"
+                         loading="lazy">
+                    <div class="cp-service-image-overlay">
+                        <div class="cp-service-icon">
+                            <i class="fa-solid fa-couch"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="cp-service-content">
+                    <h3>Services Spécialisés</h3>
+                    <p>
+                        Tapis, murs, plafonds, vitres extérieures, stores, meubles. 
+                        Des solutions spécifiques avec équipement professionnel adapté.
+                    </p>
+                    <div class="cp-service-meta">
+                        <span>
+                            <i class="fa-solid fa-sliders"></i>
+                            <strong>Type:</strong> Variable
+                        </span>
+                        <span>
+                            <i class="fa-solid fa-tags"></i>
+                            <strong>Tarif:</strong> Soumission
+                        </span>
+                    </div>
+                    <div class="cp-service-actions">
+                        <a href="{% url 'public:devis' %}" class="cp-service-btn cp-service-btn-primary">
+                            <i class="fa-solid fa-bolt"></i> Soumission gratuitte
+                        </a>
+                        <a href="{% url 'contact:contact' %}" class="cp-service-btn cp-service-btn-secondary">
+                            <i class="fa-solid fa-question-circle"></i> Question
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- COMPARAISON TABLE -->
+<section class="cp-home-section cp-section-light">
+    <div class="cp-container">
+        <div class="cp-section-head">
+            <span class="cp-section-subtitle">Guide de choix</span>
+            <h2>Tableau comparatif</h2>
+            <p>Trouvez le service parfaitement adapté à vos besoins</p>
+        </div>
+        
+        <div class="cp-comparison-table cp-fade-in">
+            <table class="cp-table">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Idéal pour</th>
+                        <th>Fréquence</th>
+                        <th>Durée moyenne</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong> Ménage Résidentiel</strong></td>
+                        <td>Entretien régulier du domicile</td>
+                        <td>Hebdomadaire / Mensuel</td>
+                        <td>2–4 heures</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ménage Commercial</strong></td>
+                        <td>Bureaux, commerces, espaces pro,...</td>
+                        <td>Quotidien → Hebdomadaire</td>
+                        <td>Sur mesure</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Grand Ménage</strong></td>
+                        <td>Nettoyage en profondeur</td>
+                        <td>1–2 fois par an</td>
+                        <td>4–8 heures</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rénovation</strong></td>
+                        <td>Après travaux ou construction</td>
+                        <td>Ponctuel</td>
+                        <td>Selon chantier</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Services Spécialisés</strong></td>
+                        <td>Tapis, vitres, murs, meubles</td>
+                        <td>Selon besoin</td>
+                        <td>Variable</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="cp-faq-section">
+    <div class="cp-container">
+        <div class="cp-section-head">
+            <span class="cp-section-subtitle">Questions fréquentes</span>
+            <h2>Quel service choisir ?</h2>
+            <p>Répondez à ces questions pour trouver votre solution idéale</p>
+        </div>
+        
+        <div class="cp-faq-grid">
+            <div class="cp-faq-item cp-fade-in">
+                <div class="cp-faq-icon">
+                    <i class="fa-solid fa-home"></i>
+                </div>
+                <div class="cp-faq-content">
+                    <div class="cp-faq-question">
+                        Besoin d'un nettoyage régulier pour votre maison ?
+                    </div>
+                    <div class="cp-faq-answer">
+                        → <strong>Ménage Résidentiel </strong> - Parfait pour l'entretien hebdomadaire ou mensuel.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cp-faq-item cp-fade-in">
+                <div class="cp-faq-icon">
+                    <i class="fa-solid fa-hammer"></i>
+                </div>
+                <div class="cp-faq-content">
+                    <div class="cp-faq-question">
+                        Vous venez de terminer des travaux de rénovation ?
+                    </div>
+                    <div class="cp-faq-answer">
+                        → <strong>Nettoyage Rénovation</strong> - Élimine toutes les poussières et résidus de construction.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cp-faq-item cp-fade-in">
+                <div class="cp-faq-icon">
+                    <i class="fa-solid fa-building"></i>
+                </div>
+                <div class="cp-faq-content">
+                    <div class="cp-faq-question">
+                        Vous gérez un bureau ou un commerce ?
+                    </div>
+                    <div class="cp-faq-answer">
+                        → <strong>Ménage Commercial</strong> - Adapté aux contraintes professionnelles et horaires spécifiques.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cp-faq-item cp-fade-in">
+                <div class="cp-faq-icon">
+                    <i class="fa-solid fa-broom"></i>
+                </div>
+                <div class="cp-faq-content">
+                    <div class="cp-faq-question">
+                        Besoin d'un grand nettoyage de printemps ou complet ?
+                    </div>
+                    <div class="cp-faq-answer">
+                        → <strong>Grand Ménage de saison</strong> - Pour les zones difficiles, placards et détails oubliés.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cp-faq-item cp-fade-in">
+                <div class="cp-faq-icon">
+                    <i class="fa-solid fa-circle-question"></i>
+                </div>
+                <div class="cp-faq-content">
+                    <div class="cp-faq-question">
+                        Vous n'êtes toujours pas sûr du service adapté ?
+                    </div>
+                    <div class="cp-faq-answer">
+                        → <a href="{% url 'contact:contact' %}" style="color: #4c6fff; font-weight: 600;">
+                            Contactez-nous pour une consultation gratuite et personnalisée
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cp-services-cta">
+    <div class="cp-services-cta-bg" 
+         style="background-image: url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+    </div>
+    
+    <div class="cp-services-cta-content">
+        <h2 class="cp-services-cta-title">
+            Prêt pour un espace impeccable ?
+        </h2>
+        <p class="cp-services-cta-subtitle">
+            Obtenez une Soumission gratuitte et personnalisé en quelques minutes seulement. 
+            Notre équipe d'experts est prête à transformer votre espace.
+        </p>
+        
+        <div class="cp-services-cta-buttons">
+            <a href="{% url 'public:devis' %}" class="cp-cta-btn cp-cta-btn-primary">
+                <i class="fa-solid fa-file-invoice-dollar"></i> Soumission gratuitte immédiatte
+            </a>
+            <a href="tel:+15144026011" class="cp-cta-btn cp-cta-btn-outline">
+                <i class="fa-solid fa-phone-volume"></i> Nous appeler : 514-402-6011
+            </a>
+        </div>
+        
+        <div style="margin-top: 3rem; display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.8);">
+                <i class="fa-solid fa-lock"></i>
+                <span>100% confidentiel</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.8);">
+                <i class="fa-solid fa-shield-alt"></i>
+                <span>Sans engagement</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.8);">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Garantie satisfaction</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Animation au défilement
+    document.addEventListener('DOMContentLoaded', function() {
+        const fadeElements = document.querySelectorAll('.cp-fade-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        });
+        
+        fadeElements.forEach(el => observer.observe(el));
+        
+        // Effet de parallaxe sur l'héro
+        const heroImage = document.querySelector('.cp-services-hero-bg img');
+        if (heroImage) {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * 0.5;
+                heroImage.style.transform = `scale(${1 + rate * 0.001}) translateY(${rate * 0.1}px)`;
+            });
+        }
+        
+        // Smooth scroll pour ancres
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

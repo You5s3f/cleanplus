@@ -1,0 +1,100 @@
+/* =====================================================
+   SERVICES LIST — Clean Plus Admin
+   ===================================================== */
+
+.services-card{
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Table wrapper */
+.services-table-wrapper{
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Table */
+.services-table{
+  width:100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.services-table thead{
+  background: var(--bg-secondary);
+}
+
+.services-table th{
+  text-align:left;
+  padding: 14px;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.services-table td{
+  padding: 14px;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+/* Row hover */
+.services-table tbody tr{
+  transition: background .15s ease;
+}
+.services-table tbody tr:hover{
+  background: rgba(37,99,235,.04);
+}
+
+/* ID */
+.services-id{
+  font-weight: 900;
+  color: var(--text-secondary);
+}
+
+/* Name */
+.services-name{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight: 800;
+}
+.services-name i{
+  color: #38bdf8;
+}
+
+/* Date */
+.services-date{
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Actions */
+.services-actions{
+  text-align:right;
+}
+
+/* Empty state */
+.services-empty{
+  text-align:center;
+  padding: 40px 16px;
+  color: var(--text-muted);
+}
+.services-empty i{
+  font-size: 26px;
+  margin-bottom: 8px;
+  opacity:.6;
+}
+.services-empty p{
+  margin:0;
+  font-weight:700;
+}
+
+/* Responsive */
+@media(max-width: 900px){
+  .services-table{
+    min-width: 600px;
+  }
+}

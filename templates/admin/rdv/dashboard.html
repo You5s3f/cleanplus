@@ -1,0 +1,219 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+{% block page_title %}Dashboard KPI{% endblock %}
+{% block page_subtitle %}Suivi rapide : demandes, rendez-vous et disponibilité équipe.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/rdv_kpi_dashboard.css' %}?v=1">
+{% endblock %}
+
+{% block content %}
+
+<!-- TOP BAR -->
+<div class="kpi-top">
+  <div class="kpi-top-left">
+    <div class="kpi-date">
+      <i class="fas fa-calendar-day"></i>
+      <span>Aujourd’hui :</span>
+      <b>{{ today|date:"Y-m-d" }}</b>
+      <span class="kpi-sep">•</span>
+      <span>Semaine du</span>
+      <b>{{ start_week|date:"Y-m-d" }}</b>
+    </div>
+    <div class="kpi-hint">Vue analytique pour prendre des décisions rapides.</div>
+  </div>
+
+  <div class="kpi-top-actions">
+    <a class="a-btn a-btn-soft" href="{% url 'rdv:day' %}">
+      <i class="fas fa-calendar-day"></i> Vue jour
+    </a>
+    <a class="a-btn a-btn-soft" href="{% url 'rdv:calendar' %}">
+      <i class="fas fa-calendar-week"></i> Vue semaine
+    </a>
+    <a class="a-btn a-btn-soft" href="{% url 'demandes:list' %}">
+      <i class="fas fa-file-lines"></i> Demandes
+    </a>
+    <a class="a-btn a-btn-soft" href="{% url 'staff:list' %}">
+      <i class="fas fa-user-group"></i> Staff
+    </a>
+  </div>
+</div>
+
+<!-- KPI GRID -->
+<div class="kpi-grid">
+
+  <!-- Demandes -->
+  <div class="kpi-card">
+    <div class="kpi-card-head">
+      <div class="kpi-title">
+        <span class="kpi-label">Demandes (total)</span>
+        <span class="kpi-icon"><i class="fas fa-file-lines"></i></span>
+      </div>
+      <div class="kpi-value">{{ demandes_total|default:0 }}</div>
+    </div>
+
+    <div class="kpi-mini">
+      <span class="kpi-chip kpi-chip-warn">Nouvelle: <b>{{ demandes_by_status.NOUVELLE|default:"0" }}</b></span>
+      <span class="kpi-chip kpi-chip-info">En cours: <b>{{ demandes_by_status.EN_COURS|default:"0" }}</b></span>
+      <span class="kpi-chip kpi-chip-ok">Traitée: <b>{{ demandes_by_status.TRAITEE|default:"0" }}</b></span>
+      <span class="kpi-chip kpi-chip-no">Annulée: <b>{{ demandes_by_status.ANNULEE|default:"0" }}</b></span>
+    </div>
+
+    <div class="kpi-spark" aria-hidden="true"></div>
+  </div>
+
+  <!-- RDV -->
+  <div class="kpi-card is-primary">
+    <div class="kpi-card-head">
+      <div class="kpi-title">
+        <span class="kpi-label">RDV (aujourd’hui)</span>
+        <span class="kpi-icon"><i class="fas fa-calendar-check"></i></span>
+      </div>
+      <div class="kpi-value">{{ rdv_today|default:0 }}</div>
+    </div>
+
+    <div class="kpi-sub">
+      <span class="kpi-chip kpi-chip-info">Cette semaine: <b>{{ rdv_week|default:0 }}</b></span>
+      <span class="kpi-chip kpi-chip-soft">Total: <b>{{ rdv_total|default:0 }}</b></span>
+    </div>
+
+    <div class="kpi-spark" aria-hidden="true"></div>
+  </div>
+
+  <!-- Staff -->
+  <div class="kpi-card">
+    <div class="kpi-card-head">
+      <div class="kpi-title">
+        <span class="kpi-label">Femmes disponibles</span>
+        <span class="kpi-icon"><i class="fas fa-user-check"></i></span>
+      </div>
+      <div class="kpi-value">{{ femmes_dispo|default:0 }}</div>
+    </div>
+
+    <div class="kpi-sub">
+      <span class="kpi-chip kpi-chip-ok">Actives: <b>{{ femmes_actives|default:0 }}</b></span>
+      <span class="kpi-chip kpi-chip-soft">Total: <b>{{ femmes_total|default:0 }}</b></span>
+    </div>
+
+    <div class="kpi-spark" aria-hidden="true"></div>
+  </div>
+
+</div>
+
+<!-- DATA GRID -->
+<div class="kpi-data-grid">
+
+  <!-- Dernières demandes -->
+  <div class="a-card kpi-table-card">
+    <div class="kpi-table-head">
+      <div>
+        <h3 class="kpi-h3"><i class="fas fa-file-circle-plus"></i> Dernières demandes</h3>
+        <p class="kpi-muted">Les demandes les plus récentes.</p>
+      </div>
+      <a class="a-btn a-btn-soft" href="{% url 'demandes:list' %}">Tout voir</a>
+    </div>
+
+    <div class="a-sep"></div>
+
+    <div class="kpi-table-wrap">
+      <table class="kpi-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Client</th>
+            <th>Téléphone</th>
+            <th>Statut</th>
+            <th class="th-right">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for d in last_demandes %}
+          <tr>
+            <td class="td-strong">#{{ d.id }}</td>
+            <td>{{ d.nom }}</td>
+            <td class="td-muted">{{ d.telephone }}</td>
+            <td>
+              <span class="kpi-badge kpi-badge-{{ d.statut|lower }}">
+                {{ d.get_statut_display }}
+              </span>
+            </td>
+            <td class="td-right">
+              <a class="a-btn a-btn-soft" href="{% url 'demandes:detail' d.id %}">
+                <i class="fas fa-eye"></i> Voir
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="kpi-empty-td">
+              <i class="fas fa-inbox"></i>
+              <div>
+                <strong>Aucune demande</strong>
+                <p>Les demandes apparaîtront ici.</p>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Derniers RDV -->
+  <div class="a-card kpi-table-card">
+    <div class="kpi-table-head">
+      <div>
+        <h3 class="kpi-h3"><i class="fas fa-calendar-day"></i> Derniers RDV</h3>
+        <p class="kpi-muted">Les derniers rendez-vous planifiés.</p>
+      </div>
+      <a class="a-btn a-btn-soft" href="{% url 'rdv:list' %}">Tout voir</a>
+    </div>
+
+    <div class="a-sep"></div>
+
+    <div class="kpi-table-wrap">
+      <table class="kpi-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Service</th>
+            <th>Femme</th>
+            <th class="th-right">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in last_rdvs %}
+          <tr>
+            <td class="td-strong">{{ r.date_heure|date:"Y-m-d H:i" }}</td>
+            <td class="td-muted">{{ r.service|default:"-" }}</td>
+            <td class="td-muted">{{ r.femme|default:"-" }}</td>
+            <td class="td-right">
+              <a class="a-btn a-btn-soft" href="{% url 'rdv:detail' r.id %}">
+                <i class="fas fa-eye"></i> Voir
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" class="kpi-empty-td">
+              <i class="fas fa-calendar-xmark"></i>
+              <div>
+                <strong>Aucun RDV</strong>
+                <p>Le planning apparaîtra ici.</p>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'admin/js/rdv_kpi_dashboard.js' %}?v=1"></script>
+{% endblock %}

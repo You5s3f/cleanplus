@@ -1,0 +1,23 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+{% block page_title %}Modifier service{% endblock %}
+{% block page_subtitle %}{{ service }}{% endblock %}
+
+{% block content %}
+<div class="a-card a-form-card">
+  <form method="post" enctype="multipart/form-data" class="a-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <div class="a-form-actions">
+      <button class="a-btn a-btn-primary" type="submit">
+        <i class="fas fa-save"></i> Sauvegarder
+      </button>
+      <a class="a-btn a-btn-soft" href="{% url 'services:list' %}">
+        Annuler
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}

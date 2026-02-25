@@ -1,0 +1,123 @@
+/* =========================================================
+   Clean Plus Admin — SERVICES FORM (CSS)
+   Compatible avec {{ form.as_p }}
+   ========================================================= */
+
+.a-form-card{ padding: 16px; }
+
+.a-form-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap: 12px;
+  flex-wrap:wrap;
+}
+
+.a-h2{
+  margin:0;
+  font-size: 20px;
+  font-weight: 1000;
+  letter-spacing: -0.02em;
+}
+
+.a-muted{
+  margin:6px 0 0;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.a-sep{
+  height:1px;
+  background: var(--border);
+  margin: 14px 0;
+  opacity:.9;
+}
+
+/* Form base */
+.a-form{
+  display:flex;
+  flex-direction:column;
+  gap: 16px;
+}
+
+/* Django as_p */
+.a-form p{
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+}
+
+/* Labels */
+.a-form label{
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 1000;
+}
+
+/* Controls */
+.a-form input,
+.a-form select,
+.a-form textarea{
+  width:100%;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.72);
+  color: var(--text);
+  outline:none;
+  transition: .15s ease;
+}
+html[data-theme="dark"] .a-form input,
+html[data-theme="dark"] .a-form select,
+html[data-theme="dark"] .a-form textarea{
+  background: rgba(11,18,35,.72);
+}
+
+/* Focus */
+.a-form input:focus,
+.a-form select:focus,
+.a-form textarea:focus{
+  border-color: rgba(37,99,235,.45);
+  box-shadow: var(--focus);
+}
+
+/* Textarea */
+.a-form textarea{
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Helptext */
+.a-form .helptext{
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* Errors */
+.a-form .errorlist{
+  list-style:none;
+  margin: 6px 0 0;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(239,68,68,.10);
+  border: 1px solid rgba(239,68,68,.35);
+  color: #ef4444;
+  font-size: 12px;
+  font-weight: 1000;
+}
+
+/* Actions */
+.a-form-actions{
+  display:flex;
+  gap: 10px;
+  flex-wrap:wrap;
+  margin-top: 6px;
+}
+
+/* Loading (JS) */
+.a-form.is-loading{
+  opacity:.65;
+  pointer-events:none;
+}

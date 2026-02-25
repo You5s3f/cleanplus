@@ -1,0 +1,319 @@
+/* Variables */
+:root {
+    --cp-primary: #4c6fff;
+    --cp-primary-light: #6c8eff;
+    --cp-secondary: #1a1a2e;
+    --cp-light: #f8faff;
+    --cp-border: #e0e6ff;
+    --cp-text: #333;
+    --cp-text-light: #666;
+    --cp-error: #ff4757;
+    --cp-success: #25D366;
+    --cp-warning: #ffa502;
+}
+
+/* Reset et base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    line-height: 1.6;
+    color: var(--cp-text);
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    min-height: 100vh;
+}
+
+/* Conteneurs */
+.cp-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Smooth transitions */
+.cp-contact-form-field input,
+.cp-contact-form-field select,
+.cp-contact-form-field textarea,
+.cp-contact-btn,
+.cp-contact-method,
+.cp-social-link {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scrollbar personnalisée */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--cp-primary);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--cp-primary-light);
+}
+
+/* Amélioration de la sélection */
+::selection {
+    background-color: var(--cp-primary);
+    color: white;
+}
+
+/* Focus visible */
+.cp-contact-form-field input:focus,
+.cp-contact-form-field select:focus,
+.cp-contact-form-field textarea:focus,
+.cp-contact-btn:focus,
+.cp-contact-method:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 111, 255, 0.2);
+}
+
+/* Loader pour le bouton submit */
+.cp-contact-submit-btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.cp-contact-submit-btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Tooltips */
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--cp-secondary);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 5px;
+}
+
+/* Messages d'état */
+.cp-contact-message {
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    animation: fadeIn 0.3s ease;
+}
+
+.cp-contact-message.success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.cp-contact-message.error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.cp-contact-message.warning {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .cp-contact-hero-content {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+    
+    .cp-contact-feature {
+        padding: 0.75rem;
+    }
+    
+    .cp-contact-feature-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .cp-contact-hero-premium {
+        min-height: 500px;
+        height: auto;
+    }
+    
+    .cp-contact-hero-content {
+        padding: 3rem 20px;
+    }
+    
+    .cp-contact-side-card {
+        padding: 2rem;
+    }
+    
+    .cp-contact-form-card {
+        padding: 2rem;
+    }
+    
+    .cp-contact-map-header,
+    .cp-contact-faq-header {
+        padding: 2rem;
+    }
+    
+    .cp-contact-zones {
+        padding: 2rem;
+    }
+    
+    .cp-contact-faq-card {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .cp-contact-hero-title {
+        font-size: 2rem;
+    }
+    
+    .cp-contact-hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .cp-contact-form-header h2 {
+        font-size: 2rem;
+    }
+    
+    .cp-contact-side-card h3 {
+        font-size: 1.5rem;
+    }
+    
+    .cp-contact-map-header h3 {
+        font-size: 1.8rem;
+    }
+    
+    .cp-contact-faq-header h3 {
+        font-size: 1.8rem;
+    }
+    
+    .cp-social-media {
+        justify-content: center;
+    }
+    
+    .cp-social-link {
+        flex: 1;
+        min-width: 120px;
+        justify-content: center;
+    }
+}
+
+/* Support pour les préférences de réduction de mouvement */
+@media (prefers-reduced-motion: reduce) {
+    .cp-contact-hero-bg img,
+    .cp-contact-fade-in,
+    .cp-contact-method,
+    .cp-contact-btn,
+    .cp-social-link {
+        animation: none;
+        transition: none;
+    }
+}
+
+/* Mode sombre (optionnel) */
+@media (prefers-color-scheme: dark) {
+    .cp-contact-main {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+    
+    .cp-contact-side-card,
+    .cp-contact-form-card,
+    .cp-contact-map-card,
+    .cp-contact-faq-card {
+        background: #2d3748;
+        border-color: #4a5568;
+        color: #e2e8f0;
+    }
+    
+    .cp-contact-side-card h3,
+    .cp-contact-form-header h2,
+    .cp-contact-map-header h3,
+    .cp-contact-faq-header h3,
+    .cp-contact-method-content h4,
+    .cp-contact-form-field label,
+    .cp-contact-form-field input,
+    .cp-contact-form-field select,
+    .cp-contact-form-field textarea {
+        color: #e2e8f0;
+    }
+    
+    .cp-contact-form-field input,
+    .cp-contact-form-field select,
+    .cp-contact-form-field textarea {
+        background: #4a5568;
+        border-color: #718096;
+        color: #e2e8f0;
+    }
+    
+    .cp-contact-form-field input::placeholder,
+    .cp-contact-form-field textarea::placeholder {
+        color: #a0aec0;
+    }
+    
+    .cp-hours-day {
+        color: #e2e8f0;
+    }
+    
+    .cp-hours-time {
+        color: #a0aec0;
+    }
+    
+    .cp-contact-zones {
+        background: #4a5568;
+    }
+    
+    .cp-contact-zones-list li {
+        color: #e2e8f0;
+    }
+}

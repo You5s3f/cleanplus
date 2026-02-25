@@ -1,0 +1,209 @@
+/* =========================================================
+   Clean Plus Admin — DEMANDES DETAIL (CSS)
+   ========================================================= */
+
+.a-demandes-detail-grid{
+  display:grid;
+  grid-template-columns: 1.25fr .75fr;
+  gap: 16px;
+  align-items:start;
+}
+
+/* Card */
+.a-card{
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow-sm);
+  padding: 16px;
+}
+html[data-theme="dark"] .a-card{ background: rgba(11,18,35,.72); }
+
+.a-card-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap: 12px;
+}
+
+.a-h2{
+  margin:0;
+  font-size: 20px;
+  font-weight: 1000;
+  letter-spacing: -0.02em;
+}
+.a-h3{
+  margin:0 0 10px;
+  font-size: 14px;
+  font-weight: 1000;
+}
+
+.a-muted{
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.a-sep{
+  height:1px;
+  background: var(--border);
+  margin: 14px 0;
+  opacity:.9;
+}
+
+/* Badge */
+.a-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 1000;
+  border: 1px solid var(--border);
+  background: rgba(2,6,23,.04);
+  color: var(--text);
+  white-space:nowrap;
+}
+html[data-theme="dark"] .a-badge{ background: rgba(148,163,184,.10); }
+
+/* Statut colors (adapte si besoin aux valeurs exactes de ton model) */
+.a-badge-nouvelle,
+.a-badge-en-attente,
+.a-badge-attente{
+  border-color: rgba(245,158,11,.35);
+  background: rgba(245,158,11,.14);
+  color: #f59e0b;
+}
+.a-badge-confirmee,
+.a-badge-confirme{
+  border-color: rgba(96,165,250,.35);
+  background: rgba(96,165,250,.12);
+  color: #60a5fa;
+}
+.a-badge-traitee,
+.a-badge-terminee,
+.a-badge-termine{
+  border-color: rgba(34,197,94,.35);
+  background: rgba(34,197,94,.14);
+  color: #16a34a;
+}
+.a-badge-annulee,
+.a-badge-annule{
+  border-color: rgba(239,68,68,.35);
+  background: rgba(239,68,68,.12);
+  color: #ef4444;
+}
+
+/* KV */
+.a-kv{
+  display:grid;
+  grid-template-columns: 190px 1fr;
+  gap: 10px 14px;
+}
+.a-k{
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+.a-k i{
+  width: 16px;
+  text-align:center;
+  color: var(--primary);
+  opacity:.95;
+}
+.a-v{
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1.45;
+}
+
+/* Message */
+.a-pre{
+  margin:0;
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: rgba(2,6,23,.04);
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12.5px;
+}
+html[data-theme="dark"] .a-pre{ background: rgba(148,163,184,.10); }
+
+/* Actions form */
+.a-form-compact{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+
+.a-label{
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 900;
+}
+
+.a-select{
+  height: 42px;
+  padding: 0 12px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.72);
+  color: var(--text);
+  outline:none;
+}
+html[data-theme="dark"] .a-select{ background: rgba(11,18,35,.72); }
+.a-select:focus{ box-shadow: var(--focus); border-color: rgba(37,99,235,.45); }
+
+/* Buttons (si pas déjà global, safe) */
+.a-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(2,6,23,.04);
+  color: var(--text);
+  font-weight: 1000;
+  cursor:pointer;
+  transition: .15s ease;
+}
+html[data-theme="dark"] .a-btn{ background: rgba(148,163,184,.10); }
+.a-btn:hover{ transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+
+.a-btn-primary{
+  border-color: rgba(37,99,235,.24);
+  background: rgba(37,99,235,.12);
+  color: var(--primary);
+}
+.a-btn-primary:hover{ background: rgba(37,99,235,.16); }
+
+.a-btn-soft{
+  background: rgba(2,6,23,.04);
+}
+html[data-theme="dark"] .a-btn-soft{ background: rgba(148,163,184,.10); }
+
+/* Actions stack */
+.a-actions-stack{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+
+/* Loading (JS) */
+.a-form-compact.is-loading{ opacity:.65; pointer-events:none; }
+
+/* Responsive */
+@media (max-width: 980px){
+  .a-demandes-detail-grid{ grid-template-columns: 1fr; }
+  .a-kv{ grid-template-columns: 1fr; }
+}

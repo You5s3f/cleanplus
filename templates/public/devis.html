@@ -1,0 +1,1023 @@
+{% extends "base_public.html" %}
+{% load static %}
+
+{% block title %}Devis Gratuit | Clean Plus{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'public/css/devis.css' %}">
+<style>
+    /* Hero premium avec photo */
+    .cp-quote-hero {
+        position: relative;
+        height: 70vh;
+        min-height: 600px;
+        overflow: hidden;
+        border-radius: 0 0 40px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+    }
+    
+    .cp-quote-hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .cp-quote-hero-bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        animation: heroZoom 20s infinite alternate ease-in-out;
+    }
+    
+    @keyframes heroZoom {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.05); }
+    }
+    
+    .cp-quote-hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, 
+            rgba(23, 37, 84, 0.9) 0%, 
+            rgba(23, 37, 84, 0.7) 50%, 
+            rgba(23, 37, 84, 0.4) 100%);
+    }
+    
+    .cp-quote-hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    .cp-quote-hero-pill {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        margin-bottom: 2rem;
+        letter-spacing: 0.5px;
+    }
+    
+    .cp-quote-hero-title {
+        font-size: 4rem;
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        color:white;
+    }
+    
+    .cp-quote-hero-subtitle {
+        font-size: 1.3rem;
+        font-weight: 300;
+        max-width: 700px;
+        margin: 0 auto 3rem;
+        line-height: 1.6;
+        opacity: 0.9;
+    }
+    
+    .cp-quote-hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-top: 3rem;
+        flex-wrap: wrap;
+    }
+    
+    .cp-quote-stat {
+        text-align: center;
+    }
+    
+    .cp-quote-stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        color: #6c8eff;
+    }
+    
+    .cp-quote-stat-label {
+        font-size: 1rem;
+        opacity: 0.9;
+        font-weight: 500;
+    }
+    
+    /* Form premium */
+    .cp-quote-form-section {
+        padding: 100px 0;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    }
+    
+    .cp-quote-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 40px;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    .cp-quote-form-card {
+        background: white;
+        border-radius: 25px;
+        padding: 3rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cp-quote-form-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, #4c6fff, #6c8eff, #4c6fff);
+    }
+    
+    .cp-quote-form-header {
+        margin-bottom: 3rem;
+        text-align: center;
+    }
+    
+    .cp-quote-form-header h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 1rem;
+    }
+    
+    .cp-quote-form-header p {
+        color: #666;
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+    
+    /* Form blocks */
+    .cp-quote-form-block {
+        margin-bottom: 3rem;
+        padding-bottom: 3rem;
+        border-bottom: 2px solid #f0f4ff;
+    }
+    
+    .cp-quote-form-block:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    
+    .cp-quote-block-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .cp-quote-block-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.3rem;
+    }
+    
+    .cp-quote-block-title h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #1a1a2e;
+        margin: 0;
+    }
+    
+    .cp-quote-form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .cp-quote-form-field {
+        margin-bottom: 1.5rem;
+    }
+    
+    .cp-quote-form-field label {
+        display: block;
+        font-weight: 600;
+        color: #1a1a2e;
+        margin-bottom: 0.75rem;
+        font-size: 0.95rem;
+    }
+    
+    .cp-quote-form-field label span {
+        color: #ff4757;
+        margin-left: 3px;
+    }
+    
+    .cp-quote-form-field input,
+    .cp-quote-form-field select,
+    .cp-quote-form-field textarea {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border: 2px solid #e0e6ff;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: white;
+        color: #333;
+    }
+    
+    .cp-quote-form-field input:focus,
+    .cp-quote-form-field select:focus,
+    .cp-quote-form-field textarea:focus {
+        outline: none;
+        border-color: #4c6fff;
+        box-shadow: 0 0 0 3px rgba(76, 111, 255, 0.1);
+    }
+    
+    .cp-quote-form-field input::placeholder,
+    .cp-quote-form-field textarea::placeholder {
+        color: #999;
+    }
+    
+    .cp-quote-form-field textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+    
+    .cp-quote-hint {
+        display: block;
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: 0.5rem;
+    }
+    
+    /* Toggles */
+    .cp-quote-toggles {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .cp-quote-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        cursor: pointer;
+        user-select: none;
+    }
+    
+    .cp-quote-toggle input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #e0e6ff;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+    
+    .cp-quote-toggle input[type="checkbox"]:checked {
+        background: #4c6fff;
+        border-color: #4c6fff;
+    }
+    
+    .cp-quote-toggle input[type="checkbox"]:checked::after {
+        content: '✓';
+        position: absolute;
+        color: white;
+        font-size: 12px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    /* Privacy toggle */
+    .cp-quote-privacy-toggle {
+        background: #f8faff;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-top: 2rem;
+    }
+    
+    /* Submit button */
+    .cp-quote-submit {
+        text-align: center;
+        margin-top: 3rem;
+    }
+    
+    .cp-quote-submit-btn {
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        color: white;
+        border: none;
+        padding: 1.2rem 3rem;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: 0 10px 30px rgba(76, 111, 255, 0.3);
+    }
+    
+    .cp-quote-submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(76, 111, 255, 0.4);
+    }
+    
+    .cp-quote-submit-note {
+        color: #666;
+        font-size: 0.9rem;
+        margin-top: 1rem;
+    }
+    
+    /* Sidebar */
+    .cp-quote-sidebar {
+        position: sticky;
+        top: 40px;
+    }
+    
+    .cp-quote-side-card {
+        background: white;
+        border-radius: 20px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        border: 1px solid #f0f4ff;
+    }
+    
+    .cp-quote-side-card h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 1.5rem;
+    }
+    
+    .cp-quote-benefits-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .cp-quote-benefits-list li {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        color: #555;
+        font-size: 1rem;
+    }
+    
+    .cp-quote-benefits-list li i {
+        color: #4c6fff;
+        font-size: 1.2rem;
+    }
+    
+    .cp-quote-feature-box {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.5rem;
+        background: #f8faff;
+        border-radius: 15px;
+        margin-bottom: 1rem;
+        transition: transform 0.3s ease;
+    }
+    
+    .cp-quote-feature-box:hover {
+        transform: translateX(5px);
+    }
+    
+    .cp-quote-feature-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.3rem;
+    }
+    
+    .cp-quote-feature-content h4 {
+        margin: 0;
+        color: #1a1a2e;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+    
+    .cp-quote-feature-content p {
+        margin: 0.25rem 0 0;
+        color: #666;
+        font-size: 0.9rem;
+    }
+    
+    /* WhatsApp button */
+    .cp-quote-whatsapp-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        background: #25D366;
+        color: white;
+        padding: 1.2rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        margin-top: 2rem;
+        box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+    }
+    
+    .cp-quote-whatsapp-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4);
+        color: white;
+    }
+    
+    /* Alert */
+    .cp-quote-alert {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        color: #856404;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .cp-quote-alert i {
+        font-size: 1.5rem;
+    }
+    
+    /* Error */
+    .cp-quote-error {
+        color: #ff4757;
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+    }
+    
+    /* Animation */
+    .cp-quote-fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    
+    .cp-quote-fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .cp-quote-form-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        
+        .cp-quote-sidebar {
+            position: static;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .cp-quote-hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .cp-quote-hero-subtitle {
+            font-size: 1.1rem;
+        }
+        
+        .cp-quote-form-row {
+            grid-template-columns: 1fr;
+        }
+        
+        .cp-quote-hero-stats {
+            gap: 2rem;
+        }
+        
+        .cp-quote-stat-number {
+            font-size: 2rem;
+        }
+        
+        .cp-quote-form-card {
+            padding: 2rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="cp-quote-hero">
+    <div class="cp-quote-hero-bg">
+        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
+             alt="Équipe Clean Plus au travail avec un sourire"
+             loading="eager">
+    </div>
+    <div class="cp-quote-hero-overlay"></div>
+    
+    <div class="cp-quote-hero-content">
+        <div class="cp-quote-hero-pill">
+            <i class="fa-solid fa-gem"></i> Soumission Premium • Gratuit • Sans Engagement
+        </div>
+        <h1 class="cp-quote-hero-title">
+            Votre Soumission Personnalisée en 2 Minutes
+        </h1>
+        <p class="cp-quote-hero-subtitle">
+            Obtenez une estimation précise pour votre projet de nettoyage. 
+            Notre équipe d'experts vous contactera dans les 24 heures avec une proposition sur mesure.
+        </p>
+        
+        <div class="cp-quote-hero-stats">
+            <div class="cp-quote-stat">
+                <div class="cp-quote-stat-number">24h</div>
+                <div class="cp-quote-stat-label">Délai de réponse</div>
+            </div>
+            <div class="cp-quote-stat">
+                <div class="cp-quote-stat-number">100%</div>
+                <div class="cp-quote-stat-label">Gratuit</div>
+            </div>
+            <div class="cp-quote-stat">
+                <div class="cp-quote-stat-number">✓</div>
+                <div class="cp-quote-stat-label">Sans engagement</div>
+            </div>
+            <div class="cp-quote-stat">
+                <div class="cp-quote-stat-number">4/5</div>
+                <div class="cp-quote-stat-label">Satisfaction client</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FORM SECTION -->
+<section class="cp-quote-form-section">
+    <div class="cp-quote-form-grid">
+        <!-- FORM -->
+        <div class="cp-quote-form-card cp-quote-fade-in">
+            <div class="cp-quote-form-header">
+                <h2>Demande de Soumission Personnalisée</h2>
+                <p>Remplissez ce formulaire et recevez votre estimation dans les 24 heures.</p>
+            </div>
+
+            {% if form.non_field_errors %}
+            <div class="cp-quote-alert">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div>{{ form.non_field_errors }}</div>
+            </div>
+            {% endif %}
+
+            <form id="quoteForm" class="cp-quote-form" method="post" novalidate>
+                {% csrf_token %}
+                
+                <!-- Hidden fields -->
+                <div style="display:none;">
+                    {{ form.nom }}
+                    {{ form.message }}
+                </div>
+
+                <!-- SECTION 1: Informations personnelles -->
+                <div class="cp-quote-form-block">
+                    <div class="cp-quote-block-header">
+                        <div class="cp-quote-block-icon">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="cp-quote-block-title">
+                            <h3>Vos informations</h3>
+                        </div>
+                    </div>
+
+                    <div class="cp-quote-form-row">
+                        <div class="cp-quote-form-field">
+                            <label for="firstName">Prénom <span>*</span></label>
+                            <input type="text" id="firstName" placeholder="Votre prénom">
+                            <small class="cp-quote-hint">Utilisé pour personnaliser notre contact</small>
+                        </div>
+
+                        <div class="cp-quote-form-field">
+                            <label for="lastName">Nom <span>*</span></label>
+                            <input type="text" id="lastName"  placeholder="Votre nom">
+                        </div>
+                    </div>
+
+                    <div class="cp-quote-form-row">
+                        <div class="cp-quote-form-field">
+                            <label for="{{ form.email.id_for_label }}">Email</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                            <div class="cp-quote-error">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="cp-quote-form-field">
+                            <label for="{{ form.telephone.id_for_label }}">Téléphone <span>*</span></label>
+                            {{ form.telephone }}
+                            {% if form.telephone.errors %}
+                            <div class="cp-quote-error">{{ form.telephone.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="cp-quote-form-field">
+                        <label for="{{ form.adresse.id_for_label }}">Adresse du nettoyage <span>*</span></label>
+                        {{ form.adresse }}
+                        {% if form.adresse.errors %}
+                        <div class="cp-quote-error">{{ form.adresse.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="cp-quote-form-row">
+                        <div class="cp-quote-form-field">
+                            <label for="postalCode">Code postal <span>*</span></label>
+                            <input type="text" id="postalCode" placeholder="Ex: 75001">
+                        </div>
+                        <div class="cp-quote-form-field">
+                            <label for="city">Ville <span>*</span></label>
+                            <input type="text" id="city"  placeholder="Ex: Paris">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: Détails du service -->
+                <div class="cp-quote-form-block">
+                    <div class="cp-quote-block-header">
+                        <div class="cp-quote-block-icon">
+                            <i class="fa-solid fa-broom"></i>
+                        </div>
+                        <div class="cp-quote-block-title">
+                            <h3>Détails du service</h3>
+                        </div>
+                    </div>
+
+                    <div class="cp-quote-form-field">
+                        <label for="{{ form.service.id_for_label }}">Type de service <span>*</span></label>
+                        {{ form.service }}
+                        {% if form.service.errors %}
+                        <div class="cp-quote-error">{{ form.service.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="cp-quote-form-row">
+                        <div class="cp-quote-form-field">
+                            <label for="propertyType">Type de bien <span>*</span></label>
+                            <select id="propertyType" >
+                                <option value="">Sélectionnez un type</option>
+                                <option value="Appartement">Appartement</option>
+                                <option value="Maison">Maison</option>
+                                <option value="Bureau">Bureau</option>
+                                <option value="Local commercial">Local commercial</option>
+                                <option value="Autre">Autre</option>
+                            </select>
+                        </div>
+
+                        <div class="cp-quote-form-field">
+                            <label for="rooms">Nombre de pièces</label>
+                            <select id="rooms">
+                                <option value="">Sélectionnez</option>
+                                <option value="1 à 3 pièces">1 à 3 pièces</option>
+                                <option value="4 à 5 pièces">4 à 5 pièces</option>
+                                <option value="6 à 8 pièces">6 à 8 pièces</option>
+                                <option value="9+ pièces">9 pièces et plus</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="cp-quote-form-row">
+                        <div class="cp-quote-form-field">
+                            <label for="{{ form.surface_m2.id_for_label }}">Surface (m²)</label>
+                            {{ form.surface_m2 }}
+                            {% if form.surface_m2.errors %}
+                            <div class="cp-quote-error">{{ form.surface_m2.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="cp-quote-form-field">
+                            <label for="{{ form.frequence.id_for_label }}">Fréquence souhaitée <span>*</span></label>
+                            {{ form.frequence }}
+                            {% if form.frequence.errors %}
+                            <div class="cp-quote-error">{{ form.frequence.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="cp-quote-form-row">
+                        <div class="cp-quote-form-field">
+                            <label for="{{ form.date_souhaitee.id_for_label }}">Date souhaitée</label>
+                            {{ form.date_souhaitee }}
+                            {% if form.date_souhaitee.errors %}
+                            <div class="cp-quote-error">{{ form.date_souhaitee.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="cp-quote-form-field">
+                            <label for="preferredTime">Horaire préféré</label>
+                            <select id="preferredTime">
+                                <option value="">Indifférent</option>
+                                <option value="Matin (8h-12h)">Matin (8h30min-12h)</option>
+                                <option value="Après-midi (13h-17h)">Après-midi (13h-17h)</option>
+                                <option value="Soir (après 17h)">Soir (après 17h)</option>
+                                <option value="Weekend">Weekend</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 3: Informations supplémentaires -->
+                <div class="cp-quote-form-block">
+                    <div class="cp-quote-block-header">
+                        <div class="cp-quote-block-icon">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </div>
+                        <div class="cp-quote-block-title">
+                            <h3>Informations supplémentaires</h3>
+                        </div>
+                    </div>
+
+                    <div class="cp-quote-form-field">
+                        <label for="specialRequests">Demandes particulières</label>
+                        <textarea id="specialRequests" rows="4" 
+                                  placeholder="Animaux, accès spécifique, zones à accentuer, produits écologiques..."></textarea>
+                    </div>
+
+                    <div class="cp-quote-form-row">
+                        <div class="cp-quote-form-field">
+                            <label for="howFound">Comment nous avez-vous connu ?</label>
+                            <select id="howFound">
+                                <option value="">Sélectionnez</option>
+                                <option value="Moteur de recherche">Moteur de recherche</option>
+                                <option value="Recommandation">Recommandation</option>
+                                <option value="Réseaux sociaux">Réseaux sociaux</option>
+                                <option value="Publicité">Publicité</option>
+                                <option value="Autre">Autre</option>
+                            </select>
+                        </div>
+
+                        <div class="cp-quote-form-field">
+                            <label>Options supplémentaires</label>
+                            <div class="cp-quote-toggles">
+                                <label class="cp-quote-toggle">
+                                    <input type="checkbox" id="provideProducts">
+                                    <span>Fournir les produits de nettoyage</span>
+                                </label>
+                                <label class="cp-quote-toggle">
+                                    <input type="checkbox" id="keyHandover">
+                                    <span>Remise des clés possible</span>
+                                </label>
+                                <label class="cp-quote-toggle">
+                                    <input type="checkbox" id="ecoProducts">
+                                    <span>Produits écologiques</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cp-quote-privacy-toggle">
+                        <label class="cp-quote-toggle" style="align-items: flex-start;">
+                            <input type="checkbox" id="privacyPolicy"  style="margin-top: 3px;">
+                            <span>
+                                J'accepte la <a href="#" style="color: #4c6fff; font-weight: 600;">politique de confidentialité</a> 
+                                et autorise Clean Plus à me contacter concernant ma demande de devis. 
+                                <span style="color: #ff4757;">*</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- SUBMIT -->
+                <div class="cp-quote-submit">
+                    <button type="submit" class="cp-quote-submit-btn">
+                        <i class="fa-solid fa-paper-plane"></i> Envoyer ma demande de Soumission
+                    </button>
+                    <p class="cp-quote-submit-note">
+                        * Champs obligatoires. Nous vous contacterons dans les 24 heures.
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="cp-quote-sidebar cp-quote-fade-in">
+            <div class="cp-quote-side-card">
+                <h3>Ce que vous recevez</h3>
+                <ul class="cp-quote-benefits-list">
+                    <li>
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>Soumission personnalisée et détaillé</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>Conseils d'experts gratuits</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>Proposition de créneaux disponibles</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>Transparence totale sur les tarifs</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>Garantie satisfaction incluse</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="cp-quote-side-card">
+                <div class="cp-quote-feature-box">
+                    <div class="cp-quote-feature-icon">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <div class="cp-quote-feature-content">
+                        <h4>Réponse rapide</h4>
+                        <p>Sous 24 heures maximum</p>
+                    </div>
+                </div>
+
+                <div class="cp-quote-feature-box">
+                    <div class="cp-quote-feature-icon">
+                        <i class="fa-solid fa-euro-sign"></i>
+                    </div>
+                    <div class="cp-quote-feature-content">
+                        <h4>Soumission gratuitte</h4>
+                        <p>Sans engagement de votre part</p>
+                    </div>
+                </div>
+
+                <div class="cp-quote-feature-box">
+                    <div class="cp-quote-feature-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div class="cp-quote-feature-content">
+                        <h4>Garantie satisfaction</h4>
+                        <p>100% satisfait ou remboursé</p>
+                    </div>
+                </div>
+
+                <div class="cp-quote-feature-box">
+                    <div class="cp-quote-feature-icon">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <div class="cp-quote-feature-content">
+                        <h4>Option écologique</h4>
+                        <p>Produits respectueux de l'environnement</p>
+                    </div>
+                </div>
+            </div>
+
+            <a href="https://wa.me/15144026011" class="cp-quote-whatsapp-btn" target="_blank" rel="noopener">
+                <i class="fab fa-whatsapp"></i>
+                Contact WhatsApp direct
+            </a>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <p style="color: #666; font-size: 0.9rem;">
+                    <i class="fa-solid fa-phone"></i>
+                    <strong>+1 514-402-6011</strong><br>
+                    Lun- Sam
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Animation au défilement
+    document.addEventListener('DOMContentLoaded', function() {
+        const fadeElements = document.querySelectorAll('.cp-quote-fade-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        });
+        
+        fadeElements.forEach(el => observer.observe(el));
+        
+        // Gestion du formulaire
+        const form = document.getElementById('quoteForm');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validation simple
+           const requiredFields = [
+    'id_email',
+    'id_telephone',
+    'id_adresse',
+    'id_service',
+    'id_frequence'
+];
+
+let isValid = true;
+
+requiredFields.forEach(id => {
+    const field = document.getElementById(id);
+    if (!field || !field.value.trim()) {
+        isValid = false;
+        field.style.borderColor = '#ff4757';
+    } else {
+        field.style.borderColor = '#e0e6ff';
+    }
+});
+
+                
+                if (!isValid) {
+                    alert('Veuillez remplir tous les champs obligatoires.');
+                    return;
+                }
+                
+                // Construire les champs cachés
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const specialRequests = document.getElementById('specialRequests').value;
+                
+                // Construire le message complet
+                let message = `Demande de devis pour ${firstName} ${lastName}\n\n`;
+                message += `Service: ${document.getElementById('id_service').value}\n`;
+                message += `Type de bien: ${document.getElementById('propertyType').value}\n`;
+                message += `Surface: ${document.getElementById('id_surface_m2').value} m²\n`;
+                message += `Fréquence: ${document.getElementById('id_frequence').value}\n`;
+                message += `Adresse: ${document.getElementById('id_adresse').value}\n`;
+                message += `Code postal: ${document.getElementById('postalCode').value}\n`;
+                message += `Ville: ${document.getElementById('city').value}\n\n`;
+                
+                if (specialRequests) {
+                    message += `Demandes particulières:\n${specialRequests}\n\n`;
+                }
+                
+                message += `Commentaire: Demande envoyée via le formulaire en ligne`;
+                
+                // Remplir les champs cachés
+                document.getElementById('id_nom').value = `${firstName} ${lastName}`;
+                document.getElementById('id_message').value = message;
+                
+                // Soumettre le formulaire
+                this.submit();
+            });
+        }
+        
+        // Validation en temps réel
+        const inputs = form.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.hasAttribute('') && !this.value.trim()) {
+                    this.style.borderColor = '#ff4757';
+                } else {
+                    this.style.borderColor = '#e0e6ff';
+                }
+            });
+            
+            input.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.style.borderColor = '#4c6fff';
+                }
+            });
+        });
+        
+        // Effet de parallaxe sur l'héro
+        const heroImage = document.querySelector('.cp-quote-hero-bg img');
+        if (heroImage) {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * 0.5;
+                heroImage.style.transform = `scale(${1 + rate * 0.001}) translateY(${rate * 0.1}px)`;
+            });
+        }
+    });
+</script>
+{% endblock %}

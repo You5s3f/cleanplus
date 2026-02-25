@@ -1,0 +1,52 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+{% block page_title %}Ajouter femme de ménage{% endblock %}
+{% block page_subtitle %}Ajoute une nouvelle intervenante (profil, contact, zones, disponibilité).{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/staff_form.css' %}?v=1">
+{% endblock %}
+
+{% block content %}
+
+<div class="a-content-wrapper">
+  <div class="a-card a-form-card">
+
+    <div class="a-form-head">
+      <div>
+        <h2 class="a-h2">Nouvelle intervenante</h2>
+        <p class="a-muted">Remplis les infos puis enregistre.</p>
+      </div>
+
+      <a class="a-btn a-btn-soft" href="{% url 'staff:list' %}">
+        ← Retour liste
+      </a>
+    </div>
+
+    <div class="a-sep"></div>
+
+    <form method="post" enctype="multipart/form-data" class="a-form" id="staffForm">
+      {% csrf_token %}
+
+      {{ form.as_p }}
+
+      <div class="a-form-actions">
+        <button class="a-btn a-btn-primary" type="submit" id="submitBtn">
+          <i class="fas fa-save"></i> Enregistrer
+        </button>
+
+        <a class="a-btn a-btn-soft" href="{% url 'staff:list' %}">
+          Annuler
+        </a>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'admin/js/staff_form.js' %}?v=1"></script>
+{% endblock %}

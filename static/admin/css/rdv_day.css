@@ -1,0 +1,187 @@
+/* =========================================================
+   Clean Plus Admin — RDV DAY (CSS)
+   Timeline jour (par heure) — Thème vert Clean Plus
+   ========================================================= */
+
+.az-toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  margin: 6px 0 16px;
+  flex-wrap: wrap;
+}
+
+/* Card (si pas déjà global, on sécurise) */
+.az-card{
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow-sm);
+  padding: 14px;
+}
+html[data-theme="dark"] .az-card{
+  background: rgba(30,43,56,.72);
+}
+
+/* Timeline */
+.az-timeline{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+
+/* Row */
+.az-time-row{
+  display:grid;
+  grid-template-columns: 84px 1fr;
+  gap: 12px;
+  align-items:start;
+  padding: 10px;
+  border-radius: 18px;
+  border: 1px solid rgba(148,163,184,.16);
+  background: rgba(255,255,255,.55);
+}
+html[data-theme="dark"] .az-time-row{
+  background: rgba(30,43,56,.55);
+}
+
+/* Left hour */
+.az-time-col{
+  font-weight: 1000;
+  color: var(--muted);
+  font-size: 12px;
+  padding-top: 6px;
+  text-align: right;
+  letter-spacing: .08em;
+}
+
+/* Body */
+.az-time-body{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+  min-height: 46px;
+}
+
+/* Event card */
+.az-event{
+  display:flex;
+  gap: 12px;
+  align-items:flex-start;
+  padding: 12px 12px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.72);
+  box-shadow: var(--shadow-sm);
+  transition: .15s ease;
+  position: relative;
+  overflow: hidden;
+}
+html[data-theme="dark"] .az-event{
+  background: rgba(30,43,56,.72);
+}
+
+.az-event:hover{
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Accent bar (left) */
+.az-event::before{
+  content:"";
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width: 6px;
+  background: rgba(42,157,143,.55);
+}
+
+/* Time */
+.az-event-time{
+  width: 58px;
+  min-width: 58px;
+  font-weight: 1000;
+  font-size: 12px;
+  color: var(--text);
+  opacity: .95;
+  padding-top: 2px;
+}
+
+/* Main content */
+.az-event-main{flex:1; min-width:0}
+.az-event-title{
+  font-weight: 1000;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.az-event-sub{
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Empty placeholder */
+.az-empty{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height: 44px;
+  border-radius: 18px;
+  border: 1px dashed rgba(148,163,184,.30);
+  color: var(--muted);
+  background: rgba(2,6,23,.02);
+}
+html[data-theme="dark"] .az-empty{
+  background: rgba(148,163,184,.06);
+}
+
+/* ---------- Statut Colors avec couleurs du thème vert ---------- */
+/* Default: planifié */
+.az-event-planifié::before{ 
+  background: rgba(255, 193, 7, .70); /* Jaune warning */ 
+}
+
+/* En cours - vert Clean Plus */
+.az-event-en\ cours::before{ 
+  background: rgba(42, 157, 143, .75); /* Vert Clean Plus */ 
+}
+
+/* Terminé - vert vif */
+.az-event-terminé::before{ 
+  background: rgba(40, 167, 69, .75); /* Vert success */ 
+}
+
+/* Annulé - rouge */
+.az-event-annulé::before{ 
+  background: rgba(220, 53, 69, .75); /* Rouge danger */ 
+}
+
+/* Si r.statut renvoie "en_cours" ou "en-cours" (sécurité) */
+.az-event-en_cours::before,
+.az-event-en-cours::before{
+  background: rgba(42, 157, 143, .75); /* Vert Clean Plus */
+}
+
+/* Responsive */
+@media (max-width: 780px){
+  .az-time-row{
+    grid-template-columns: 64px 1fr;
+  }
+  .az-time-col{
+    text-align:left;
+  }
+  .az-event{
+    flex-direction: column;
+    gap: 8px;
+  }
+  .az-event-time{
+    width:auto;
+    min-width:0;
+    color: var(--muted);
+  }
+}

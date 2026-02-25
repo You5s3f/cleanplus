@@ -1,0 +1,61 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+{% block page_title %}Créer une demande{% endblock %}
+{% block page_subtitle %}Ajoute une nouvelle demande de devis (client + service + détails).{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/demandes_form.css' %}?v=1">
+{% endblock %}
+
+{% block content %}
+<div class="a-content-wrapper">
+
+  <div class="a-card a-form-card">
+    <form method="post" class="a-form" id="demandeForm">
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="a-form-alert a-form-alert-error">
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      <div class="a-form-grid">
+        {% for field in form %}
+          <div class="a-field {% if field.errors %}is-error{% endif %}">
+            <label class="a-label" for="{{ field.id_for_label }}">
+              {{ field.label }}
+              {% if field.field.required %}<span class="a-required">*</span>{% endif %}
+            </label>
+
+            {{ field }}
+
+            {% if field.help_text %}
+              <div class="a-help">{{ field.help_text }}</div>
+            {% endif %}
+
+            {% for error in field.errors %}
+              <div class="a-error">{{ error }}</div>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="a-form-actions">
+        <button class="a-btn a-btn-primary" type="submit" id="submitBtn">
+          <i class="fas fa-save"></i> Enregistrer
+        </button>
+        <a class="a-btn a-btn-soft" href="{% url 'demandes:list' %}">
+          Annuler
+        </a>
+      </div>
+    </form>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'admin/js/demandes_form.js' %}?v=1"></script>
+{% endblock %}

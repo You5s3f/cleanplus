@@ -1,0 +1,77 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+{% block page_title %}RDV #{{ rdv.id }}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/rdv_detail.css' %}?v=1">
+{% endblock %}
+{% block content %}
+<div class="az-detail-grid">
+
+  <div class="az-card">
+    <div class="az-card-head">
+      <div>
+        <h2 style="margin:0;">{{ rdv.date_heure|date:"Y-m-d H:i" }}</h2>
+        <p style="margin:6px 0 0;opacity:.8;">{{ rdv.adresse }}</p>
+      </div>
+      <span class="badge az-btn-soft">{{ rdv.get_statut_display }}</span>
+    </div>
+
+    <hr class="az-sep">
+
+    <div class="az-kv">
+      <div class="az-k">Demande liée</div>
+      <div class="az-v">
+        {% if rdv.demande %}
+          <a class="az-btn-soft" style="padding:8px 10px;border-radius:12px;display:inline-block;"
+             href="{% url 'demandes:detail' rdv.demande.id %}">
+            #{{ rdv.demande.id }} — {{ rdv.demande.nom }}
+          </a>
+        {% else %}
+          -
+        {% endif %}
+      </div>
+
+      <div class="az-k">Service</div>
+      <div class="az-v">{{ rdv.service|default:"-" }}</div>
+
+      <div class="az-k">Femme de ménage</div>
+      <div class="az-v">{{ rdv.femme|default:"-" }}</div>
+
+      <div class="az-k">Durée</div>
+      <div class="az-v">{{ rdv.duree_minutes }} min</div>
+    </div>
+
+    <hr class="az-sep">
+    <a class="btn az-btn-soft" href="{% url 'rdv:list' %}">← Retour liste</a>
+  </div>
+
+  <div class="az-card">
+  <h3 style="margin:0 0 12px;">Actions</h3>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <a href="{% url 'rdv:update' rdv.id %}"
+       class="btn az-btn-soft">
+      ✏️ Modifier
+    </a>
+
+    {% if rdv.statut != "annule" %}
+    <form method="post"
+          action="{% url 'rdv:cancel' rdv.id %}"
+          onsubmit="return confirm('Annuler ce rendez-vous ?');">
+      {% csrf_token %}
+      <button type="submit"
+              class="btn az-btn-danger">
+        ❌ Annuler
+      </button>
+    </form>
+    {% endif %}
+  </div>
+</div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'admin/js/rdv_detail.js' %}?v=1"></script>
+{% endblock %}

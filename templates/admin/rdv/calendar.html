@@ -1,0 +1,58 @@
+{% extends "base_admin.html" %}
+{% block page_title %}Calendrier RDV (Semaine du {{ start_week|date:"Y-m-d" }}){% endblock %}
+{% load static %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/calendar_week.css' %}?v=2">
+{% endblock %}
+{% block content %}
+
+<div class="az-toolbar">
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <a class="btn az-btn-soft" href="{% url 'rdv:calendar' %}?week={{ prev_week }}">← Semaine precedente</a>
+    <a class="btn az-btn-soft" href="{% url 'rdv:calendar' %}">Cette semaine</a>
+    <a class="btn az-btn-soft" href="{% url 'rdv:calendar' %}?week={{ next_week }}">Semaine suivante →</a>
+  </div>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <a class="btn az-btn-soft" href="{% url 'rdv:list' %}">Vue liste</a>
+    <a class="btn" href="{% url 'rdv:create' %}">+ Ajouter RDV</a>
+  </div>
+</div>
+
+<div class="az-week-grid">
+  {% for col in week_columns %}
+    <div class="az-day">
+      <div class="az-day-head">
+        <div class="az-day-title">{{ col.day|date:"l" }}</div>
+        <div class="az-day-date">{{ col.day|date:"Y-m-d" }}</div>
+      </div>
+
+      <div class="az-day-body">
+        {% for r in col.items %}
+          <a class="az-event az-event-{{ r.statut|slugify }}" href="{% url 'rdv:detail' r.id %}">
+            <div class="az-event-time">{{ r.date_heure|date:"H:i" }}</div>
+            <div class="az-event-main">
+              <div class="az-event-title">
+                {{ r.service|default:"Service" }}
+              </div>
+              <div class="az-event-sub">
+                {% if r.femme %}👤 {{ r.femme }}{% else %}👤 Non assignée{% endif %}
+              </div>
+              <div class="az-event-sub">📍 {{ r.adresse|truncatechars:28 }}</div>
+            </div>
+          </a>
+        {% empty %}
+          <div class="az-empty">Aucun RDV</div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'admin/js/calendar_week.js' %}?v=1"></script>
+{% endblock %}

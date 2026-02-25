@@ -1,0 +1,181 @@
+/* =========================================================
+   Clean Plus Admin — DEMANDES LIST (CSS)
+   Thème vert Clean Plus
+   ========================================================= */
+
+.az-toolbar{
+  margin-bottom: 16px;
+  display:flex;
+  gap: 12px;
+  align-items:flex-end;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+
+.az-filters{
+  display:flex;
+  gap: 12px;
+  flex-wrap:wrap;
+  align-items:flex-end;
+}
+
+.az-field{
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+  min-width: 180px;
+}
+
+.az-field--wide{min-width: 280px}
+
+.az-label{
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 900;
+}
+
+.az-control{
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(255,255,255,.72);
+  color: var(--text);
+  outline: none;
+  transition: .15s ease;
+}
+html[data-theme="dark"] .az-control{
+  background: rgba(30,43,56,.72);
+}
+
+.az-control:focus{
+  box-shadow: var(--focus);
+  border-color: rgba(42,157,143,.45);
+}
+
+/* Card + table */
+.a-card{
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow-sm);
+  overflow:hidden;
+}
+html[data-theme="dark"] .a-card{ background: rgba(30,43,56,.72); }
+
+.a-table-wrap{overflow:auto}
+
+.a-table{
+  width:100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 900px;
+}
+
+.a-table thead th{
+  text-align:left;
+  padding: 12px;
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  border-bottom: 1px solid var(--border);
+  background: rgba(2,6,23,.03);
+}
+html[data-theme="dark"] .a-table thead th{
+  background: rgba(148,163,184,.08);
+}
+
+.a-th-right{text-align:right}
+
+.a-table tbody td{
+  padding: 12px;
+  border-bottom: 1px solid rgba(148,163,184,.16);
+  vertical-align: middle;
+}
+
+.a-row:hover{background: rgba(42,157,143,.06)}
+html[data-theme="dark"] .a-row:hover{background: rgba(42,157,143,.10)}
+
+.a-id{font-weight: 1000; white-space:nowrap}
+
+.a-client{display:flex; flex-direction:column}
+.a-client-name{font-weight: 1000}
+.a-client-sub{font-size: 12px; color: var(--muted); margin-top:2px}
+
+.a-muted-td{color: var(--muted)}
+.a-td-right{text-align:right; white-space:nowrap}
+
+.a-empty-td{
+  padding: 16px;
+  color: var(--muted);
+}
+
+/* Badges */
+.a-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 1000;
+  border: 1px solid var(--border);
+  background: rgba(2,6,23,.04);
+  color: var(--text);
+}
+html[data-theme="dark"] .a-badge{ background: rgba(148,163,184,.10); }
+
+/* Statut colors - adaptées au thème vert */
+.a-badge-nouvelle,
+.a-badge-en-attente,
+.a-badge-attente{ 
+  border-color: rgba(255, 193, 7, .35); 
+  background: rgba(255, 193, 7, .14); 
+  color: #ffc107; 
+}
+
+.a-badge-confirmee,
+.a-badge-confirme{ 
+  border-color: rgba(42, 157, 143, .35); 
+  background: rgba(42, 157, 143, .14); 
+  color: #2a9d8f; 
+}
+
+.a-badge-traitee,
+.a-badge-terminee,
+.a-badge-termine{ 
+  border-color: rgba(40, 167, 69, .35); 
+  background: rgba(40, 167, 69, .14); 
+  color: #28a745; 
+}
+
+.a-badge-annulee,
+.a-badge-annule{ 
+  border-color: rgba(220, 53, 69, .35); 
+  background: rgba(220, 53, 69, .12); 
+  color: #dc3545; 
+}
+
+/* Empty state (JS) */
+.a-empty{
+  display:none;
+  padding: 22px 16px;
+  text-align:center;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+.a-empty i{font-size: 22px; color: var(--primary)}
+.a-empty h3{
+  margin: 10px 0 4px;
+  color: var(--text);
+  font-weight: 1000;
+}
+.a-empty p{margin:0}
+
+/* Responsive toolbar */
+@media (max-width: 760px){
+  .az-field--wide{min-width: 220px}
+  .a-td-right{text-align:left}
+}

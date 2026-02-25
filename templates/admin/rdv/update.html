@@ -1,0 +1,74 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+{% block page_title %}
+Modifier RDV #{{ rdv.id }}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/rdv_form.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="az-card" style="max-width:720px;margin:auto;">
+
+  <div class="az-card-head">
+    <div>
+      <h2 style="margin:0;">Modifier le rendez-vous</h2>
+      <p style="margin:6px 0 0;opacity:.8;">
+        {{ rdv.date_heure|date:"Y-m-d H:i" }} — {{ rdv.adresse }}
+      </p>
+    </div>
+    <span class="badge az-btn-soft">{{ rdv.get_statut_display }}</span>
+  </div>
+
+  <hr class="az-sep">
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+      <div class="az-alert az-alert-danger">
+        {{ form.non_field_errors }}
+      </div>
+    {% endif %}
+
+    <div class="az-form-grid">
+      {% for field in form %}
+        <div class="az-field">
+          <label class="az-label">
+            {{ field.label }}
+          </label>
+
+          {{ field }}
+
+          {% if field.help_text %}
+            <small class="az-help">{{ field.help_text }}</small>
+          {% endif %}
+
+          {% if field.errors %}
+            <div class="az-error">
+              {{ field.errors }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <hr class="az-sep">
+
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <a href="{% url 'rdv:detail' rdv.id %}"
+         class="btn az-btn-soft">
+        Annuler
+      </a>
+
+      <button type="submit"
+              class="btn az-btn-primary">
+        💾 Enregistrer les modifications
+      </button>
+    </div>
+  </form>
+
+</div>
+{% endblock %}

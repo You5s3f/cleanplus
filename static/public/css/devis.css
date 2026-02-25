@@ -1,0 +1,280 @@
+/* Variables et reset */
+:root {
+    --cp-primary: #4c6fff;
+    --cp-primary-light: #6c8eff;
+    --cp-secondary: #1a1a2e;
+    --cp-light: #f8faff;
+    --cp-border: #e0e6ff;
+    --cp-text: #333;
+    --cp-text-light: #666;
+    --cp-error: #ff4757;
+    --cp-success: #25D366;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    line-height: 1.6;
+    color: var(--cp-text);
+}
+
+/* Conteneur principal */
+.cp-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Reset du formulaire */
+.cp-quote-form input,
+.cp-quote-form select,
+.cp-quote-form textarea {
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.cp-quote-form input:focus,
+.cp-quote-form select:focus,
+.cp-quote-form textarea:focus {
+    outline: none;
+}
+
+/* Styles spécifiques pour Django form fields */
+.cp-quote-form-field select,
+.cp-quote-form-field input[type="text"],
+.cp-quote-form-field input[type="email"],
+.cp-quote-form-field input[type="tel"],
+.cp-quote-form-field input[type="date"],
+.cp-quote-form-field textarea {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: 2px solid var(--cp-border);
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+    color: var(--cp-text);
+}
+
+.cp-quote-form-field select:focus,
+.cp-quote-form-field input[type="text"]:focus,
+.cp-quote-form-field input[type="email"]:focus,
+.cp-quote-form-field input[type="tel"]:focus,
+.cp-quote-form-field input[type="date"]:focus,
+.cp-quote-form-field textarea:focus {
+    border-color: var(--cp-primary);
+    box-shadow: 0 0 0 3px rgba(76, 111, 255, 0.1);
+}
+
+/* Date picker amélioré */
+.cp-quote-form-field input[type="date"] {
+    position: relative;
+    min-height: 50px;
+}
+
+.cp-quote-form-field input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    position: absolute;
+    right: 15px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+/* Placeholders */
+.cp-quote-form-field input::placeholder,
+.cp-quote-form-field textarea::placeholder {
+    color: #999;
+    opacity: 1;
+}
+
+/* Responsive amélioré */
+@media (max-width: 768px) {
+    .cp-quote-hero {
+        min-height: 500px;
+        height: 60vh;
+    }
+    
+    .cp-quote-hero-title {
+        font-size: 2rem;
+    }
+    
+    .cp-quote-hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .cp-quote-form-block {
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+    }
+    
+    .cp-quote-form-field input,
+    .cp-quote-form-field select,
+    .cp-quote-form-field textarea {
+        padding: 0.875rem 1.25rem;
+    }
+    
+    .cp-quote-feature-box {
+        padding: 1rem;
+    }
+    
+    .cp-quote-feature-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+    
+    .cp-quote-submit-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .cp-quote-whatsapp-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .cp-quote-hero {
+        min-height: 400px;
+        height: 50vh;
+    }
+    
+    .cp-quote-hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .cp-quote-form-card {
+        padding: 1.5rem;
+    }
+    
+    .cp-quote-form-header h2 {
+        font-size: 2rem;
+    }
+    
+    .cp-quote-block-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    
+    .cp-quote-hero-stats {
+        gap: 1.5rem;
+    }
+    
+    .cp-quote-stat-number {
+        font-size: 1.5rem;
+    }
+}
+
+/* Animation pour le scroll */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Personnalisation du scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--cp-primary);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--cp-primary-light);
+}
+
+/* Amélioration de la sélection */
+::selection {
+    background-color: var(--cp-primary);
+    color: white;
+}
+
+/* Styles pour les tooltips */
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--cp-secondary);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 5px;
+}
+
+/* Styles pour les messages de succès/erreur */
+.cp-quote-message {
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    display: none;
+}
+
+.cp-quote-message.success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    display: block;
+}
+
+.cp-quote-message.error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    display: block;
+}
+
+/* Loader pour le bouton submit */
+.cp-quote-submit-btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.cp-quote-submit-btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}

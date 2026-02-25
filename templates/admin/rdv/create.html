@@ -1,0 +1,21 @@
+{% extends "base_admin.html" %}
+{% load static %}
+{% block page_title %}Créer un RDV{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/rdv_form.css' %}?v=1">
+{% endblock %}
+
+{% block content %}
+<div class="az-card">
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" type="submit">Enregistrer</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'admin/js/rdv_form.js' %}?v=1"></script>
+{% endblock %}

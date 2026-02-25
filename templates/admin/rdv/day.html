@@ -1,0 +1,50 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+{% block page_title %}RDV — Jour ({{ day|date:"Y-m-d" }}){% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/rdv_day.css' %}">
+{% endblock %}
+{% block content %}
+<div class="az-toolbar">
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <a class="btn az-btn-soft" href="{% url 'rdv:day' %}?date={{ prev_day }}">← Jour précédent</a>
+    <a class="btn az-btn-soft" href="{% url 'rdv:day' %}">Aujourd’hui</a>
+    <a class="btn az-btn-soft" href="{% url 'rdv:day' %}?date={{ next_day }}">Jour suivant →</a>
+  </div>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <a class="btn az-btn-soft" href="{% url 'rdv:calendar' %}">Vue semaine</a>
+    <a class="btn az-btn-soft" href="{% url 'rdv:list' %}">Vue liste</a>
+    <a class="btn" href="{% url 'rdv:create' %}">+ Ajouter RDV</a>
+  </div>
+</div>
+
+<div class="az-card">
+  <div class="az-timeline">
+    {% for slot in timeline %}
+      <div class="az-time-row">
+        <div class="az-time-col">{{ slot.hour }}:00</div>
+        <div class="az-time-body">
+          {% for r in slot.items %}
+            <a class="az-event az-event-{{ r.statut|slugify }}" href="{% url 'rdv:detail' r.id %}">
+              <div class="az-event-time">{{ r.date_heure|date:"H:i" }}</div>
+              <div class="az-event-main">
+                <div class="az-event-title">{{ r.service|default:"Service" }}</div>
+                <div class="az-event-sub">{% if r.femme %}👤 {{ r.femme }}{% else %}👤 Non assignée{% endif %}</div>
+                <div class="az-event-sub">📍 {{ r.adresse|truncatechars:42 }}</div>
+              </div>
+            </a>
+          {% empty %}
+            <div class="az-empty">—</div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'admin/js/rdv_day.js' %}?v=1"></script>
+{% endblock %}

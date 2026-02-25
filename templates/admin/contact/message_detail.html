@@ -1,0 +1,55 @@
+{% extends "base_admin.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/message_detail.css' %}">
+{% endblock %}
+
+
+
+
+{% block page_title %}Message{% endblock %}
+
+{% block content %}
+<div class="a-message-detail">
+
+  <div class="a-message-header">
+    <div class="a-message-field">
+      <strong>Nom</strong>
+      <div class="a-message-value">{{ message.name }}</div>
+    </div>
+
+    <div class="a-message-field">
+      <strong>Email</strong>
+      <div class="a-message-value">{{ message.email }}</div>
+    </div>
+
+    <div class="a-message-field">
+      <strong>Téléphone</strong>
+      <div class="a-message-value">
+        {{ message.phone|default:"—" }}
+      </div>
+    </div>
+
+    <div class="a-message-field">
+      <strong>Sujet</strong>
+      <div class="a-message-value">
+        {{ message.get_subject_display }}
+      </div>
+    </div>
+  </div>
+
+  <div class="a-message-separator"></div>
+
+  <div class="a-message-body">
+    {{ message.message|linebreaks }}
+  </div>
+
+  <div class="a-message-actions">
+    <a href="{% url 'contact:admin_list' %}" class="a-message-back">
+      ← Retour aux messages
+    </a>
+  </div>
+
+</div>
+{% endblock %}
+

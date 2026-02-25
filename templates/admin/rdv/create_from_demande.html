@@ -1,0 +1,81 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+{% block page_title %}Créer RDV{% endblock %}
+{% block page_subtitle %}Depuis la demande #{{ demande.id }} – planification du rendez-vous{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/rdv_from_demande.css' %}?v=1">
+{% endblock %}
+
+{% block content %}
+
+<div class="a-rdv-create-grid">
+
+  <!-- LEFT : Résumé demande -->
+  <div class="a-card a-detail-card">
+
+    <div class="a-card-head">
+      <div>
+        <h3 class="a-h3">Résumé de la demande</h3>
+        <p class="a-muted">Informations client</p>
+      </div>
+    </div>
+
+    <div class="a-sep"></div>
+
+    <div class="a-kv">
+      <div class="a-k"><i class="fas fa-user"></i> Client</div>
+      <div class="a-v">{{ demande.nom }}</div>
+
+      <div class="a-k"><i class="fas fa-phone"></i> Téléphone</div>
+      <div class="a-v">{{ demande.telephone }}</div>
+
+      <div class="a-k"><i class="fas fa-location-dot"></i> Adresse</div>
+      <div class="a-v">{{ demande.adresse }}</div>
+
+      <div class="a-k"><i class="fas fa-broom"></i> Service</div>
+      <div class="a-v">{{ demande.service|default:"-" }}</div>
+    </div>
+
+    {% if demande.message %}
+      <div class="a-sep"></div>
+      <h4 class="a-h4">Message du client</h4>
+      <pre class="a-pre">{{ demande.message }}</pre>
+    {% endif %}
+
+  </div>
+
+  <!-- RIGHT : Form RDV -->
+  <div class="a-card a-form-card">
+
+    <h3 class="a-h3">Nouveau rendez-vous</h3>
+    <p class="a-muted">Définis la date, la durée et l’intervenante</p>
+
+    <div class="a-sep"></div>
+
+    <form method="post" class="a-form">
+      {% csrf_token %}
+
+      {{ form.as_p }}
+
+      <div class="a-form-actions">
+        <button class="a-btn a-btn-primary" type="submit">
+          <i class="fas fa-calendar-check"></i> Créer le RDV
+        </button>
+
+        <a class="a-btn a-btn-soft" href="{% url 'demandes:detail' demande.id %}">
+          Annuler
+        </a>
+      </div>
+    </form>
+
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'admin/js/rdv_from_demande.js' %}?v=1"></script>
+{% endblock %}

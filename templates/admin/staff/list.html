@@ -1,0 +1,192 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+{% block page_title %}Femmes de ménage{% endblock %}
+{% block page_subtitle %}Recherchez, filtrez et gérez votre équipe (zone, disponibilité, statut).{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/staff_list.css' %}?v=4">
+{% endblock %}
+
+{% block content %}
+
+<!-- TOOLBAR -->
+<div class="staff-toolbar">
+  <form method="get" class="staff-filters" id="staffFilters">
+    <div class="staff-field staff-field--wide">
+      <span class="staff-label">Recherche</span>
+      <div class="staff-control-wrap">
+        <i class="fas fa-search"></i>
+        <input
+          class="staff-control"
+          type="text"
+          name="q"
+          id="staffSearch"
+          placeholder="Nom / Téléphone / Ville / Zone..."
+          value="{{ q|default:'' }}"
+          autocomplete="off"
+        >
+      </div>
+    </div>
+
+    <div class="staff-field">
+      <span class="staff-label">Statut</span>
+      <select class="staff-control" name="statut" id="filterStatut">
+        <option value="">Tous</option>
+        {% for value,label in statuts %}
+          <option value="{{ value }}" {% if statut == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="staff-field">
+      <span class="staff-label">Disponible</span>
+      <select class="staff-control" name="dispo" id="filterDispo">
+        <option value="">Tous</option>
+        <option value="1" {% if dispo == "1" %}selected{% endif %}>Oui</option>
+        <option value="0" {% if dispo == "0" %}selected{% endif %}>Non</option>
+      </select>
+    </div>
+
+    <div class="staff-filter-actions">
+      <button class="a-btn a-btn-primary" type="submit">
+        <i class="fas fa-filter"></i> Filtrer
+      </button>
+      <a class="a-btn a-btn-soft" href="{% url 'staff:list' %}">
+        <i class="fas fa-rotate-left"></i> Reset
+      </a>
+    </div>
+  </form>
+
+  <a class="a-btn a-btn-primary" href="{% url 'staff:create' %}">
+    <i class="fas fa-plus"></i> Ajouter
+  </a>
+</div>
+
+<!-- TABLE CARD -->
+<div class="a-card staff-card">
+  <div class="staff-table-wrap">
+    <table class="staff-table" id="staffTable">
+      <thead>
+        <tr>
+          <th>Profil</th>
+          <th>Téléphone</th>
+          <th>Zone</th>
+          <th>Dispo</th>
+          <th>Statut</th>
+          <th class="th-right">Action</th>
+        </tr>
+      </thead>
+
+      <tbody id="staffTbody">
+        {% for f in items %}
+        <tr class="staff-row"
+            data-name="{{ f.nom_complet|default:''|lower }}"
+            data-phone="{{ f.telephone|default:''|lower }}"
+            data-zone="{{ f.zones_couvertes|default:f.ville_zone|default:''|lower }}"
+            data-dispo="{% if f.disponible %}oui{% else %}non{% endif %}"
+            data-statut="{{ f.get_statut_display|default:''|lower }}">
+          <td>
+            <div class="staff-profile">
+              {% if f.photo %}
+                <img src="{{ f.photo.url }}" class="staff-avatar" alt="photo">
+              {% else %}
+                <div class="staff-avatar staff-avatar-empty">
+                  {{ f.nom_complet|slice:":1"|upper|default:"—" }}
+                </div>
+              {% endif %}
+
+              <div class="staff-meta">
+                <div class="staff-name">{{ f.nom_complet }}</div>
+                <div class="staff-sub">{{ f.zones_couvertes|default:f.ville_zone|default:"-" }}</div>
+              </div>
+            </div>
+          </td>
+
+          <td class="staff-td-muted">{{ f.telephone }}</td>
+          <td class="staff-td-muted">{{ f.zones_couvertes|default:f.ville_zone|default:"-" }}</td>
+
+          <td>
+            {% if f.disponible %}
+              <span class="staff-badge staff-badge-ok"><i class="fas fa-check"></i> Oui</span>
+            {% else %}
+              <span class="staff-badge staff-badge-no"><i class="fas fa-xmark"></i> Non</span>
+            {% endif %}
+          </td>
+
+          <td>
+            <span class="staff-badge {% if f.statut == 'ACTIVE' %}staff-badge-ok{% else %}staff-badge-no{% endif %}">
+              {{ f.get_statut_display }}
+            </span>
+          </td>
+
+ <td class="td-right">
+
+  <!-- VOIR -->
+  <a href="{% url 'staff:detail' f.id %}"
+     style="
+       display:inline-flex;
+       align-items:center;
+       gap:6px;
+       padding:6px 10px;
+       border-radius:8px;
+       border:1px solid rgba(255,255,255,0.15);
+       color:#e5e7eb;
+       text-decoration:none;
+       margin-right:6px;
+     ">
+    <i class="fas fa-eye"></i> Voir
+  </a>
+
+  <!-- SUPPRIMER -->
+  <form method="post"
+        action="{% url 'staff:delete' f.id %}"
+        style="display:inline;"
+        onsubmit="return confirm('Supprimer définitivement ce membre ?');">
+    {% csrf_token %}
+    <button type="submit"
+            style="
+              display:inline-flex;
+              align-items:center;
+              gap:6px;
+              padding:6px 10px;
+              border-radius:8px;
+              border:1px solid rgba(239,68,68,0.6);
+              background:transparent;
+              color:#ef4444;
+              cursor:pointer;
+            ">
+      <i class="fas fa-trash"></i> Supprimer
+    </button>
+  </form>
+
+</td>
+
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="staff-empty-td">
+            <i class="fas fa-user-slash"></i>
+            <div>
+              <strong>Aucune femme de ménage</strong>
+              <p>Ajoute un membre ou change les filtres.</p>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="staff-empty" id="staffEmptyState">
+    <i class="fas fa-search"></i>
+    <h3>Aucun résultat</h3>
+    <p>Change la recherche ou les filtres.</p>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'admin/js/staff_list.js' %}?v=1"></script>
+{% endblock %}

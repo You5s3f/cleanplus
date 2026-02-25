@@ -1,0 +1,92 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+{% block page_title %}Services{% endblock %}
+{% block page_subtitle %}Gérez le catalogue des services proposés.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/services_list.css' %}?v=1">
+{% endblock %}
+
+{% block content %}
+
+<!-- HEADER -->
+<div class="a-page-header">
+  <div>
+    <h2 class="a-page-title-large">Services</h2>
+    <p class="a-page-subtitle">Liste des services disponibles</p>
+  </div>
+
+  <a class="a-btn a-btn-primary" href="{% url 'services:create' %}">
+    <i class="fas fa-plus"></i> Ajouter un service
+  </a>
+</div>
+
+<!-- CARD TABLE -->
+<div class="a-card services-card">
+
+  <div class="services-table-wrapper">
+    <table class="services-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom du service</th>
+          <th>Date de création</th>
+          <th style="text-align:right;">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for it in items %}
+        <tr>
+          <td class="services-id">#{{ it.id }}</td>
+
+          <td>
+            <div class="services-name">
+              <i class="fas fa-broom"></i>
+              {{ it }}
+            </div>
+          </td>
+
+          <td class="services-date">
+            {{ it.created_at|date:"Y-m-d H:i"|default:"-" }}
+          </td>
+
+          <td class="services-actions" style="text-align:right;">
+
+  <!-- MODIFIER -->
+  <a class="a-btn a-btn-soft"
+     href="{% url 'services:edit' it.id %}"
+     title="Modifier">
+    <i class="fas fa-pen"></i>
+  </a>
+
+  <!-- SUPPRIMER -->
+  <form method="post"
+      action="{% url 'services:delete' it.id %}"
+      style="display:inline;"
+      onsubmit="return confirm('Supprimer ce service ?');">
+  {% csrf_token %}
+  <button type="submit" class="a-btn a-btn-soft" title="Supprimer">
+    <i class="fas fa-trash"></i>
+  </button>
+</form>
+
+</td>
+
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4" class="services-empty">
+            <i class="fas fa-box-open"></i>
+            <p>Aucun service enregistré</p>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+{% endblock %}

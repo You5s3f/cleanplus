@@ -1,0 +1,1171 @@
+{% extends "base_public.html" %}
+{% load static %}
+
+{% block title %}À propos de Clean Plus | Excellence en Nettoyage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'public/css/about.css' %}">
+<style>
+    /* Hero premium avec photo de nettoyage */
+    .cp-about-hero-premium {
+        position: relative;
+        height: 80vh;
+        min-height: 700px;
+        overflow: hidden;
+        border-radius: 0 0 40px 40px;
+        display: flex;
+        align-items: center;
+        color: white;
+    }
+    
+    .cp-about-hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .cp-about-hero-bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        animation: heroZoom 20s infinite alternate ease-in-out;
+    }
+    
+    @keyframes heroZoom {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.05); }
+    }
+    
+    .cp-about-hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, 
+            rgba(23, 37, 84, 0.9) 0%, 
+            rgba(23, 37, 84, 0.7) 50%, 
+            rgba(23, 37, 84, 0.4) 100%);
+    }
+    
+    .cp-about-hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+        text-align: center;
+    }
+    
+    .cp-about-hero-pill {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        margin-bottom: 2rem;
+        letter-spacing: 0.5px;
+    }
+    
+    .cp-about-hero-title {
+        font-size: 4rem;
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        color:white;
+    }
+    
+    .cp-about-hero-subtitle {
+        font-size: 1.3rem;
+        font-weight: 300;
+        max-width: 700px;
+        margin: 0 auto 3rem;
+        line-height: 1.6;
+        opacity: 0.9;
+    }
+    
+    /* Hero stats */
+    .cp-about-hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 4rem;
+        margin: 3rem auto;
+        max-width: 1200px;
+        flex-wrap: wrap;
+    }
+    
+    .cp-about-stat {
+        text-align: center;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        min-width: 200px;
+        transition: transform 0.3s ease;
+    }
+    
+    .cp-about-stat:hover {
+        transform: translateY(-10px);
+        background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .cp-about-stat-number {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        color: #6c8eff;
+    }
+    
+    .cp-about-stat-label {
+        font-size: 1rem;
+        font-weight: 500;
+        opacity: 0.9;
+    }
+    
+    /* Hero features */
+    .cp-about-hero-features {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-top: 3rem;
+        flex-wrap: wrap;
+    }
+    
+    .cp-about-feature {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 1rem 2rem;
+        border-radius: 50px;
+    }
+    
+    .cp-about-feature i {
+        color: #6c8eff;
+        font-size: 1.2rem;
+    }
+    
+    /* Story section - Nettoyage professionnel */
+    .cp-about-story {
+        padding: 100px 0;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    }
+    
+    .cp-about-story-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+        align-items: center;
+    }
+    
+    .cp-about-story-content h2 {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #1a1a2e;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+    }
+    
+    .cp-about-story-content p {
+        color: #666;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+    }
+    
+    .cp-about-story-tags {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+    }
+    
+    .cp-about-tag {
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .cp-about-story-image {
+        border-radius: 30px;
+        overflow: hidden;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.1);
+        position: relative;
+        height: 500px;
+    }
+    
+    .cp-about-story-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+    }
+    
+    .cp-about-story-image:hover img {
+        transform: scale(1.05);
+    }
+    
+    /* Values section */
+    .cp-about-values {
+        padding: 100px 0;
+        background: white;
+    }
+    
+    .cp-about-values-header {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto 60px;
+    }
+    
+    .cp-about-values-header h2 {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #1a1a2e;
+        margin-bottom: 1rem;
+    }
+    
+    .cp-about-values-header p {
+        color: #666;
+        font-size: 1.2rem;
+        line-height: 1.6;
+    }
+    
+    .cp-about-values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    .cp-about-value-card {
+        background: #f8faff;
+        border-radius: 25px;
+        padding: 2.5rem;
+        text-align: center;
+        transition: all 0.4s ease;
+        border: 2px solid transparent;
+    }
+    
+    .cp-about-value-card:hover {
+        transform: translateY(-15px);
+        border-color: #4c6fff;
+        box-shadow: 0 20px 60px rgba(76, 111, 255, 0.1);
+    }
+    
+    .cp-about-value-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        color: white;
+        font-size: 2rem;
+        box-shadow: 0 10px 30px rgba(76, 111, 255, 0.3);
+    }
+    
+    .cp-about-value-card h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 1rem;
+    }
+    
+    .cp-about-value-card p {
+        color: #666;
+        line-height: 1.6;
+    }
+    
+    /* Mission card avec image de nettoyage */
+    .cp-about-mission {
+        max-width: 1000px;
+        margin: 60px auto 0;
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        border-radius: 30px;
+        padding: 4rem;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cp-about-mission::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:  url('/static/img/post.png');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.15;
+    }
+    
+    .cp-about-mission-content {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .cp-about-mission-content h3 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+    }
+    
+    .cp-about-mission-content p {
+        font-size: 1.2rem;
+        line-height: 1.7;
+        opacity: 0.9;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    /* Team section avec photos d'équipe de nettoyage */
+    .cp-about-team {
+        padding: 100px 0;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    }
+    
+    .cp-about-team-header {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto 60px;
+    }
+    
+    .cp-about-team-header h2 {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #1a1a2e;
+        margin-bottom: 1rem;
+    }
+    
+    .cp-about-team-header p {
+        color: #666;
+        font-size: 1.2rem;
+        line-height: 1.6;
+    }
+    
+    .cp-about-team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 40px;
+        max-width: 1200px;
+        margin: 0 auto 60px;
+        padding: 0 20px;
+    }
+    
+    .cp-about-team-card {
+        background: white;
+        border-radius: 25px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+        transition: transform 0.4s ease;
+    }
+    
+    .cp-about-team-card:hover {
+        transform: translateY(-15px);
+    }
+    
+    .cp-about-team-image {
+        height: 250px;
+        overflow: hidden;
+    }
+    
+    .cp-about-team-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+    }
+    
+    .cp-about-team-card:hover .cp-about-team-image img {
+        transform: scale(1.1);
+    }
+    
+    .cp-about-team-content {
+        padding: 2rem;
+        text-align: center;
+    }
+    
+    .cp-about-team-role {
+        display: inline-block;
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        color: white;
+        padding: 0.5rem 1.5rem;
+        border-radius: 50px;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .cp-about-team-content h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 1rem;
+    }
+    
+    .cp-about-team-content p {
+        color: #666;
+        line-height: 1.6;
+    }
+    
+    /* Process section - Images de formation nettoyage */
+    .cp-about-process {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 30px;
+        padding: 3rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+    }
+    
+    .cp-about-process-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .cp-about-process-header h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 1rem;
+    }
+    
+    .cp-about-process-header p {
+        color: #666;
+        font-size: 1.1rem;
+    }
+    
+    .cp-about-process-steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+    }
+    
+    .cp-about-process-step {
+        text-align: center;
+        padding: 2rem;
+        background: #f8faff;
+        border-radius: 20px;
+        transition: transform 0.3s ease;
+    }
+    
+    .cp-about-process-step:hover {
+        transform: translateY(-10px);
+        background: #eef2ff;
+    }
+    
+    .cp-about-step-number {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 1.5rem;
+        margin: 0 auto 1rem;
+    }
+    
+    .cp-about-step-content h4 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #1a1a2e;
+        margin-bottom: 0.5rem;
+    }
+    
+    .cp-about-step-content p {
+        color: #666;
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    /* Certifications section avec images d'équipement */
+    .cp-about-certifications {
+        padding: 100px 0;
+        background: white;
+    }
+    
+    .cp-about-certifications-header {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto 60px;
+    }
+    
+    .cp-about-certifications-header h2 {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #1a1a2e;
+        margin-bottom: 1rem;
+    }
+    
+    .cp-about-certifications-header p {
+        color: #666;
+        font-size: 1.2rem;
+        line-height: 1.6;
+    }
+    
+    .cp-about-certifications-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto 60px;
+        padding: 0 20px;
+    }
+    
+    .cp-about-certification-card {
+        background: #f8faff;
+        border-radius: 25px;
+        padding: 2.5rem;
+        text-align: center;
+        transition: all 0.4s ease;
+        border: 2px solid transparent;
+    }
+    
+    .cp-about-certification-card:hover {
+        transform: translateY(-10px);
+        border-color: #4c6fff;
+    }
+    
+    .cp-about-certification-icon {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        color: white;
+        font-size: 1.8rem;
+    }
+    
+    /* Environmental section avec images de produits éco */
+    .cp-about-environmental {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: linear-gradient(135deg, #f8fafc, #eef2ff);
+        border-radius: 30px;
+        padding: 4rem;
+    }
+    
+    .cp-about-environmental-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .cp-about-environmental-header h3 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 1rem;
+    }
+    
+    .cp-about-environmental-header p {
+        color: #666;
+        font-size: 1.1rem;
+    }
+    
+    .cp-about-environmental-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+    }
+    
+    .cp-about-environmental-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.5rem;
+        background: white;
+        border-radius: 15px;
+        transition: transform 0.3s ease;
+    }
+    
+    .cp-about-environmental-item:hover {
+        transform: translateX(10px);
+    }
+    
+    .cp-about-environmental-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+    
+    .cp-about-environmental-content h4 {
+        margin: 0;
+        color: #1a1a2e;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+    
+    .cp-about-environmental-content p {
+        margin: 0.25rem 0 0;
+        color: #666;
+        font-size: 0.9rem;
+    }
+    
+    /* CTA section avec image de nettoyage final */
+    .cp-about-cta-premium {
+        padding: 100px 0;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cp-about-cta-premium::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&auto=format&fit=crop&w=2032&q=80');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.1;
+    }
+    
+    .cp-about-cta-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: white;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    .cp-about-cta-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+    }
+    
+    .cp-about-cta-subtitle {
+        font-size: 1.3rem;
+        opacity: 0.9;
+        margin-bottom: 3rem;
+        line-height: 1.6;
+    }
+    
+    .cp-about-cta-buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .cp-about-cta-btn {
+        padding: 1.2rem 3rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+    
+    .cp-about-cta-btn-primary {
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        color: white;
+        box-shadow: 0 10px 30px rgba(76, 111, 255, 0.3);
+    }
+    
+    .cp-about-cta-btn-outline {
+        background: transparent;
+        border-color: rgba(255, 255, 255, 0.3);
+        color: white;
+    }
+    
+    .cp-about-cta-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(76, 111, 255, 0.4);
+    }
+    
+    /* Animation */
+    .cp-about-fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    
+    .cp-about-fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .cp-about-story-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        
+        .cp-about-story-image {
+            height: 400px;
+            order: -1;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .cp-about-hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .cp-about-hero-subtitle {
+            font-size: 1.1rem;
+        }
+        
+        .cp-about-hero-stats {
+            gap: 2rem;
+        }
+        
+        .cp-about-stat {
+            min-width: 150px;
+            padding: 1.5rem;
+        }
+        
+        .cp-about-stat-number {
+            font-size: 2.5rem;
+        }
+        
+        .cp-about-story-content h2,
+        .cp-about-values-header h2,
+        .cp-about-team-header h2,
+        .cp-about-certifications-header h2 {
+            font-size: 2.2rem;
+        }
+        
+        .cp-about-cta-title {
+            font-size: 2.5rem;
+        }
+        
+        .cp-about-cta-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .cp-about-cta-btn {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .cp-about-mission {
+            padding: 3rem 2rem;
+        }
+        
+        .cp-about-environmental {
+            padding: 3rem 2rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .cp-about-hero-title {
+            font-size: 2rem;
+        }
+        
+        .cp-about-hero-stats {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .cp-about-stat {
+            width: 100%;
+            max-width: 250px;
+        }
+        
+        .cp-about-story-tags {
+            justify-content: center;
+        }
+        
+        .cp-about-process-steps {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION avec photo de nettoyage professionnel -->
+<section class="cp-about-hero-premium">
+ <div class="cp-about-hero-bg">
+    <img src="{% static 'img/about-hero.png' %}" alt="Nettoyage professionnel Clean Plus">
+</div>
+
+    </div>
+    <div class="cp-about-hero-overlay"></div>
+    
+    <div class="cp-about-hero-content">
+        <div class="cp-about-hero-pill">
+            <i class="fa-solid fa-sparkles"></i> Nettoyage Professionnel • Excellence • Fiabilité
+        </div>
+        <h1 class="cp-about-hero-title">
+            L'Art du Nettoyage Parfait
+        </h1>
+        <p class="cp-about-hero-subtitle">
+            Depuis plus de 3 ans, Clean Plus redéfinit les standards du nettoyage avec précision, 
+            rigueur et un souci du détail qui fait toute la différence.
+        </p>
+        
+        <div class="cp-about-hero-stats">
+            <div class="cp-about-stat cp-about-fade-in">
+                <div class="cp-about-stat-number">3+</div>
+                <div class="cp-about-stat-label">Années d'expertise</div>
+            </div>
+            <div class="cp-about-stat cp-about-fade-in">
+                <div class="cp-about-stat-number">100+</div>
+                <div class="cp-about-stat-label">Espaces nettoyés</div>
+            </div>
+            <div class="cp-about-stat cp-about-fade-in">
+                <div class="cp-about-stat-number">75%</div>
+                <div class="cp-about-stat-label">Clients satisfaits</div>
+            </div>
+            <div class="cp-about-stat cp-about-fade-in">
+                <div class="cp-about-stat-number">10+</div>
+                <div class="cp-about-stat-label">Experts formés</div>
+            </div>
+        </div>
+        
+        <div class="cp-about-hero-features">
+            <div class="cp-about-feature">
+                <i class="fa-solid fa-leaf"></i>
+                <span>Produits écologiques</span>
+            </div>
+            <div class="cp-about-feature">
+                <i class="fa-solid fa-user-check"></i>
+                <span>Équipe certifiée</span>
+            </div>
+            <div class="cp-about-feature">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Garantie satisfaction</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STORY SECTION avec photo d'équipe de nettoyage -->
+<section class="cp-about-story">
+    <div class="cp-about-story-grid">
+        <div class="cp-about-story-content cp-about-fade-in">
+            <h2>Notre Histoire</h2>
+            <p>
+                Clean Plus est né en 2023 d'une simple observation : le nettoyage professionnel 
+                mérite la même rigueur que n'importe quel autre service d'excellence.
+            </p>
+            <p>
+                Nous avons construit notre réputation sur des méthodes éprouvées, des équipes 
+                formées aux meilleures pratiques, et une attention obsessionnelle aux détails 
+                qui transforment chaque espace.
+            </p>
+            <p>
+                Aujourd'hui, nous combinons expertise traditionnelle et innovations écologiques 
+                pour offrir un service qui dépasse les attentes, tout en respectant 
+                l'environnement et votre santé.
+            </p>
+            
+            <div class="cp-about-story-tags">
+                <span class="cp-about-tag"><i class="fa-solid fa-check"></i> Techniques éprouvées</span>
+                <span class="cp-about-tag"><i class="fa-solid fa-check"></i> Ponctualité absolue</span>
+                <span class="cp-about-tag"><i class="fa-solid fa-check"></i> Équipe diplômée</span>
+                <span class="cp-about-tag"><i class="fa-solid fa-check"></i> Service premium</span>
+            </div>
+        </div>
+        
+        <div class="cp-about-story-image cp-about-fade-in">
+            <img src="https://images.unsplash.com/photo-1583947581924-860bda6a26df?ixlib=rb-4.0.3&auto=format&fit=crop&w=2067&q=80" 
+                 alt="Équipe de nettoyage professionnelle en uniforme"
+                 loading="lazy">
+        </div>
+    </div>
+</section>
+
+<!-- VALUES SECTION -->
+<section class="cp-about-values">
+    <div class="cp-about-values-header cp-about-fade-in">
+        <h2>Nos Valeurs Fondamentales</h2>
+        <p>Des principes qui guident chaque geste, chaque intervention, chaque relation client.</p>
+    </div>
+    
+    <div class="cp-about-values-grid">
+        <div class="cp-about-value-card cp-about-fade-in">
+            <div class="cp-about-value-icon">
+                <i class="fa-solid fa-medal"></i>
+            </div>
+            <h3>Excellence Technique</h3>
+            <p>Méthodes éprouvées et attention aux détails pour un résultat parfait à chaque fois.</p>
+        </div>
+        
+        <div class="cp-about-value-card cp-about-fade-in">
+            <div class="cp-about-value-icon">
+                <i class="fa-solid fa-handshake"></i>
+            </div>
+            <h3>Fiabilité Totale</h3>
+            <p>Ponctualité, transparence et respect des engagements. Votre confiance est notre priorité.</p>
+        </div>
+        
+        <div class="cp-about-value-card cp-about-fade-in">
+            <div class="cp-about-value-icon">
+                <i class="fa-solid fa-leaf"></i>
+            </div>
+            <h3>Écologie Responsable</h3>
+            <p>Produits certifiés et méthodes respectueuses de l'environnement et de votre santé.</p>
+        </div>
+        
+        <div class="cp-about-value-card cp-about-fade-in">
+            <div class="cp-about-value-icon">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+            <h3>Respect des Lieux</h3>
+            <p>De vos biens, de votre intimité, de votre temps. Une intervention discrète et efficace.</p>
+        </div>
+    </div>
+    
+    <div class="cp-about-mission cp-about-fade-in">
+        <div class="cp-about-mission-content">
+            <h3>Notre Mission</h3>
+            <p>
+                Transformer chaque espace en un environnement sain, accueillant et fonctionnel 
+                grâce à l'expertise du nettoyage professionnel, tout en innovant constamment 
+                pour réduire notre impact environnemental.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- TEAM SECTION avec photos d'experts du nettoyage -->
+
+
+<!-- CERTIFICATIONS SECTION avec équipements professionnels -->
+<section class="cp-about-certifications">
+    <div class="cp-about-certifications-header cp-about-fade-in">
+        <h2>Certifications & Équipements</h2>
+        <p>La garantie d'un service professionnel et sécurisé</p>
+    </div>
+    
+    <div class="cp-about-certifications-grid">
+        <div class="cp-about-certification-card cp-about-fade-in">
+            <div class="cp-about-certification-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h3>Responsabilité Civile</h3>
+            <p>Assurance complète pour la protection de vos biens pendant l'intervention</p>
+        </div>
+        
+        <div class="cp-about-certification-card cp-about-fade-in">
+            <div class="cp-about-certification-icon">
+                <i class="fa-solid fa-file-contract"></i>
+            </div>
+            <h3>Contrats Transparents</h3>
+            <p>Engagements clairs, détail des prestations, tarification transparente</p>
+        </div>
+        
+        <div class="cp-about-certification-card cp-about-fade-in">
+            <div class="cp-about-certification-icon">
+                <i class="fa-solid fa-award"></i>
+            </div>
+            <h3>Garantie Satisfaction</h3>
+            <p>Si le résultat ne vous satisfait pas, nous revenons gratuitement</p>
+        </div>
+        
+        <div class="cp-about-certification-card cp-about-fade-in">
+            <div class="cp-about-certification-icon">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <h3>Équipement Professionnel</h3>
+            <p>Matériel haut de gamme et produits certifiés pour chaque type de surface</p>
+        </div>
+    </div>
+    
+    <div class="cp-about-environmental cp-about-fade-in">
+        <div class="cp-about-environmental-header">
+            <h3>Engagement Écologique</h3>
+            <p>Des méthodes responsables pour un nettoyage respectueux de l'environnement</p>
+        </div>
+        
+        <div class="cp-about-environmental-grid">
+            <div class="cp-about-environmental-item">
+                <div class="cp-about-environmental-icon">
+                    <i class="fa-solid fa-recycle"></i>
+                </div>
+                <div class="cp-about-environmental-content">
+                    <h4>Produits Certifiés</h4>
+                    <p>Utilisation exclusive de produits écologiques et biodégradables</p>
+                </div>
+            </div>
+            
+            <div class="cp-about-environmental-item">
+                <div class="cp-about-environmental-icon">
+                    <i class="fa-solid fa-tint"></i>
+                </div>
+                <div class="cp-about-environmental-content">
+                    <h4>Économie d'Eau</h4>
+                    <p>Techniques optimisées pour réduire la consommation d'eau de 40%</p>
+                </div>
+            </div>
+            
+            <div class="cp-about-environmental-item">
+                <div class="cp-about-environmental-icon">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div class="cp-about-environmental-content">
+                    <h4>Énergie Responsable</h4>
+                    <p>Équipements à basse consommation et véhicules électriques</p>
+                </div>
+            </div>
+            
+            <div class="cp-about-environmental-item">
+                <div class="cp-about-environmental-icon">
+                    <i class="fa-solid fa-truck"></i>
+                </div>
+                <div class="cp-about-environmental-content">
+                    <h4>Logistique Optimisée</h4>
+                    <p>Planification des trajets pour minimiser l'empreinte carbone</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA SECTION avec photo de résultat final -->
+<section class="cp-about-cta-premium">
+    <div class="cp-about-cta-content">
+        <h2 class="cp-about-cta-title">Prêt pour un Nettoyage Exceptionnel ?</h2>
+        <p class="cp-about-cta-subtitle">
+            Découvrez la différence Clean Plus : expertise, écologie et résultats garantis. 
+            Transformez votre espace avec des professionnels passionnés.
+        </p>
+        
+        <div class="cp-about-cta-buttons">
+            <a href="{% url 'public:devis' %}" class="cp-about-cta-btn cp-about-cta-btn-primary">
+                <i class="fa-solid fa-file-invoice-dollar"></i> Soumission Gratuitte Personnalisée
+            </a>
+            <a href="{% url 'contact:contact' %}" class="cp-about-cta-btn cp-about-cta-btn-outline">
+                <i class="fa-solid fa-paper-plane"></i> Contacter un Expert
+            </a>
+        </div>
+        
+        <div style="margin-top: 3rem; display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.8);">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Équipe certifiée</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.8);">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Produits écologiques</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.8);">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Résultats garantis</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Animation au défilement
+    document.addEventListener('DOMContentLoaded', function() {
+        const fadeElements = document.querySelectorAll('.cp-about-fade-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        });
+        
+        fadeElements.forEach(el => observer.observe(el));
+        
+        // Effet de parallaxe sur l'héro
+        const heroImage = document.querySelector('.cp-about-hero-bg img');
+        if (heroImage) {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * 0.5;
+                heroImage.style.transform = `scale(${1 + rate * 0.001}) translateY(${rate * 0.1}px)`;
+            });
+        }
+        
+        // Animation des statistiques
+        const stats = document.querySelectorAll('.cp-about-stat-number');
+        stats.forEach(stat => {
+            const finalValue = stat.textContent;
+            const value = finalValue.replace(/[^0-9]/g, '');
+            
+            if (value) {
+                let startValue = 0;
+                const duration = 2000;
+                const increment = value / (duration / 16);
+                
+                const updateCount = () => {
+                    startValue += increment;
+                    if (startValue < value) {
+                        stat.textContent = Math.floor(startValue) + finalValue.replace(value, '');
+                        setTimeout(updateCount, 16);
+                    } else {
+                        stat.textContent = finalValue;
+                    }
+                };
+                
+                // Démarrer l'animation quand la stat est visible
+                const statObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            updateCount();
+                            statObserver.unobserve(entry.target);
+                        }
+                    });
+                });
+                
+                statObserver.observe(stat);
+            }
+        });
+    });
+</script>
+{% endblock %}

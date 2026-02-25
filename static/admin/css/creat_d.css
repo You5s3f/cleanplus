@@ -1,0 +1,163 @@
+/* =========================
+   ADMIN FORMS (Create/Edit)
+   ========================= */
+
+.a-card.a-form-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-6);
+}
+
+/* Grid */
+.a-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+/* Field */
+.a-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.a-label {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.a-required {
+  color: var(--color-danger);
+  margin-left: 6px;
+}
+
+/* Inputs / selects / textarea (style Django widgets) */
+.a-field input,
+.a-field select,
+.a-field textarea {
+  width: 100%;
+  min-height: 40px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+}
+
+.a-field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.a-field input:focus,
+.a-field select:focus,
+.a-field textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.14);
+}
+
+/* Placeholder */
+.a-field input::placeholder,
+.a-field textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Help + errors */
+.a-help {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.a-error {
+  font-size: var(--font-size-xs);
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+.a-field.is-error input,
+.a-field.is-error select,
+.a-field.is-error textarea {
+  border-color: rgba(239, 68, 68, 0.55);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+
+/* Alerts */
+.a-form-alert {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.a-form-alert-error {
+  border-color: rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.10);
+  color: var(--color-danger);
+}
+
+/* Actions */
+.a-form-actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-color);
+}
+
+/* Buttons (si pas déjà global) */
+.a-btn {
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 14px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: transform var(--transition-fast), background var(--transition), border-color var(--transition), color var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.a-btn:hover { background: var(--bg-hover); transform: translateY(-1px); }
+.a-btn:active { transform: translateY(0); }
+
+.a-btn-primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--text-on-primary);
+  box-shadow: 0 10px 25px rgba(59,130,246,.18);
+}
+.a-btn-primary:hover {
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+}
+
+.a-btn-soft {
+  background: var(--bg-active);
+  border-color: rgba(59,130,246,.25);
+  color: var(--color-primary-dark);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .a-form-grid { grid-template-columns: 1fr; }
+  .a-form-actions { justify-content: stretch; flex-wrap: wrap; }
+  .a-form-actions .a-btn { flex: 1; }
+}

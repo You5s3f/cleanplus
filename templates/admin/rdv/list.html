@@ -1,0 +1,168 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+{% block page_title %}Rendez-vous{% endblock %}
+{% block page_subtitle %}Recherchez, filtrez et gérez tous les rendez-vous.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/rdv_list.css' %}?v=2">
+{% endblock %}
+
+{% block content %}
+
+<!-- HEADER -->
+<div class="rdv-page-header">
+  <h1>Gestion des rendez-vous</h1>
+  <p>Recherchez, filtrez et gérez tous les rendez-vous.</p>
+</div>
+
+<!-- TOOLBAR -->
+<div class="rdv-toolbar">
+  <div class="rdv-search">
+    <i class="fas fa-search"></i>
+    <input
+      id="searchAppointments"
+      type="text"
+      placeholder="Rechercher (adresse, service, femme, statut, ID...)"
+      autocomplete="off"
+    />
+  </div>
+
+  <a class="btn" href="{% url 'rdv:create' %}">
+    <i class="fas fa-plus"></i> Ajouter
+  </a>
+</div>
+
+<!-- FILTERS -->
+<div class="rdv-card">
+  <div class="rdv-card-head">
+    <h3>Filtres</h3>
+  </div>
+
+  <div class="rdv-card-body">
+    <div class="rdv-filters">
+      <div class="rdv-field">
+        <span class="rdv-label">Statut</span>
+        <select class="rdv-control" id="filterStatus">
+          <option value="all">Tous</option>
+          <option value="planifié">Planifié</option>
+          <option value="en cours">En cours</option>
+          <option value="terminé">Terminé</option>
+          <option value="annulé">Annulé</option>
+        </select>
+      </div>
+
+      <div class="rdv-field">
+        <span class="rdv-label">Service</span>
+        <select class="rdv-control" id="filterService">
+          <option value="all">Tous</option>
+          {% for r in items %}
+            {% if r.service %}
+              <option value="{{ r.service }}">{{ r.service }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="rdv-field">
+        <span class="rdv-label">Femme de ménage</span>
+        <select class="rdv-control" id="filterFemme">
+          <option value="all">Toutes</option>
+          {% for r in items %}
+            {% if r.femme %}
+              <option value="{{ r.femme }}">{{ r.femme }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="rdv-filter-actions">
+        <button type="button" class="btn" id="btnApplyFilters">
+          <i class="fas fa-filter"></i> Appliquer
+        </button>
+        <button type="button" class="btn az-btn-soft" id="btnResetFilters">
+          <i class="fas fa-rotate-left"></i> Reset
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LIST -->
+<div class="rdv-card">
+  <div class="rdv-card-head">
+    <h3>Liste des rendez-vous</h3>
+  </div>
+
+  <div class="rdv-card-body">
+    <table class="rdv-table" id="rdvTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Date/Heure</th>
+          <th>Adresse</th>
+          <th>Service</th>
+          <th>Femme</th>
+          <th>Statut</th>
+          <th style="text-align:right;"></th>
+        </tr>
+      </thead>
+
+      <tbody id="rdvTbody">
+        {% for r in items %}
+        <tr class="rdv-row"
+            data-id="{{ r.id }}"
+            data-datetime="{{ r.date_heure|date:'Y-m-d H:i' }}"
+            data-adresse="{{ r.adresse|default:''|lower }}"
+            data-service="{{ r.service|default:''|lower }}"
+            data-femme="{{ r.femme|default:''|lower }}"
+            data-statut="{{ r.get_statut_display|default:''|lower }}">
+          <td class="rdv-id">#{{ r.id }}</td>
+          <td>{{ r.date_heure|date:"Y-m-d H:i" }}</td>
+          <td>{{ r.adresse }}</td>
+          <td>{{ r.service|default:"-" }}</td>
+          <td>{{ r.femme|default:"-" }}</td>
+
+          <td>
+            {% with s=r.get_statut_display %}
+              {% if s %}
+                {% if s|lower == "terminé" %}
+                  <span class="rdv-badge rdv-badge--success">{{ s }}</span>
+                {% elif s|lower == "annulé" %}
+                  <span class="rdv-badge rdv-badge--danger">{{ s }}</span>
+                {% elif s|lower == "en cours" %}
+                  <span class="rdv-badge rdv-badge--info">{{ s }}</span>
+                {% else %}
+                  <span class="rdv-badge rdv-badge--warning">{{ s }}</span>
+                {% endif %}
+              {% else %}
+                <span class="rdv-badge">-</span>
+              {% endif %}
+            {% endwith %}
+          </td>
+
+          <td class="rdv-actions">
+            <a class="btn az-btn-soft" href="{% url 'rdv:detail' r.id %}">
+              <i class="fas fa-eye"></i> Voir
+            </a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7">Aucun rendez-vous</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="rdv-empty" id="emptyState">
+      <i class="fas fa-search"></i>
+      <h3>Aucun résultat</h3>
+      <p>Change la recherche ou les filtres.</p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'admin/js/rdv_list.js' %}?v=1"></script>
+{% endblock %}

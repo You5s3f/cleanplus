@@ -1,0 +1,1130 @@
+{% extends "base_public.html" %}
+{% load static %}
+
+{% block title %}Contact Premium | Clean Plus{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'public/css/contact.css' %}">
+<style>
+    /* Hero premium avec photo */
+    .cp-contact-hero-premium {
+        position: relative;
+        height: 70vh;
+        min-height: 600px;
+        overflow: hidden;
+        border-radius: 0 0 40px 40px;
+        display: flex;
+        align-items: center;
+        color: white;
+    }
+    
+    .cp-contact-hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .cp-contact-hero-bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        animation: heroZoom 20s infinite alternate ease-in-out;
+    }
+    
+    @keyframes heroZoom {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.05); }
+    }
+    
+    .cp-contact-hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, 
+            rgba(23, 37, 84, 0.85) 0%, 
+            rgba(23, 37, 84, 0.7) 50%, 
+            rgba(23, 37, 84, 0.4) 100%);
+    }
+    
+    .cp-contact-hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+    }
+    
+    .cp-contact-hero-pill {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        margin-bottom: 2rem;
+        letter-spacing: 0.5px;
+    }
+    
+    .cp-contact-hero-title {
+        font-size: 4rem;
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        color:white;
+    }
+    
+    .cp-contact-hero-subtitle {
+        font-size: 1.3rem;
+        font-weight: 300;
+        margin-bottom: 3rem;
+        line-height: 1.6;
+        opacity: 0.9;
+        max-width: 500px;
+    }
+    
+    .cp-contact-hero-buttons {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+    
+    .cp-contact-btn {
+        padding: 1.2rem 2.5rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+    
+    .cp-contact-btn-primary {
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        color: white;
+        box-shadow: 0 10px 30px rgba(76, 111, 255, 0.3);
+    }
+    
+    .cp-contact-btn-outline {
+        background: transparent;
+        border-color: rgba(255, 255, 255, 0.3);
+        color: white;
+    }
+    
+    .cp-contact-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(76, 111, 255, 0.4);
+    }
+    
+    /* Hero card */
+    .cp-contact-hero-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 25px;
+        padding: 2.5rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+    
+    .cp-contact-feature {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        transition: transform 0.3s ease;
+    }
+    
+    .cp-contact-feature:hover {
+        transform: translateX(10px);
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .cp-contact-feature-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+    }
+    
+    .cp-contact-feature-content h4 {
+        margin: 0;
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    
+    .cp-contact-feature-content p {
+        margin: 0.25rem 0 0;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+    }
+    
+    /* Main contact section */
+    .cp-contact-main {
+        padding: 100px 0;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    }
+    
+    .cp-contact-grid {
+        display: grid;
+        grid-template-columns: 400px 1fr;
+        gap: 40px;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    /* Sidebar */
+    .cp-contact-sidebar {
+        position: sticky;
+        top: 40px;
+    }
+    
+    .cp-contact-side-card {
+        background: white;
+        border-radius: 25px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+        border: 1px solid #f0f4ff;
+    }
+    
+    .cp-contact-side-card h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f0f4ff;
+    }
+    
+    .cp-contact-methods {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .cp-contact-method {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        border-radius: 15px;
+        text-decoration: none;
+        color: #333;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+    
+    .cp-contact-method:hover {
+        background: #f8faff;
+        border-color: #e0e6ff;
+        transform: translateX(5px);
+    }
+    
+    .cp-contact-method-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.3rem;
+        flex-shrink: 0;
+    }
+    
+    .cp-contact-method-content h4 {
+        margin: 0;
+        color: #1a1a2e;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    
+    .cp-contact-method-content p {
+        margin: 0.25rem 0 0;
+        color: #666;
+        font-size: 0.9rem;
+    }
+    
+    .cp-contact-method-arrow {
+        margin-left: auto;
+        color: #4c6fff;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .cp-contact-method:hover .cp-contact-method-arrow {
+        opacity: 1;
+    }
+    
+    /* Social media */
+    .cp-social-media {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+    }
+    
+    .cp-social-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background: #f8faff;
+        border-radius: 50px;
+        text-decoration: none;
+        color: #4c6fff;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .cp-social-link:hover {
+        background: #4c6fff;
+        color: white;
+        transform: translateY(-3px);
+    }
+    
+    /* Working hours */
+    .cp-working-hours {
+        margin-top: 2rem;
+    }
+    
+    .cp-hours-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 0;
+        border-bottom: 1px solid #f0f4ff;
+    }
+    
+    .cp-hours-item:last-child {
+        border-bottom: none;
+    }
+    
+    .cp-hours-day {
+        font-weight: 600;
+        color: #1a1a2e;
+    }
+    
+    .cp-hours-time {
+        color: #666;
+    }
+    
+    /* Form card */
+    .cp-contact-form-card {
+        background: white;
+        border-radius: 25px;
+        padding: 3rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cp-contact-form-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, #4c6fff, #6c8eff, #4c6fff);
+    }
+    
+    .cp-contact-form-header {
+        margin-bottom: 3rem;
+    }
+    
+    .cp-contact-form-header h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 1rem;
+    }
+    
+    .cp-contact-form-header p {
+        color: #666;
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+    
+    /* Form styles */
+    .cp-contact-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .cp-contact-form-field {
+        margin-bottom: 1.5rem;
+    }
+    
+    .cp-contact-form-field label {
+        display: block;
+        font-weight: 600;
+        color: #1a1a2e;
+        margin-bottom: 0.75rem;
+        font-size: 0.95rem;
+    }
+    
+    .cp-contact-form-field label span {
+        color: #ff4757;
+        margin-left: 3px;
+    }
+    
+    .cp-contact-form-field input,
+    .cp-contact-form-field select,
+    .cp-contact-form-field textarea {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border: 2px solid #e0e6ff;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: white;
+        color: #333;
+    }
+    
+    .cp-contact-form-field input:focus,
+    .cp-contact-form-field select:focus,
+    .cp-contact-form-field textarea:focus {
+        outline: none;
+        border-color: #4c6fff;
+        box-shadow: 0 0 0 3px rgba(76, 111, 255, 0.1);
+    }
+    
+    .cp-contact-form-field textarea {
+        min-height: 150px;
+        resize: vertical;
+    }
+    
+    /* Checkbox */
+    .cp-contact-checkbox {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        margin: 2rem 0;
+        cursor: pointer;
+        user-select: none;
+    }
+    
+    .cp-contact-checkbox input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #e0e6ff;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s ease;
+        margin-top: 3px;
+    }
+    
+    .cp-contact-checkbox input[type="checkbox"]:checked {
+        background: #4c6fff;
+        border-color: #4c6fff;
+    }
+    
+    .cp-contact-checkbox input[type="checkbox"]:checked::after {
+        content: '✓';
+        position: absolute;
+        color: white;
+        font-size: 12px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    /* Form actions */
+    .cp-contact-form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+    
+    .cp-contact-submit-btn {
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        color: white;
+        border: none;
+        padding: 1.2rem 3rem;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: 0 10px 30px rgba(76, 111, 255, 0.3);
+    }
+    
+    .cp-contact-submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(76, 111, 255, 0.4);
+    }
+    
+    .cp-contact-reset-btn {
+        background: #f0f4ff;
+        color: #4c6fff;
+        border: 2px solid #e0e6ff;
+        padding: 1.2rem 2rem;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    
+    /* Map section */
+    .cp-contact-map-section {
+        margin-top: 4rem;
+    }
+    
+    .cp-contact-map-card {
+        background: white;
+        border-radius: 25px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    }
+    
+    .cp-contact-map-header {
+        padding: 2.5rem;
+        border-bottom: 2px solid #f0f4ff;
+    }
+    
+    .cp-contact-map-header h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 0.5rem;
+    }
+    
+    .cp-contact-map-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: 400px;
+    }
+    
+    .cp-contact-zones {
+        padding: 2.5rem;
+        background: #f8faff;
+    }
+    
+    .cp-contact-zones h4 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #1a1a2e;
+        margin-bottom: 1.5rem;
+    }
+    
+    .cp-contact-zones-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .cp-contact-zones-list li {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+        color: #555;
+    }
+    
+    .cp-contact-zones-list li i {
+        color: #4c6fff;
+    }
+    
+    .cp-contact-map-visual {
+        background: linear-gradient(135deg, #eef2ff, #e0e6ff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cp-contact-map-visual img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.7;
+    }
+    
+    /* FAQ section */
+    .cp-contact-faq {
+        margin-top: 4rem;
+    }
+    
+    .cp-contact-faq-card {
+        background: white;
+        border-radius: 25px;
+        padding: 3rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    }
+    
+    .cp-contact-faq-header {
+        margin-bottom: 3rem;
+    }
+    
+    .cp-contact-faq-header h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 0.5rem;
+    }
+    
+    .cp-faq-item {
+        margin-bottom: 1rem;
+        border: 2px solid #f0f4ff;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    
+    .cp-faq-question {
+        padding: 1.5rem;
+        background: #f8faff;
+        font-weight: 600;
+        color: #1a1a2e;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background 0.3s ease;
+    }
+    
+    .cp-faq-question:hover {
+        background: #eef2ff;
+    }
+    
+    .cp-faq-answer {
+        padding: 1.5rem;
+        background: white;
+        color: #666;
+        line-height: 1.6;
+        display: none;
+    }
+    
+    .cp-faq-item.active .cp-faq-answer {
+        display: block;
+    }
+    
+    /* Animation */
+    .cp-contact-fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    
+    .cp-contact-fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .cp-contact-hero-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+        
+        .cp-contact-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .cp-contact-sidebar {
+            position: static;
+        }
+        
+        .cp-contact-map-content {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .cp-contact-hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .cp-contact-hero-subtitle {
+            font-size: 1.1rem;
+        }
+        
+        .cp-contact-form-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .cp-contact-form-actions {
+            flex-direction: column;
+        }
+        
+        .cp-contact-submit-btn,
+        .cp-contact-reset-btn {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .cp-contact-hero-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .cp-contact-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="cp-contact-hero-premium">
+    <div class="cp-contact-hero-bg">
+        <img src="https://images.unsplash.com/photo-1583947581924-860bda6a26df?ixlib=rb-4.0.3&auto=format&fit=crop&w=2067&q=80" 
+             alt="Équipe Clean Plus professionnelle en action"
+             loading="eager">
+    </div>
+    <div class="cp-contact-hero-overlay"></div>
+    
+    <div class="cp-contact-hero-content">
+        <div>
+            <div class="cp-contact-hero-pill">
+                <i class="fa-solid fa-gem"></i> Contact Premium • 24h/24
+            </div>
+            <h1 class="cp-contact-hero-title">
+                Contactez L'excellence
+            </h1>
+            <p class="cp-contact-hero-subtitle">
+                Notre équipe d'experts est à votre écoute pour répondre à toutes vos questions, 
+                établir un devis personnalisé ou planifier votre premier service de nettoyage.
+            </p>
+            
+            <div class="cp-contact-hero-buttons">
+                <a href="tel:+15144026011" class="cp-contact-btn cp-contact-btn-primary">
+                    <i class="fa-solid fa-phone-volume"></i> 514-402-6011
+                </a>
+                <a href="https://wa.me/15144026011" target="_blank" rel="noopener" class="cp-contact-btn cp-contact-btn-outline">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp direct
+                </a>
+            </div>
+        </div>
+        
+        <div class="cp-contact-hero-card">
+            <div class="cp-contact-feature">
+                <div class="cp-contact-feature-icon">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+                <div class="cp-contact-feature-content">
+                    <h4>Horaires d'ouverture</h4>
+                    <p>Lun–Ven • Sam pour Ménage Résidentiel </p>
+                </div>
+            </div>
+            
+            <div class="cp-contact-feature">
+                <div class="cp-contact-feature-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div class="cp-contact-feature-content">
+                    <h4>Email professionnel</h4>
+                    <p>Cleanplus6011@gmail.com • Réponse sous 24h max</p>
+                </div>
+            </div>
+            
+            <div class="cp-contact-feature">
+                <div class="cp-contact-feature-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div class="cp-contact-feature-content">
+                    <h4>Zone d'intervention</h4>
+                    <p> Rive du sud de Montréal • Service sur rendez-vous</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MAIN CONTACT SECTION -->
+<section class="cp-contact-main">
+    <div class="cp-contact-grid">
+        <!-- SIDEBAR -->
+        <div class="cp-contact-sidebar cp-contact-fade-in">
+            <div class="cp-contact-side-card">
+                <h3>Nos Canaux de Contact</h3>
+                <ul class="cp-contact-methods">
+                    <a href="tel:+15144026011" class="cp-contact-method">
+                        <div class="cp-contact-method-icon">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div class="cp-contact-method-content">
+                            <h4>Téléphone direct</h4>
+                            <p>Appelez-nous maintenant</p>
+                        </div>
+                        <div class="cp-contact-method-arrow">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    
+                   <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Cleanplus6011@gmail.com"
+   target="_blank"
+   rel="noopener"
+   class="cp-contact-method">
+
+                         <div class="cp-contact-method-icon">
+                            <i class="fa-solid fa-envelope"></i>
+                      </div>
+    <div class="cp-contact-method-content">
+        <h4>Email professionnel</h4>
+        <p>Réponse garantie sous 24h</p>
+    </div>
+    <div class="cp-contact-method-arrow">
+        <i class="fa-solid fa-chevron-right"></i>
+    </div>
+</a>
+
+                    
+                    <a href="https://wa.me/15144026011" target="_blank" rel="noopener" class="cp-contact-method">
+                        <div class="cp-contact-method-icon">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+                        <div class="cp-contact-method-content">
+                            <h4>WhatsApp Business</h4>
+                            <p>Réponse rapide et instantanée</p>
+                        </div>
+                        <div class="cp-contact-method-arrow">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    
+                    
+                </ul>
+                
+                <div class="cp-social-media">
+                 
+                    <a href="https://www.instagram.com/clean.plus3?igsh=MXY0N3FyYjZzOGt1ZA==" class="cp-social-link">
+                        <i class="fa-brands fa-instagram"></i>
+                        <span>Instagram</span>
+                    </a>
+                  
+                </div>
+            </div>
+            
+            <div class="cp-contact-side-card">
+                <h3>Horaires de Contact</h3>
+                <div class="cp-working-hours">
+                    <div class="cp-hours-item">
+                        <span class="cp-hours-day">Lundi - Samedi</span>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background: #f8faff; border-radius: 12px;">
+                    <h4 style="margin: 0 0 0.5rem; font-size: 1rem; color: #4c6fff;">📞 Numéro d'urgence</h4>
+                    <p style="margin: 0; font-size: 1.5rem; font-weight: 700; color: #1a1a2e;">+1 514-402-6011</p>
+                    <p style="margin: 0.25rem 0 0; font-size: 0.9rem; color: #666;">24h/24 pour les urgences</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FORM -->
+        <div class="cp-contact-form-card cp-contact-fade-in">
+            <div class="cp-contact-form-header">
+                <h2>Envoyez-nous un Message</h2>
+                <p>Remplissez ce formulaire et notre équipe vous répondra dans les plus brefs délais.</p>
+            </div>
+            
+            <form method="post" action="{% url 'contact:contact' %}">
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                <div style="background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; 
+                            padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+                
+                <div class="cp-contact-form-grid">
+                    <div class="cp-contact-form-field">
+                        <label for="contactName">Nom complet <span>*</span></label>
+                        <input type="text" id="contactName" name="contactName" 
+                               placeholder="Votre nom et prénom" required>
+                    </div>
+                    
+                    <div class="cp-contact-form-field">
+                        <label for="contactEmail">Adresse email <span>*</span></label>
+                        <input type="email" id="contactEmail" name="contactEmail" 
+                               placeholder="Cleanplus6011@gmail.com " required>
+                    </div>
+                </div>
+                
+                <div class="cp-contact-form-grid">
+                    <div class="cp-contact-form-field">
+                        <label for="contactPhone">Numéro de téléphone</label>
+                        <input type="tel" id="contactPhone" name="contactPhone" 
+                               placeholder="+1 (514) 402-6011">
+                    </div>
+                    
+                    <div class="cp-contact-form-field">
+                        <label for="contactSubject">Sujet de votre message <span>*</span></label>
+                        <select id="contactSubject" name="contactSubject" required>
+                            <option value="">Sélectionnez un sujet</option>
+                            <option value="quote">Demande de Soumission personnalisée</option>
+                            <option value="info">Informations sur nos services</option>
+                            <option value="existing">Suivi client existant</option>
+                            <option value="complaint">Réclamation ou feedback</option>
+                            <option value="partnership">Proposition de partenariat</option>
+                            <option value="other">Autre demande</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="cp-contact-form-field">
+                    <label for="contactMessage">Votre message <span>*</span></label>
+                    <textarea id="contactMessage" name="contactMessage" rows="6" required
+                              placeholder="Décrivez en détail votre demande, vos besoins spécifiques, ou toute information qui nous aidera à mieux vous servir..."></textarea>
+                </div>
+                
+                <label class="cp-contact-checkbox">
+                    <input type="checkbox" id="contactPrivacy" name="contactPrivacy" required>
+                    <span>
+                        J'accepte la <a href="#" style="color: #4c6fff; font-weight: 600;">politique de confidentialité</a> 
+                        et autorise Clean Plus à utiliser mes informations pour répondre à ma demande. 
+                        <span style="color: #ff4757;">*</span>
+                    </span>
+                </label>
+                
+                <div class="cp-contact-form-actions">
+                    <button type="submit" class="cp-contact-submit-btn">
+                        <i class="fa-solid fa-paper-plane"></i> Envoyer mon message
+                    </button>
+                    <button type="button" class="cp-contact-reset-btn" id="cpResetForm">
+                        <i class="fa-solid fa-rotate-left"></i> Réinitialiser
+                    </button>
+                </div>
+                
+                <div id="cpConfirmation" style="display: none; margin-top: 2rem; padding: 2rem; 
+                                               background: #d4edda; border-radius: 12px; text-align: center;">
+                    <i class="fa-solid fa-circle-check" style="font-size: 3rem; color: #155724; margin-bottom: 1rem;"></i>
+                    <h3 style="margin: 0 0 0.5rem; color: #155724;">Message envoyé avec succès !</h3>
+                    <p style="margin: 0; color: #155724;">Nous vous répondrons dans les plus brefs délais.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- MAP SECTION -->
+  
+    
+    <!-- FAQ SECTION -->
+    <div class="cp-contact-faq cp-contact-fade-in">
+        <div class="cp-contact-faq-card">
+            <div class="cp-contact-faq-header">
+                <h3>Questions Fréquentes</h3>
+                <p>Trouvez rapidement des réponses à vos questions</p>
+            </div>
+            
+            <div class="cp-faq-items">
+                <div class="cp-faq-item">
+                    <div class="cp-faq-question">
+                        <span>Quels sont vos horaires de contact ?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="cp-faq-answer">
+                        <p>Nous sommes joignables du lundi au vendredi , et le samedi pour Ménage Résidentiel. 
+                           Pour les urgences, notre numéro est disponible 24h/24. Vous pouvez également nous 
+                           écrire via WhatsApp ou le formulaire de contact à tout moment.</p>
+                    </div>
+                </div>
+                
+                <div class="cp-faq-item">
+                    <div class="cp-faq-question">
+                        <span>Quel est le délai de réponse ?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="cp-faq-answer">
+                        <p>Nous nous engageons à répondre à toutes les demandes dans un délai maximum de 24 heures. 
+                           En pratique, la plupart des demandes reçoivent une réponse dans les 2 à 4 heures 
+                           pendant nos heures d'ouverture.</p>
+                    </div>
+                </div>
+                
+                <div class="cp-faq-item">
+                    <div class="cp-faq-question">
+                        <span>Puis-je annuler ou reporter un rendez-vous ?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="cp-faq-answer">
+                        <p>Absolument. Vous pouvez annuler ou reporter votre rendez-vous sans frais jusqu'à 
+                           24 heures avant l'intervention prévue. Contactez-nous simplement par téléphone, 
+                           WhatsApp ou email pour effectuer le changement.</p>
+                    </div>
+                </div>
+                
+                <div class="cp-faq-item">
+                    <div class="cp-faq-question">
+                        <span>Comment obtenir une Soumission personnalisée ?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="cp-faq-answer">
+                        <p>Vous pouvez obtenir une Soumission personnalisée en remplissant notre 
+                           <a href="{% url 'public:devis' %}" style="color: #4c6fff; font-weight: 600;">formulaire de Soumission en ligne</a>, 
+                           en nous appelant directement, ou en nous envoyant un message via WhatsApp. 
+                           Nous vous contacterons dans les 24 heures avec une estimation détaillée.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Animation au défilement
+    document.addEventListener('DOMContentLoaded', function() {
+        const fadeElements = document.querySelectorAll('.cp-contact-fade-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        });
+        
+        fadeElements.forEach(el => observer.observe(el));
+        
+        // Gestion FAQ
+        const faqQuestions = document.querySelectorAll('.cp-faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', function() {
+                const item = this.parentElement;
+                item.classList.toggle('active');
+                
+                // Fermer les autres items
+                document.querySelectorAll('.cp-faq-item').forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+            });
+        });
+        
+        // Réinitialisation du formulaire
+        const resetBtn = document.getElementById('cpResetForm');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', function() {
+                const form = this.closest('form');
+                if (form) {
+                    form.reset();
+                    form.querySelectorAll('input, textarea, select').forEach(field => {
+                        field.style.borderColor = '#e0e6ff';
+                    });
+                    
+                    // Masquer le message de confirmation
+                    const confirmation = document.getElementById('cpConfirmation');
+                    if (confirmation) {
+                        confirmation.style.display = 'none';
+                    }
+                }
+            });
+        }
+        
+        // Validation du formulaire
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validation simple
+                const requiredFields = form.querySelectorAll('[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        isValid = false;
+                        field.style.borderColor = '#ff4757';
+                    } else {
+                        field.style.borderColor = '#4c6fff';
+                    }
+                });
+                
+                if (!isValid) {
+                    alert('Veuillez remplir tous les champs obligatoires.');
+                    return;
+                }
+                
+                // Afficher le message de confirmation
+                const confirmation = document.getElementById('cpConfirmation');
+                if (confirmation) {
+                    confirmation.style.display = 'block';
+                    confirmation.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Soumettre le formulaire après un délai
+                    setTimeout(() => {
+                        form.submit();
+                    }, 2000);
+                }
+            });
+            
+            // Validation en temps réel
+            const inputs = form.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    if (this.hasAttribute('required') && !this.value.trim()) {
+                        this.style.borderColor = '#ff4757';
+                    } else if (this.value.trim()) {
+                        this.style.borderColor = '#4c6fff';
+                    }
+                });
+                
+                input.addEventListener('input', function() {
+                    if (this.value.trim()) {
+                        this.style.borderColor = '#4c6fff';
+                    }
+                });
+            });
+        }
+        
+        // Effet de parallaxe sur l'héro
+        const heroImage = document.querySelector('.cp-contact-hero-bg img');
+        if (heroImage) {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * 0.5;
+                heroImage.style.transform = `scale(${1 + rate * 0.001}) translateY(${rate * 0.1}px)`;
+            });
+        }
+    });
+</script>
+{% endblock %}

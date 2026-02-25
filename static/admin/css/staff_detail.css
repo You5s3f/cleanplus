@@ -1,0 +1,411 @@
+/* =========================================================
+   Clean Plus Admin — STAFF DETAIL
+   Compatible avec le HTML fourni
+   ========================================================= */
+
+/* =========================
+   Layout général
+   ========================= */
+.staff-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(340px, 420px) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 980px) {
+  .staff-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   Cards
+   ========================= */
+.staff-profile-card,
+.staff-history-card {
+  overflow: hidden;
+}
+
+
+/* =========================
+   Header profil
+   ========================= */
+.staff-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.staff-head-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.staff-avatar-lg {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.staff-avatar-empty {
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  font-weight: 1000;
+  background: rgba(37,99,235,.12);
+  color: var(--primary);
+}
+
+.staff-head-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.staff-name {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 1000;
+  letter-spacing: -0.02em;
+}
+
+.staff-phone {
+  margin-top: 6px;
+  font-size: 12.5px;
+  font-weight: 900;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.staff-phone i {
+  color: var(--primary);
+}
+
+/* =========================
+   Badges statut
+   ========================= */
+.staff-head-right {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.staff-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 1000;
+  border: 1px solid var(--border);
+  background: rgba(2,6,23,.04);
+  color: var(--text);
+}
+
+html[data-theme="dark"] .staff-badge {
+  background: rgba(148,163,184,.10);
+}
+
+.staff-badge.is-ok {
+  border-color: rgba(34,197,94,.35);
+  background: rgba(34,197,94,.14);
+  color: #16a34a;
+}
+
+.staff-badge.is-no {
+  border-color: rgba(239,68,68,.35);
+  background: rgba(239,68,68,.14);
+  color: #ef4444;
+}
+
+/* =========================
+   Infos clé / valeur
+   ========================= */
+.staff-kv {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 10px 16px;
+}
+
+@media (max-width: 980px) {
+  .staff-kv {
+    grid-template-columns: 1fr;
+  }
+}
+
+.staff-k {
+  font-size: 12px;
+  font-weight: 1000;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.staff-k i {
+  width: 16px;
+  text-align: center;
+  color: var(--primary);
+}
+
+.staff-v {
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1.45;
+}
+
+/* =========================
+   Titres sections
+   ========================= */
+.staff-h3 {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* =========================
+   Notes
+   ========================= */
+.staff-pre {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(2,6,23,.04);
+  font-size: 12.5px;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+html[data-theme="dark"] .staff-pre {
+  background: rgba(148,163,184,.10);
+}
+
+/* =========================
+   Actions
+   ========================= */
+.staff-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* =========================
+   Historique RDV
+   ========================= */
+.staff-history-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.staff-count {
+  font-size: 12px;
+  font-weight: 1000;
+  color: var(--muted);
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(2,6,23,.04);
+}
+
+html[data-theme="dark"] .staff-count {
+  background: rgba(148,163,184,.10);
+}
+
+/* =========================
+   Table RDV
+   ========================= */
+.staff-table-wrap {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+
+.staff-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+}
+
+.staff-table thead th {
+  padding: 12px;
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  background: rgba(2,6,23,.03);
+}
+
+html[data-theme="dark"] .staff-table thead th {
+  background: rgba(148,163,184,.08);
+}
+
+.staff-table td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(148,163,184,.16);
+}
+
+.td-right,
+.th-right {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.td-muted {
+  color: var(--muted);
+}
+
+.td-strong {
+  font-weight: 1000;
+}
+
+/* =========================
+   Empty state
+   ========================= */
+.staff-empty-td {
+  padding: 24px 16px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.staff-empty-td i {
+  font-size: 22px;
+  opacity: .6;
+  margin-bottom: 8px;
+}
+
+.staff-empty-td p {
+  margin: 6px 0 0;
+}
+
+
+/* Page full width */
+.staff-detail-page {
+  width: 100%;
+  max-width: none;
+}
+
+/* Grille corrigée */
+.staff-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(360px, 420px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+/* Sécurité overflow */
+.staff-history-card {
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   Historique RDV — affichage vertical
+   ========================================================= */
+
+/* On cache l'entête du tableau */
+.staff-table thead {
+  display: none;
+}
+
+/* Le tableau devient un simple conteneur */
+.staff-table,
+.staff-table tbody {
+  display: block;
+  width: 100%;
+}
+
+/* =========================================================
+   Historique RDV — version COMPACTE
+   ========================================================= */
+
+/* Carte RDV plus petite */
+.staff-table tr {
+  padding: 18px 20px;
+  margin-bottom: 13px;
+  border-radius: 13px;
+   min-height: 96px;        /* 👈 empêche les sauts */
+  box-sizing: border-box;
+}
+
+/* Lignes plus serrées */
+.staff-table td {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;             /* 👈 espace entre label / valeur */
+  padding: 10px 0;
+  font-size: 17.5px;
+  word-break: break-word;
+}
+/* Labels plus discrets */
+.staff-table td::before {
+  min-width: 80px;
+  font-size: 13px;
+  font-weight: 1000;
+  color: var(--muted);
+
+   width: 90px;             /* 👈 empêche les décalages */
+  flex-shrink: 0;
+}
+
+.staff-table td:nth-child(1)::before { content: "Date"; }
+.staff-table td:nth-child(2)::before { content: "Adresse"; }
+.staff-table td:nth-child(3)::before { content: "Service"; }
+.staff-table td:nth-child(4)::before { content: ""; }
+
+/* Bouton "Voir" plus compact */
+.staff-table .a-btn {
+  padding: 8px 13px;
+  font-size: 12px;
+    transform: none !important;
+}
+
+/* Dernière ligne (action) rapprochée */
+.staff-table td.td-right {
+  justify-content: flex-end;
+  margin-top: 10px;      /* 👈 espace avant le bouton */
+}
+/* Espacement global réduit */
+.staff-history-card {
+  padding: 17px;
+    overflow: hidden;
+}
+
+/* Titre + compteur plus serrés */
+.staff-history-head {
+  margin-bottom: 8px;
+}
+
+.staff-count {
+  padding: 4px 8px;
+  font-size: 11px;
+}
+.staff-table tr:hover {
+  background: rgba(37,99,235,.06);
+}
+
+
+
+
+

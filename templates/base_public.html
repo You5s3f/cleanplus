@@ -1,0 +1,206 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Clean Plus{% endblock %}</title>
+
+  <link rel="stylesheet" href="{% static 'public/css/public.css' %}?v=999">
+  {% block extra_css %}{% endblock %}
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+
+<style>
+/* Masquer la scrollbar tout en gardant le scroll */
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+/* Firefox */
+html {
+    scrollbar-width: none;
+}
+
+/* Internet Explorer / anciens Edge */
+body {
+    -ms-overflow-style: none;
+}
+
+
+
+/* Fixer la barre du drawer mobile */
+.cp-drawer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.cp-drawer__head {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    background: #fff; /* adapte à ton thème */
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Zone scrollable */
+.cp-drawer__links {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+</style>
+
+<body class="cp-body">
+
+  <!-- HEADER GLOBAL -->
+  <header class="cp-header" id="cpHeader">
+    <div class="cp-container">
+
+      <!-- Brand -->
+      <a class="cp-brand" href="{% url 'public:home' %}">
+        <div class="cp-brand__logo">
+          <img src="{% static 'img/logo-v2.png' %}" alt="Logo Clean Plus">
+        </div>
+        <div class="cp-brand__text">
+          <div class="cp-brand__name">Clean Plus</div>
+          <div class="cp-brand__tag">Ménage professionnel</div>
+        </div>
+      </a>
+
+      <!-- Nav -->
+      <nav class="cp-nav" id="navbar" aria-label="Navigation principale">
+        <a href="{% url 'public:home' %}" class="cp-link {% if request.resolver_match.url_name == 'home' %}is-active{% endif %}">
+          Accueil
+        </a>
+        <a href="{% url 'public:services' %}" class="cp-link {% if request.resolver_match.url_name == 'services' %}is-active{% endif %}">
+          Services
+        </a>
+        <a href="{% url 'public:devis' %}" class="cp-link {% if request.resolver_match.url_name == 'devis' %}is-active{% endif %}">
+          Soumission
+        </a>
+        <a href="{% url 'contact:contact' %}" class="cp-link {% if request.resolver_match.app_name == 'contact' %}is-active{% endif %}">
+          Contact
+        </a>
+        <a href="{% url 'public:about' %}" class="cp-link {% if request.resolver_match.url_name == 'about' %}is-active{% endif %}">
+          À propos
+        </a>
+      </nav>
+
+      <!-- Actions -->
+      <div class="cp-actions">
+        <a href="tel:+15144026011" class="cp-btn cp-btn--soft">
+          <i class="fas fa-phone"></i><span>514-402-6011</span>
+        </a>
+        <a href="https://wa.me/15144026011" class="cp-btn cp-btn--primary" target="_blank" rel="noopener">
+          <i class="fab fa-whatsapp"></i><span>WhatsApp</span>
+        </a>
+
+        <button class="cp-iconbtn" id="menuToggle" aria-label="Menu" aria-controls="cpDrawer" aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile drawer -->
+    <!-- ✅ Drawer mobile (doit être un vrai drawer, pas un overlay) -->
+    <div class="cp-drawer" id="cpDrawer" aria-hidden="true">
+      <div class="cp-drawer__head">
+        <div class="cp-drawer__title">Menu</div>
+        <button class="cp-iconbtn" id="cpDrawerClose" aria-label="Fermer">
+          <i class="fas fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="cp-drawer__links">
+        <a href="{% url 'public:home' %}" class="cp-drawer__link {% if request.resolver_match.url_name == 'home' %}is-active{% endif %}">Accueil</a>
+        <a href="{% url 'public:services' %}" class="cp-drawer__link {% if request.resolver_match.url_name == 'services' %}is-active{% endif %}">Services</a>
+        <a href="{% url 'public:devis' %}" class="cp-drawer__link {% if request.resolver_match.url_name == 'devis' %}is-active{% endif %}">Devis en ligne</a>
+        <a href="{% url 'contact:contact' %}" class="cp-drawer__link {% if request.resolver_match.app_name == 'contact' %}is-active{% endif %}">Contact</a>
+        <a href="{% url 'public:about' %}" class="cp-drawer__link {% if request.resolver_match.url_name == 'about' %}is-active{% endif %}">À propos</a>
+
+        <div class="cp-drawer__sep"></div>
+
+        <a href="tel:+15144026011" class="cp-drawer__cta">
+          <i class="fas fa-phone"></i> Appeler
+        </a>
+        <a href="https://wa.me/15144026011" class="cp-drawer__cta is-primary" target="_blank" rel="noopener">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- ✅ Overlay (UNE SEULE FOIS) -->
+    <div class="cp-overlay" id="cpOverlay" aria-hidden="true"></div>
+
+  </header>
+
+  <!-- CONTENT -->
+  <main class="cp-page">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER GLOBAL -->
+  <footer class="cp-footer">
+    <div class="cp-container">
+
+      <div class="cp-footer__grid">
+        <div class="cp-footer__col">
+          <h3>Clean Plus</h3>
+          <p>Ménage professionnel, fiable et rapide.</p>
+
+          <div class="cp-social">
+            <a href="https://www.instagram.com/clean.plus3?igsh=MXY0N3FyYjZzOGt1ZA==" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/15144026011" target="_blank" rel="noopener" aria-label="Contacter Clean Plus sur WhatsApp">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="cp-footer__col">
+          <h4>Liens</h4>
+          <ul>
+            <li><a href="{% url 'public:home' %}">Accueil</a></li>
+            <li><a href="{% url 'public:services' %}">Services</a></li>
+            <li><a href="{% url 'public:devis' %}">Soumission</a></li>
+            <li><a href="{% url 'contact:contact' %}">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="cp-footer__col">
+          <h4>Contact</h4>
+          <ul class="cp-footer__contact">
+            <li><i class="fas fa-phone"></i> <a href="tel:+15144026011">514-402-6011</a></li>
+            <li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/15144026011" target="_blank" rel="noopener">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+
+   
+
+   <div class="cp-footer__bottom">
+  © {% now "Y" %} Clean Plus — Tous droits réservés.
+
+  <a href="/accounts/logout/" class="cp-admin-link">
+  <i class="fas fa-lock"></i> Espace Admin
+</a>
+
+</div>
+
+
+    </div>
+  </footer>
+
+  <script src="{% static 'public/js/public.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

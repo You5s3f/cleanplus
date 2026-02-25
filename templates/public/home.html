@@ -1,0 +1,874 @@
+{% extends "base_public.html" %}
+{% load static %}
+
+{% block title %}Clean Plus | Excellence en Nettoyage Professionnel{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'public/css/home.css' %}">
+<style>
+    /* Design Premium */
+    .cp-hero-visual {
+        height: 90vh;
+        min-height: 700px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 0 0 40px 40px;
+    }
+    
+    .cp-hero-visual img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        animation: scaleIn 20s infinite alternate ease-in-out;
+    }
+    
+    @keyframes scaleIn {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.1); }
+    }
+    
+    .cp-hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, 
+            rgba(23, 37, 84, 0.9) 0%, 
+            rgba(23, 37, 84, 0.7) 50%, 
+            rgba(23, 37, 84, 0.4) 100%);
+        display: flex;
+        align-items: center;
+    }
+    
+    .cp-hero-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        color: white;
+        text-align: center;
+    }
+    
+    .cp-hero-title {
+        font-size: 4.5rem;
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color:white;
+    }
+    
+    .cp-hero-subtitle {
+        font-size: 1.5rem;
+        font-weight: 300;
+        margin-bottom: 3rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.6;
+    }
+    
+    .cp-hero-badges {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 3rem;
+        flex-wrap: wrap;
+    }
+    
+    .cp-hero-badge {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 500;
+    }
+    
+    /* Service Cards Premium */
+    .cp-service-card-premium {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .cp-service-card-premium:hover {
+        transform: translateY(-20px);
+        box-shadow: 0 40px 80px rgba(76, 111, 255, 0.15);
+    }
+    
+    .cp-service-image {
+        height: 300px;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .cp-service-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+    }
+    
+    .cp-service-card-premium:hover .cp-service-image img {
+        transform: scale(1.1);
+    }
+    
+    .cp-service-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.7));
+        display: flex;
+        align-items: flex-end;
+        padding: 2rem;
+    }
+    
+    .cp-service-icon {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 10px 30px rgba(76, 111, 255, 0.3);
+    }
+    
+    .cp-service-content {
+        padding: 2.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .cp-service-content h3 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: #1a1a2e;
+        font-weight: 700;
+    }
+    
+    .cp-service-content p {
+        color: #666;
+        line-height: 1.7;
+        margin-bottom: 2rem;
+        flex-grow: 1;
+    }
+    
+    .cp-service-features {
+        margin-top: auto;
+    }
+    
+    .cp-feature-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+        color: #555;
+        font-size: 0.95rem;
+    }
+    
+    .cp-feature-item i {
+        color: #4c6fff;
+        font-size: 1.2rem;
+    }
+    
+    /* Stats Section */
+    .cp-stats-section {
+        padding: 8rem 0;
+        background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cp-stats-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.05;
+        background-size: cover;
+        background-position: center;
+    }
+    
+    .cp-stat-item {
+        text-align: center;
+        padding: 2rem;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+    }
+    
+    .cp-stat-item:hover {
+        transform: translateY(-10px);
+    }
+    
+    .cp-stat-number {
+        font-size: 3.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.5rem;
+        line-height: 1;
+    }
+    
+    .cp-stat-label {
+        font-size: 1.1rem;
+        color: #555;
+        font-weight: 500;
+    }
+    
+    /* Process Section */
+    .cp-process-step-premium {
+        position: relative;
+        padding: 3rem;
+        background: white;
+        border-radius: 25px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        transition: all 0.4s ease;
+    }
+    
+    .cp-process-step-premium:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 30px 60px rgba(76, 111, 255, 0.1);
+    }
+    
+    .cp-process-number {
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 1.2rem;
+        box-shadow: 0 10px 30px rgba(76, 111, 255, 0.3);
+    }
+    
+    .cp-process-image {
+        height: 200px;
+        border-radius: 15px;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+    }
+    
+    .cp-process-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+    
+    .cp-process-step-premium:hover .cp-process-image img {
+        transform: scale(1.05);
+    }
+    
+    /* Testimonial Premium */
+    .cp-testimonial-premium {
+        background: white;
+        border-radius: 25px;
+        padding: 3rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cp-testimonial-quote {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 8rem;
+        color: #f0f4ff;
+        font-family: Georgia, serif;
+        line-height: 1;
+    }
+    
+    .cp-testimonial-text {
+        font-size: 1.2rem;
+        line-height: 1.7;
+        color: #444;
+        font-style: italic;
+        margin-bottom: 2rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .cp-testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .cp-testimonial-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid #4c6fff;
+    }
+    
+    .cp-testimonial-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .cp-testimonial-rating {
+        color: #ffc107;
+        font-size: 1.2rem;
+        margin-top: 0.5rem;
+    }
+    
+    /* CTA Premium */
+    .cp-cta-premium {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        padding: 8rem 0;
+        border-radius: 40px;
+        position: relative;
+        overflow: hidden;
+        margin: 5rem auto;
+        max-width: 1400px;
+    }
+    
+    .cp-cta-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: white;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    .cp-cta-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+    }
+    
+    .cp-cta-subtitle {
+        font-size: 1.3rem;
+        opacity: 0.9;
+        margin-bottom: 3rem;
+        line-height: 1.6;
+    }
+    
+    .cp-cta-buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .cp-btn-premium {
+        padding: 1.2rem 3rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+    
+    .cp-btn-primary {
+        background: linear-gradient(135deg, #4c6fff, #6c8eff);
+        color: white;
+        box-shadow: 0 10px 30px rgba(76, 111, 255, 0.3);
+    }
+    
+    .cp-btn-outline {
+        background: transparent;
+        border-color: rgba(255, 255, 255, 0.3);
+        color: white;
+    }
+    
+    .cp-btn-premium:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(76, 111, 255, 0.4);
+    }
+    
+    /* Animation classes */
+    .cp-fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    
+    .cp-fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .cp-hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .cp-hero-subtitle {
+            font-size: 1.2rem;
+        }
+        
+        .cp-cta-title {
+            font-size: 2.5rem;
+        }
+        
+        .cp-cta-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .cp-btn-premium {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .cp-hero-badges {
+            gap: 1rem;
+        }
+        
+        .cp-hero-badge {
+            padding: 0.75rem 1.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION - Visuel époustouflant -->
+<section class="cp-hero">
+    <div class="cp-hero-visual">
+         <img src="{% static 'img/home.png' %}" >
+        <div class="cp-hero-overlay">
+            <div class="cp-hero-content">
+                <h1 class="cp-hero-title">
+                    L'art de la propreté<br>à son excellence
+                </h1>
+                <p class="cp-hero-subtitle">
+                    Transformez votre espace avec notre service de nettoyage professionnel premium. 
+                    Expertise, précision et résultats impeccables garantis.
+                </p>
+                
+                <div class="cp-hero-badges">
+                    <div class="cp-hero-badge">
+                        <i class="fa-solid fa-gem"></i>
+                        <span>Service Premium</span>
+                    </div>
+                    <div class="cp-hero-badge">
+                        <i class="fa-solid fa-shield-check"></i>
+                        <span>Garantie 100%</span>
+                    </div>
+                    <div class="cp-hero-badge">
+                        <i class="fa-solid fa-clock"></i>
+                        <span>Disponible 24/7</span>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="{% url 'public:devis' %}" class="cp-btn-premium cp-btn-primary">
+                        <i class="fa-solid fa-sparkles"></i>
+                        Demander une Soumission gratuitte
+                    </a>
+                    <a href="#services" class="cp-btn-premium cp-btn-outline">
+                        <i class="fa-solid fa-play-circle"></i>
+                        Découvrir nos services
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATS SECTION - Chiffres impressionnants -->
+<section class="cp-stats-section">
+    <div class="cp-stats-bg" style="background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');"></div>
+    <div class="cp-container">
+        <div class="cp-section-head">
+            <span class="cp-section-subtitle">Notre impact</span>
+            <h2>Des chiffres qui parlent</h2>
+            <p>L'excellence mesurée en chiffres et en satisfaction</p>
+        </div>
+        
+        <div class="cp-stats-grid">
+            <div class="cp-stat-item cp-fade-in">
+                <div class="cp-stat-number">4<span>/5</span></div>
+                <div class="cp-stat-label">Satisfaction client</div>
+                <p style="margin-top: 1rem; color: #888; font-size: 0.9rem;">Basé sur 2,300+ avis</p>
+            </div>
+            <div class="cp-stat-item cp-fade-in">
+                <div class="cp-stat-number">85<span>%</span></div>
+                <div class="cp-stat-label">Clients fidèles</div>
+                <p style="margin-top: 1rem; color: #888; font-size: 0.9rem;">Taux de fidélisation</p>
+            </div>
+            <div class="cp-stat-item cp-fade-in">
+                <div class="cp-stat-number">15<span>min</span></div>
+                <div class="cp-stat-label">Réponse moyenne</div>
+                <p style="margin-top: 1rem; color: #888; font-size: 0.9rem;">Pour les Soumission</p>
+            </div>
+            <div class="cp-stat-item cp-fade-in">
+                <div class="cp-stat-number">5,00<span>+</span></div>
+                <div class="cp-stat-label">Interventions</div>
+                <p style="margin-top: 1rem; color: #888; font-size: 0.9rem;">Réalisées avec succès</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SERVICES SECTION - Présentation élégante -->
+<section class="cp-home-section" id="services">
+    <div class="cp-container">
+        <div class="cp-section-head">
+            <span class="cp-section-subtitle">Nos prestations</span>
+            <h2>Services d'exception</h2>
+            <p>Chaque détail mérite une attention particulière</p>
+        </div>
+        
+        <div class="cp-services-grid-premium">
+            <!-- Service 1 -->
+            <div class="cp-service-card-premium cp-fade-in">
+                <div class="cp-service-image">
+                    <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&auto=format&fit=crop&w=2032&q=80" 
+                         alt="Appartement de luxe parfaitement propre avec décoration moderne"
+                         loading="lazy">
+                    <div class="cp-service-overlay">
+                        <div class="cp-service-icon">
+                            <i class="fa-solid fa-home"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="cp-service-content">
+                    <h3>Ménage Résidentiel </h3>
+                    <p>Transformez votre maison en un havre de propreté avec notre service résidentiel. Chaque centimètre carré mérite notre attention.</p>
+                    <div class="cp-service-features">
+                        <div class="cp-feature-item">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Produits écologiques certifiés</span>
+                        </div>
+                        <div class="cp-feature-item">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Équipement professionnel</span>
+                        </div>
+                        <div class="cp-feature-item">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Check-list détaillée</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 2 -->
+            <div class="cp-service-card-premium cp-fade-in">
+                <div class="cp-service-image">
+                    <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80" 
+                         alt="Bureaux d'entreprise modernes et impeccables"
+                         loading="lazy">
+                    <div class="cp-service-overlay">
+                        <div class="cp-service-icon">
+                            <i class="fa-solid fa-building"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="cp-service-content">
+                    <h3>Ménage Commercial</h3>
+                    <p>Assurer le nettoyage et l’entretien des locaux professionnels (bureaux, magasins, entreprises) afin de garantir un environnement propre, sain et accueillant.</p>
+                    <div class="cp-service-features">
+                        <div class="cp-feature-item">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Plannings flexibles 24/7</span>
+                        </div>
+                        <div class="cp-feature-item">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Équipe discrète et efficace</span>
+                        </div>
+                        <div class="cp-feature-item">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Rapports détaillés</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service 3 -->
+            <div class="cp-service-card-premium cp-fade-in">
+                <div class="cp-service-image">
+                   <img src="{% static 'img/post.png' %}" >
+                    <div class="cp-service-overlay">
+                        <div class="cp-service-icon">
+                            <i class="fa-solid fa-paint-roller"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="cp-service-content">
+                    <h3>Ménage Rénovation</h3>
+                    <p>Élimination complète des résidus de construction pour une remise des clés parfaite. De la poussière fine aux résidus de peinture.</p>
+                    <div class="cp-service-features">
+                        <div class="cp-feature-item">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Ménage en profondeur</span>
+                        </div>
+                        <div class="cp-feature-item">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Élimination des poussières fines</span>
+                        </div>
+                        <div class="cp-feature-item">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Protection des surfaces</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Services secondaires -->
+        <div class="cp-services-secondary">
+            <div class="cp-service-mini-card cp-fade-in">
+                <div class="cp-service-mini-icon">
+                    <i class="fa-solid fa-couch"></i>
+                </div>
+                <h4>Ménage de Tapis</h4>
+                <p>Technologie vapeur pour un résultat parfait</p>
+            </div>
+            <div class="cp-service-mini-card cp-fade-in">
+                <div class="cp-service-mini-icon">
+                    <i class="fa-solid fa-window-maximize"></i>
+                </div>
+                <h4>Vitres Impeccables</h4>
+                <p>Résultat sans traces garanti</p>
+            </div>
+            <div class="cp-service-mini-card cp-fade-in">
+                <div class="cp-service-mini-icon">
+                    <i class="fa-solid fa-bath"></i>
+                </div>
+                <h4>Sanitaires Éclatants</h4>
+                <p>Désinfection et brillance optimales</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROCESS SECTION - Méthodologie élégante -->
+<section class="cp-home-section cp-section-light">
+    <div class="cp-container">
+        <div class="cp-section-head">
+            <span class="cp-section-subtitle">Notre méthode</span>
+            <h2>L'excellence en 4 étapes</h2>
+            <p>Un processus rigoureux pour un résultat parfait</p>
+        </div>
+        
+        <div class="cp-process-grid">
+            <div class="cp-process-step-premium cp-fade-in">
+                <div class="cp-process-number">1</div>
+                <div class="cp-process-image">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
+                         alt="Consultation en ligne avec expert"
+                         loading="lazy">
+                </div>
+                <h3>Évaluation sur mesure</h3>
+                <p>Analyse détaillée de vos besoins et établissement d'un plan personnalisé</p>
+            </div>
+            
+            <div class="cp-process-step-premium cp-fade-in">
+                <div class="cp-process-number">2</div>
+                <div class="cp-process-image">
+                    <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2056&q=80" 
+                         alt="Équipe professionnelle préparant le matériel"
+                         loading="lazy">
+                </div>
+                <h3>Préparation minutieuse</h3>
+                <p>Sélection des produits adaptés et mise en place de l'équipe qualifiée</p>
+            </div>
+            
+            <div class="cp-process-step-premium cp-fade-in">
+                <div class="cp-process-number">3</div>
+                <div class="cp-process-image">
+                    <img src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
+                         alt="Exécution précise du nettoyage"
+                         loading="lazy">
+                </div>
+                <h3>Exécution précise</h3>
+                <p>Intervention rigoureuse selon des protocoles établis et vérifiés</p>
+            </div>
+            
+            <div class="cp-process-step-premium cp-fade-in">
+                <div class="cp-process-number">4</div>
+                <div class="cp-process-image">
+                    <img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80" 
+                         alt="Contrôle qualité final"
+                         loading="lazy">
+                </div>
+                <h3>Contrôle qualité</h3>
+                <p>Vérification exhaustive et garantie de satisfaction avant livraison</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS SECTION - Témoignages élégants -->
+<section class="cp-home-section">
+    <div class="cp-container">
+        <div class="cp-section-head">
+            <span class="cp-section-subtitle">Témoignages</span>
+            <h2>Ce que disent nos clients</h2>
+            <p>La satisfaction client est notre meilleure récompense</p>
+        </div>
+        
+        <div class="cp-testimonials-grid-premium">
+            <div class="cp-testimonial-premium cp-fade-in">
+                <div class="cp-testimonial-quote">"</div>
+                <p class="cp-testimonial-text">
+                    "Exceptionnel ! Clean Plus a transformé notre appartement en un véritable showroom. 
+                    L'attention aux détails, la ponctualité et le professionnalisme sont remarquables."
+                </p>
+                <div class="cp-testimonial-author">
+                  
+                    <div>
+                        <h4> Nathalie Dubois</h4>
+                        <p>• Client depuis 2 ans</p>
+                        <div class="cp-testimonial-rating">★★★★★</div>
+                    </div>
+                </div>
+            </div>
+             <div class="cp-testimonials-grid-premium">
+            <div class="cp-testimonial-premium cp-fade-in">
+                <div class="cp-testimonial-quote">"</div>
+                <p class="cp-testimonial-text">
+                    "Reliable, efficient and friendly service. I highly recommend it!"
+                </p>
+                <div class="cp-testimonial-author">
+                    
+                    <div>
+                        <h4> Sarha </h4>
+                        <p>• Client depuis 2,5 ans</p>
+                        <div class="cp-testimonial-rating">★★★★</div>
+                    </div>
+                </div>
+            </div>
+       
+            
+           
+        </div>
+    </div>
+</section>
+
+<!-- FINAL CTA SECTION - Appel à l'action impactant -->
+<section class="cp-cta-premium">
+    <img src="https://images.unsplash.com/photo-1549638441-b787d2e11f14?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
+         alt="Équipe Clean Plus professionnelle"
+         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.1;">
+    
+    <div class="cp-cta-content">
+        <h2 class="cp-cta-title">Prêt à transformer votre espace ?</h2>
+        <p class="cp-cta-subtitle">
+            Rejoignez les milliers de clients qui ont choisi l'excellence. 
+            Offrez-vous le luxe d'un espace parfaitement propre, sans stress ni compromis.
+        </p>
+        
+        <div class="cp-cta-buttons">
+            <a href="{% url 'public:devis' %}" class="cp-btn-premium cp-btn-primary">
+                <i class="fa-solid fa-calendar-check"></i>
+                Réserver un nettoyage
+            </a>
+            <a href="tel:+15144026011" class="cp-btn-premium cp-btn-outline">
+                <i class="fa-solid fa-phone"></i>
+                Nous appeler
+            </a>
+        </div>
+        
+        <div style="margin-top: 3rem; display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.8);">
+                <i class="fa-solid fa-lock"></i>
+                <span>Soumission gratuitte</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.8);">
+                <i class="fa-solid fa-shield-alt"></i>
+                <span>Sans engagement</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.8);">
+                <i class="fa-solid fa-clock"></i>
+                <span>Réponse rapide</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Animation au défilement
+    document.addEventListener('DOMContentLoaded', function() {
+        const fadeElements = document.querySelectorAll('.cp-fade-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        });
+        
+        fadeElements.forEach(el => observer.observe(el));
+        
+        // Smooth scroll pour les ancres
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Effet de parallaxe sur l'héro
+        const heroImage = document.querySelector('.cp-hero-visual img');
+        if (heroImage) {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * 0.3;
+                heroImage.style.transform = `scale(${1 + rate * 0.001})`;
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+
+{% block page_title %}Détail demande #{{ demande.id }}{% endblock %}
+{% block page_subtitle %}Consulte les infos client, le statut et crée un RDV directement.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/demandes_detail.css' %}?v=1">
+{% endblock %}
+
+{% block content %}
+
+<div class="a-demandes-detail-grid">
+
+  <!-- LEFT: Infos demande -->
+  <div class="a-card a-detail-card">
+
+    <div class="a-card-head">
+      <div class="a-card-title">
+        <h2 class="a-h2">{{ demande.nom }}</h2>
+        <p class="a-muted">Créée le {{ demande.created_at|date:"Y-m-d H:i" }}</p>
+      </div>
+
+      <span class="a-badge a-badge-{{ demande.statut|slugify }}" id="statusBadge">
+        {{ demande.get_statut_display }}
+      </span>
+    </div>
+
+    <div class="a-sep"></div>
+
+    <div class="a-kv">
+      <div class="a-k"><i class="fas fa-phone"></i> Téléphone</div>
+      <div class="a-v">{{ demande.telephone }}</div>
+
+      <div class="a-k"><i class="fas fa-envelope"></i> Email</div>
+      <div class="a-v">{{ demande.email|default:"-" }}</div>
+
+      <div class="a-k"><i class="fas fa-location-dot"></i> Adresse</div>
+      <div class="a-v">{{ demande.adresse|default:"-" }}</div>
+
+      <div class="a-k"><i class="fas fa-broom"></i> Service</div>
+      <div class="a-v">{{ demande.service|default:"-" }}</div>
+
+      <div class="a-k"><i class="fas fa-ruler-combined"></i> Surface</div>
+      <div class="a-v">{% if demande.surface_m2 %}{{ demande.surface_m2 }} m²{% else %}-{% endif %}</div>
+
+      <div class="a-k"><i class="fas fa-repeat"></i> Fréquence</div>
+      <div class="a-v">{{ demande.frequence|default:"-" }}</div>
+
+      <div class="a-k"><i class="fas fa-calendar"></i> Date souhaitée</div>
+      <div class="a-v">{% if demande.date_souhaitee %}{{ demande.date_souhaitee|date:"Y-m-d" }}{% else %}-{% endif %}</div>
+    </div>
+
+    {% if demande.message %}
+      <div class="a-sep"></div>
+      <h3 class="a-h3">Message client</h3>
+      <pre class="a-pre">{{ demande.message }}</pre>
+    {% endif %}
+
+  </div>
+
+  <!-- RIGHT: Actions -->
+  <div class="a-card a-actions-card">
+
+    <h3 class="a-h3">Actions</h3>
+
+    <form method="post" action="{% url 'demandes:update_status' demande.id %}" class="a-form-compact" id="statusForm">
+      {% csrf_token %}
+
+      <label class="a-label" for="id_statut">Changer statut</label>
+      <select id="id_statut" name="statut" class="a-select">
+        {% for value,label in demande.STATUT_CHOICES %}
+          <option value="{{ value }}" {% if demande.statut == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+
+      <button class="a-btn a-btn-primary" type="submit" id="saveStatusBtn">
+        <i class="fas fa-save"></i> Enregistrer
+      </button>
+    </form>
+
+    <div class="a-sep"></div>
+
+    <div class="a-actions-stack">
+      <a class="a-btn a-btn-primary" href="{% url 'rdv:create_from_demande' demande.id %}">
+        <i class="fas fa-calendar-plus"></i> Créer RDV depuis cette demande
+      </a>
+
+      <a class="a-btn a-btn-soft" href="{% url 'demandes:list' %}">
+        ← Retour liste
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'admin/js/demandes_detail.js' %}?v=1"></script>
+{% endblock %}

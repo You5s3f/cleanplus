@@ -1,0 +1,186 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+{% block page_title %}Dashboard{% endblock %}
+{% block page_subtitle %}Vue rapide : demandes, rendez-vous, équipe et activité récente.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'admin/css/dashboard.css' %}?v=1">
+{% endblock %}
+
+{% block content %}
+
+<!-- TOP: Quick Actions -->
+<div class="dash-top">
+  <div class="dash-welcome">
+    <h2 class="dash-title">Bonjour 👋</h2>
+    <p class="dash-sub">Voici un aperçu de l’activité Clean Plus.</p>
+  </div>
+
+  <div class="dash-actions">
+    <a class="a-btn a-btn-primary" href="{% url 'demandes:list' %}">
+      <i class="fas fa-file-lines"></i> Voir demandes
+    </a>
+    <a class="a-btn a-btn-soft" href="{% url 'rdv:create' %}">
+      <i class="fas fa-calendar-plus"></i> Ajouter RDV
+    </a>
+    <a class="a-btn a-btn-soft" href="{% url 'staff:create' %}">
+      <i class="fas fa-user-plus"></i> Ajouter staff
+    </a>
+  </div>
+</div>
+
+<!-- KPI GRID -->
+<div class="dash-kpi-grid">
+
+  <div class="dash-kpi-card">
+    <div class="dash-kpi-head">
+      <span class="dash-kpi-label">Demandes (Total)</span>
+      <span class="dash-kpi-ico"><i class="fas fa-file-lines"></i></span>
+    </div>
+    <div class="dash-kpi-value">{{ kpi.demandes_total|default:0 }}</div>
+    <div class="dash-kpi-foot">
+      <span class="dash-pill dash-pill-info"><i class="fas fa-sparkles"></i> Activité</span>
+      <span class="dash-spark" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <div class="dash-kpi-card is-primary">
+    <div class="dash-kpi-head">
+      <span class="dash-kpi-label">Nouvelles demandes</span>
+      <span class="dash-kpi-ico"><i class="fas fa-bell"></i></span>
+    </div>
+    <div class="dash-kpi-value">{{ kpi.demandes_nouvelles|default:0 }}</div>
+    <div class="dash-kpi-foot">
+      <span class="dash-pill dash-pill-warn"><i class="fas fa-circle-exclamation"></i> À traiter</span>
+      <span class="dash-spark" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <div class="dash-kpi-card">
+    <div class="dash-kpi-head">
+      <span class="dash-kpi-label">RDV (Total)</span>
+      <span class="dash-kpi-ico"><i class="fas fa-calendar-check"></i></span>
+    </div>
+    <div class="dash-kpi-value">{{ kpi.rdv_total|default:0 }}</div>
+    <div class="dash-kpi-foot">
+      <span class="dash-pill dash-pill-ok"><i class="fas fa-check"></i> Planning</span>
+      <span class="dash-spark" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <div class="dash-kpi-card">
+    <div class="dash-kpi-head">
+      <span class="dash-kpi-label">Staff actives</span>
+      <span class="dash-kpi-ico"><i class="fas fa-user-group"></i></span>
+    </div>
+    <div class="dash-kpi-value">{{ kpi.staff_actives|default:0 }}</div>
+    <div class="dash-kpi-foot">
+      <span class="dash-pill dash-pill-soft"><i class="fas fa-shield"></i> Équipe</span>
+      <span class="dash-spark" aria-hidden="true"></span>
+    </div>
+  </div>
+
+</div>
+
+<!-- MAIN GRID -->
+<div class="dash-grid">
+
+  <!-- Dernières demandes -->
+  <div class="a-card dash-card">
+    <div class="dash-card-head">
+      <div>
+        <h3 class="dash-h3"><i class="fas fa-file-circle-plus"></i> Dernières demandes</h3>
+        <p class="dash-muted">Les plus récentes demandes entrantes.</p>
+      </div>
+      <a class="a-btn a-btn-soft" href="{% url 'demandes:list' %}">
+        Tout voir
+      </a>
+    </div>
+
+    <div class="a-sep"></div>
+
+    <div class="dash-list">
+      {% for d in last_demandes %}
+      <a class="dash-item" href="{% url 'demandes:detail' d.id %}">
+        <div class="dash-item-left">
+          <div class="dash-dot"></div>
+          <div class="dash-item-main">
+            <div class="dash-item-title">{{ d.nom }}</div>
+            <div class="dash-item-sub">
+              <i class="fas fa-clock"></i> {{ d.created_at|date:"Y-m-d H:i" }}
+              <span class="dash-sep">•</span>
+              <i class="fas fa-broom"></i> {{ d.service|default:"-" }}
+            </div>
+          </div>
+        </div>
+
+        <span class="dash-badge dash-badge-{{ d.statut|lower }}">
+          {{ d.get_statut_display|default:d.statut }}
+        </span>
+      </a>
+      {% empty %}
+      <div class="dash-empty">
+        <i class="fas fa-inbox"></i>
+        <h4>Aucune demande</h4>
+        <p>Les demandes apparaîtront ici.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Prochains RDV -->
+  <div class="a-card dash-card">
+    <div class="dash-card-head">
+      <div>
+        <h3 class="dash-h3"><i class="fas fa-calendar-day"></i> Prochains RDV</h3>
+        <p class="dash-muted">Les rendez-vous à venir.</p>
+      </div>
+      <a class="a-btn a-btn-soft" href="{% url 'rdv:list' %}">
+        Voir RDV
+      </a>
+    </div>
+
+    <div class="a-sep"></div>
+
+    <div class="dash-list">
+      {% for r in next_rdv %}
+      <a class="dash-item" href="{% url 'rdv:detail' r.id %}">
+        <div class="dash-item-left">
+          <div class="dash-time">
+            <div class="dash-time-top">{{ r.date_heure|date:"H:i" }}</div>
+            <div class="dash-time-sub">{{ r.date_heure|date:"Y-m-d" }}</div>
+          </div>
+
+          <div class="dash-item-main">
+            <div class="dash-item-title">{{ r.service|default:"Service" }}</div>
+            <div class="dash-item-sub">
+              <i class="fas fa-location-dot"></i> {{ r.adresse|truncatechars:42 }}
+              {% if r.femme %}
+                <span class="dash-sep">•</span> <i class="fas fa-user"></i> {{ r.femme }}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <span class="dash-badge dash-badge-{{ r.statut|lower }}">
+          {{ r.get_statut_display|default:r.statut }}
+        </span>
+      </a>
+      {% empty %}
+      <div class="dash-empty">
+        <i class="fas fa-calendar-xmark"></i>
+        <h4>Aucun RDV</h4>
+        <p>Le planning apparaîtra ici.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'admin/js/dashboard.js' %}?v=1"></script>
+{% endblock %}

@@ -1,0 +1,91 @@
+/* ==================================================
+   Clean Plus Admin — Messages
+   Thème vert Clean Plus
+   ================================================== */
+
+/* Carte principale */
+.a-messages-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Tableau */
+.a-messages-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+/* En-tête */
+.a-messages-table thead th {
+  text-align: left;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+  padding: 10px 14px;
+}
+
+/* Lignes */
+.a-messages-table tbody tr {
+  background: rgba(255,255,255,.65);
+  border-radius: 14px;
+  transition: background .15s ease, transform .15s ease;
+}
+
+html[data-theme="dark"] .a-messages-table tbody tr {
+  background: rgba(30,43,56,.65);
+}
+
+/* Hover */
+.a-messages-table tbody tr:hover {
+  background: rgba(42,157,143,.08);
+  transform: translateY(-1px);
+}
+
+/* Cellules */
+.a-messages-table td {
+  padding: 14px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+/* Arrondis */
+.a-messages-table tbody tr td:first-child {
+  border-top-left-radius: 14px;
+  border-bottom-left-radius: 14px;
+  font-weight: 900;
+}
+
+.a-messages-table tbody tr td:last-child {
+  border-top-right-radius: 14px;
+  border-bottom-right-radius: 14px;
+  text-align: right;
+}
+
+/* Bouton Voir */
+.a-messages-btn {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 900;
+  border-radius: 999px;
+  background: rgba(42,157,143,.12);
+  border: 1px solid rgba(42,157,143,.25);
+  color: var(--primary);
+  transition: all .15s ease;
+}
+
+.a-messages-btn:hover {
+  background: rgba(42,157,143,.2);
+  transform: translateY(-1px);
+}
+
+/* Ligne vide */
+.a-messages-empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 24px;
+}

@@ -1,0 +1,76 @@
+{% extends "base_public.html" %}
+{% load static %}
+{% block title %}Demande envoyée | Clean Plus{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'public/css/success v2.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="cps-hero">
+  <div class="cps-container">
+
+    <div class="cps-card">
+      <div class="cps-icon">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+
+      <span class="cps-pill">
+        <i class="fa-solid fa-bolt"></i> Demande reçue
+      </span>
+
+      <h1>Demande envoyée avec succès !</h1>
+      <p>
+        Merci pour votre demande. Notre équipe vous contactera dans les <strong>24 heures</strong>.
+      </p>
+
+      <div class="cps-infos">
+        <div class="cps-info">
+          <i class="fa-solid fa-clock"></i>
+          <div>
+            <div class="t">Délai</div>
+            <div class="v">Sous 24h</div>
+          </div>
+        </div>
+        <div class="cps-info">
+          <i class="fa-solid fa-shield-halved"></i>
+          <div>
+            <div class="t">Garantie</div>
+            <div class="v">Satisfaction</div>
+          </div>
+        </div>
+        <div class="cps-info">
+          <i class="fa-solid fa-headset"></i>
+          <div>
+            <div class="t">Support</div>
+            <div class="v">Toujours dispo</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cps-actions">
+        <a class="cps-btn cps-btn--soft" href="{% url 'public:services' %}">
+          <i class="fa-solid fa-broom"></i> Voir les services
+        </a>
+        <a class="cps-btn cps-btn--primary" href="{% url 'public:home' %}">
+          <i class="fa-solid fa-house"></i> Retour à l’accueil
+        </a>
+      </div>
+
+      <div class="cps-foot">
+        Besoin d’une réponse rapide ?
+        <a href="https://wa.me/15144026011" target="_blank" rel="noopener">
+          WhatsApp direct
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% block extra_js %}
+<script src="{% static 'public/js/success.js' %}"></script>
+{% endblock %}
+
+{% endblock %}

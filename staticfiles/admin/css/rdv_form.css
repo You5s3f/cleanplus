@@ -1,0 +1,297 @@
+/* =========================================================
+   Clean Plus Admin — RDV CREATE / FORM (CSS)
+   Compatible avec {{ form.as_p }}
+   ========================================================= */
+
+.form{
+  display:flex;
+  flex-direction:column;
+  gap: 16px;
+}
+
+/* Django form.as_p */
+.form p{
+  margin: 0;
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+}
+
+/* Labels */
+.form label{
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--muted);
+}
+
+/* Inputs / Select / Textarea */
+.form input,
+.form select,
+.form textarea{
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.72);
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  transition: .15s ease;
+}
+html[data-theme="dark"] .form input,
+html[data-theme="dark"] .form select,
+html[data-theme="dark"] .form textarea{
+  background: rgba(11,18,35,.72);
+}
+
+/* Focus */
+.form input:focus,
+.form select:focus,
+.form textarea:focus{
+  border-color: rgba(37,99,235,.45);
+  box-shadow: var(--focus);
+}
+
+/* Textarea */
+.form textarea{
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Help text */
+.form .helptext{
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* Errors */
+.form .errorlist{
+  list-style:none;
+  padding: 8px 12px;
+  border-radius: 14px;
+  background: rgba(239,68,68,.10);
+  border: 1px solid rgba(239,68,68,.35);
+  color: #ef4444;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* Submit button */
+.form button[type="submit"]{
+  align-self:flex-start;
+  margin-top: 8px;
+}
+
+/* Loading state (JS) */
+.form.is-loading{
+  opacity: .6;
+  pointer-events:none;
+}
+.form.is-loading button{
+  position:relative;
+}
+.form.is-loading button::after{
+  content:"";
+  width:16px;
+  height:16px;
+  border-radius:999px;
+  border:2px solid rgba(255,255,255,.6);
+  border-top-color: white;
+  position:absolute;
+  right: -28px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: spin .7s linear infinite;
+}
+
+@keyframes spin{
+  to{ transform: rotate(360deg) translateY(-50%); }
+}
+
+/* Responsive */
+@media (max-width: 680px){
+  .form input,
+  .form select,
+  .form textarea{
+    font-size: 15px;
+  }
+}
+
+
+
+
+
+
+
+
+
+/* ============================
+   RDV FORM (Create / Update)
+   ============================ */
+
+.az-card {
+  background: var(--card-bg, #0f172a);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* ===== Header ===== */
+.az-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.az-card-head h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.az-card-head p {
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+/* ===== Separator ===== */
+.az-sep {
+  border: none;
+  height: 1px;
+  margin: 18px 0;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255,255,255,0.15),
+    transparent
+  );
+}
+
+/* ===== Alerts ===== */
+.az-alert {
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+
+.az-alert-danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fecaca;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* ===== Form grid ===== */
+.az-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 18px;
+}
+
+@media (max-width: 720px) {
+  .az-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== Fields ===== */
+.az-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.az-label {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+/* Inputs */
+.az-field input,
+.az-field select,
+.az-field textarea {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  color: #e5e7eb;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.az-field textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.az-field input:focus,
+.az-field select:focus,
+.az-field textarea:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px rgba(56,189,248,0.25);
+}
+
+/* Disabled */
+.az-field input:disabled,
+.az-field select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Help text */
+.az-help {
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+/* Errors */
+.az-error {
+  font-size: 0.8rem;
+  color: #fca5a5;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  border-radius: 14px;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+/* Primary */
+.az-btn-primary {
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  color: #020617;
+  border: none;
+}
+
+/* Soft */
+.az-btn-soft {
+  background: rgba(255,255,255,0.08);
+  color: #e5e7eb;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+/* Danger (annulation si besoin) */
+.az-btn-danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fecaca;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+/* ===== Badge ===== */
+.badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}

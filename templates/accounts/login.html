@@ -1,0 +1,105 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Connexion | Clean Plus</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" referrerpolicy="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static 'admin/css/auth.css' %}">
+</head>
+
+<body class="auth-body">
+  <main class="auth-wrap">
+    <section class="auth-card">
+
+      <div class="auth-brand">
+       
+        <div class="auth-brand-text">
+          <div class="auth-title">Clean Plus</div>
+          <div class="auth-sub">Espace Administration</div>
+        </div>
+        <span class="auth-badge">PRO</span>
+      </div>
+
+      <div class="auth-head">
+        <h1>Connexion</h1>
+        <p>Connecte-toi pour accéder au dashboard.</p>
+      </div>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="auth-alert {% if message.tags == 'error' %}auth-alert-error{% else %}auth-alert-info{% endif %}">
+            <i class="fas {% if message.tags == 'error' %}fa-triangle-exclamation{% else %}fa-circle-info{% endif %}"></i>
+            <div>{{ message }}</div>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post" class="auth-form" id="loginForm">
+        {% csrf_token %}
+
+        <div class="auth-field">
+          <label for="id_username">Nom d’utilisateur</label>
+          <div class="auth-input">
+            <i class="fas fa-user"></i>
+            <input id="id_username" type="text" name="username" placeholder="ex: admin" autocomplete="username" required>
+          </div>
+        </div>
+
+        <div class="auth-field">
+          <label for="id_password">Mot de passe</label>
+          <div class="auth-input">
+            <i class="fas fa-lock"></i>
+            <input id="id_password" type="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
+            <button class="auth-eye" type="button" id="togglePwd" aria-label="Afficher/masquer">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button class="auth-btn" type="submit" id="loginBtn">
+          <i class="fas fa-right-to-bracket"></i> Se connecter
+        </button>
+
+        <div class="auth-foot">
+          <span><i class="fas fa-shield-halved"></i> Accès sécurisé</span>
+          <span class="auth-dot">•</span>
+          <span>Clean Plus Admin</span>
+        </div>
+      </form>
+
+    </section>
+
+    <aside class="auth-side">
+      <div class="auth-side-card">
+        <h2>Bienvenue 👋</h2>
+        <p>Gère tes demandes, ton planning et ton équipe depuis un espace moderne et rapide.</p>
+
+        <div class="auth-side-stats">
+          <div class="auth-stat">
+            <i class="fas fa-file-lines"></i>
+            <div><strong>Demandes</strong><span>suivi & traitement</span></div>
+          </div>
+          <div class="auth-stat">
+            <i class="fas fa-calendar-check"></i>
+            <div><strong>RDV</strong><span>planning intelligent</span></div>
+          </div>
+          <div class="auth-stat">
+            <i class="fas fa-user-group"></i>
+            <div><strong>Équipe</strong><span>gestion & disponibilité</span></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script src="{% static 'admin/js/auth.js' %}?v=1"></script>
+</body>
+</html>
+

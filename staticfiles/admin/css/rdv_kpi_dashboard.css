@@ -1,0 +1,241 @@
+/* =========================================================
+   Clean Plus Admin — KPI DASHBOARD (CSS)
+   ========================================================= */
+
+.kpi-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap: 12px;
+  flex-wrap:wrap;
+  margin-bottom: 14px;
+}
+
+.kpi-date{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  flex-wrap:wrap;
+  color: var(--text);
+  font-weight: 900;
+}
+.kpi-date i{ color: var(--primary); opacity:.95; }
+.kpi-sep{ opacity:.55; }
+
+.kpi-hint{
+  margin-top: 6px;
+  color: var(--muted);
+  font-weight: 800;
+  font-size: 12.5px;
+}
+
+.kpi-top-actions{
+  display:flex;
+  gap: 10px;
+  flex-wrap:wrap;
+}
+
+/* KPI cards */
+.kpi-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.kpi-card{
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: rgba(255,255,255,.70);
+  box-shadow: var(--shadow-sm);
+  padding: 14px;
+  position:relative;
+  overflow:hidden;
+}
+html[data-theme="dark"] .kpi-card{
+  background: rgba(11,18,35,.70);
+}
+
+.kpi-card.is-primary{
+  border-color: rgba(37,99,235,.30);
+  box-shadow: 0 18px 60px rgba(37,99,235,.12);
+}
+
+.kpi-card-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap: 12px;
+}
+
+.kpi-title{
+  display:flex;
+  flex-direction:column;
+  gap: 8px;
+}
+
+.kpi-label{
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 1100;
+  letter-spacing: .02em;
+}
+
+.kpi-icon{
+  width: 34px;
+  height: 34px;
+  border-radius: 14px;
+  display:grid;
+  place-items:center;
+  border: 1px solid var(--border);
+  background: rgba(2,6,23,.04);
+  color: var(--text);
+}
+html[data-theme="dark"] .kpi-icon{ background: rgba(148,163,184,.10); }
+
+.kpi-value{
+  font-size: 28px;
+  font-weight: 1200;
+  letter-spacing: -0.03em;
+}
+
+.kpi-mini, .kpi-sub{
+  display:flex;
+  gap: 8px;
+  flex-wrap:wrap;
+  margin-top: 12px;
+}
+
+.kpi-chip{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(2,6,23,.04);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 1000;
+}
+html[data-theme="dark"] .kpi-chip{ background: rgba(148,163,184,.10); }
+
+.kpi-chip-ok{ border-color: rgba(34,197,94,.35); background: rgba(34,197,94,.14); color:#16a34a; }
+.kpi-chip-no{ border-color: rgba(239,68,68,.35); background: rgba(239,68,68,.12); color:#ef4444; }
+.kpi-chip-warn{ border-color: rgba(245,158,11,.35); background: rgba(245,158,11,.16); color:#f59e0b; }
+.kpi-chip-info{ border-color: rgba(56,189,248,.35); background: rgba(56,189,248,.14); color:#0ea5e9; }
+.kpi-chip-soft{ border-color: rgba(148,163,184,.35); background: rgba(148,163,184,.14); color: var(--text); }
+
+/* Spark */
+.kpi-spark{
+  position:absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 120px;
+  height: 26px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(37,99,235,0), rgba(37,99,235,.28), rgba(37,99,235,0));
+  opacity: .8;
+}
+
+/* Data grid */
+.kpi-data-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items:start;
+}
+
+.kpi-table-card{ padding: 14px; }
+
+.kpi-table-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap: 12px;
+  flex-wrap:wrap;
+}
+
+.kpi-h3{
+  margin:0;
+  font-size: 14px;
+  font-weight: 1100;
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+.kpi-muted{
+  margin:6px 0 0;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 800;
+}
+
+.kpi-table-wrap{ overflow:auto; }
+
+.kpi-table{
+  width:100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+
+.kpi-table thead th{
+  text-align:left;
+  padding: 12px;
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  border-bottom: 1px solid var(--border);
+  background: rgba(2,6,23,.03);
+}
+html[data-theme="dark"] .kpi-table thead th{
+  background: rgba(148,163,184,.08);
+}
+
+.kpi-table td{
+  padding: 12px;
+  border-bottom: 1px solid rgba(148,163,184,.16);
+}
+
+.td-right, .th-right{ text-align:right; white-space:nowrap; }
+.td-muted{ color: var(--muted); }
+.td-strong{ font-weight: 1100; }
+
+/* Badges statut */
+.kpi-badge{
+  display:inline-flex;
+  align-items:center;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 1000;
+  border: 1px solid var(--border);
+  background: rgba(2,6,23,.04);
+  color: var(--text);
+}
+html[data-theme="dark"] .kpi-badge{ background: rgba(148,163,184,.10); }
+
+.kpi-badge-nouvelle{ border-color: rgba(245,158,11,.35); background: rgba(245,158,11,.16); color:#f59e0b; }
+.kpi-badge-en_cours{ border-color: rgba(56,189,248,.35); background: rgba(56,189,248,.14); color:#0ea5e9; }
+.kpi-badge-traitee{ border-color: rgba(34,197,94,.35); background: rgba(34,197,94,.14); color:#16a34a; }
+.kpi-badge-annulee{ border-color: rgba(239,68,68,.35); background: rgba(239,68,68,.12); color:#ef4444; }
+
+/* Empty */
+.kpi-empty-td{
+  padding: 22px 16px;
+  color: var(--muted);
+  text-align:center;
+}
+.kpi-empty-td i{
+  font-size: 22px;
+  opacity:.6;
+  margin-bottom: 10px;
+}
+.kpi-empty-td p{ margin:6px 0 0; }
+
+/* Responsive */
+@media (max-width: 1100px){
+  .kpi-grid{ grid-template-columns: 1fr; }
+  .kpi-data-grid{ grid-template-columns: 1fr; }
+}

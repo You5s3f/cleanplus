@@ -1,0 +1,120 @@
+/* =========================================================
+   Clean Plus Admin — DEMANDES FORM (CSS)
+   Grid + champs + erreurs + alert
+   ========================================================= */
+
+.a-form-card{
+  padding: 16px;
+}
+
+/* Form */
+.a-form{
+  display:flex;
+  flex-direction:column;
+  gap: 14px;
+}
+
+/* Alert */
+.a-form-alert{
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: rgba(2,6,23,.04);
+  color: var(--text);
+}
+html[data-theme="dark"] .a-form-alert{
+  background: rgba(148,163,184,.10);
+}
+
+.a-form-alert-error{
+  border-color: rgba(239,68,68,.35);
+  background: rgba(239,68,68,.10);
+  color: #ef4444;
+  font-weight: 900;
+}
+
+/* Grid */
+.a-form-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+/* Field wrapper */
+.a-field{
+  display:flex;
+  flex-direction:column;
+  gap: 6px;
+}
+
+/* Labels */
+.a-label{
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 1000;
+}
+.a-required{
+  color: #ef4444;
+  margin-left: 4px;
+}
+
+/* Inputs styling (works for Django default widgets) */
+.a-field input,
+.a-field select,
+.a-field textarea{
+  width:100%;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.72);
+  color: var(--text);
+  outline:none;
+  transition: .15s ease;
+}
+html[data-theme="dark"] .a-field input,
+html[data-theme="dark"] .a-field select,
+html[data-theme="dark"] .a-field textarea{
+  background: rgba(11,18,35,.72);
+}
+
+.a-field textarea{
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Focus */
+.a-field input:focus,
+.a-field select:focus,
+.a-field textarea:focus{
+  border-color: rgba(37,99,235,.45);
+  box-shadow: var(--focus);
+}
+
+/* Help + Error */
+.a-help{
+  font-size: 12px;
+  color: var(--muted);
+}
+.a-error{
+  font-size: 12px;
+  font-weight: 900;
+  color: #ef4444;
+}
+
+/* Error state outline */
+.a-field.is-error input,
+.a-field.is-error select,
+.a-field.is-error textarea{
+  border-color: rgba(239,68,68,.45);
+  box-shadow: 0 0 0 3px rgba(239,68,68,.10);
+}
+
+/* Actions */
+.a-form-actions{
+  display:flex;
+  gap: 10px;
+  flex-wrap:wrap;
+  margin-top: 6px;
+}
+
+/* Loadin*
