@@ -38,77 +38,118 @@
 
   const liveClock = $("#live-clock");
 
-  // ---------- State ----------
-  const STORAGE = {
-    theme: "cp_theme",
-    density: "cp_density",
-    sidebar: "cp_sidebar" // "open" | "closed"
-  };
+ // ---------- Sidebar (mobile drawer + desktop icon-only) ----------
+const STORAGE = {
+  theme: "cp_theme",
+  density: "cp_density",
+  sidebar: "cp_sidebar" // "open" | "closed"
+};
 
-  // ---------- Sidebar open/close ----------
-  function openSidebar() {
-    if (!sidebar) return;
-    if (isMobile()) {
-      sidebar.classList.add("is-open");
-      if (overlay) overlay.classList.add("is-open");
-    } else {
-      // desktop: optionnel si tu veux un mode "collapsed"
-      sidebar.classList.remove("is-collapsed");
-      if (overlay) overlay.classList.remove("is-open");
-    }
-    localStorage.setItem(STORAGE.sidebar, "open");
+function setToggleIcon() {
+  const i = toggleSidebarBtn ? toggleSidebarBtn.querySelector("i") : null;
+  if (!i) return;
+
+  // Desktop : cp-icon => chevron, sinon bars
+  if (!isMobile() && document.body.classList.contains("cp-icon")) {
+    i.className = "fas fa-chevron-right";
+  } else {
+    i.className = "fas fa-bars";
   }
+}
 
-  function closeSidebar() {
-    if (!sidebar) return;
-    if (isMobile()) {
-      sidebar.classList.remove("is-open");
-      if (overlay) overlay.classList.remove("is-open");
-    } else {
-      // desktop: collapsed
-      sidebar.classList.add("is-collapsed");
-      if (overlay) overlay.classList.remove("is-open");
+function openSidebar() {
+  if (!sidebar) return;
+
+  if (isMobile()) {
+    sidebar.classList.add("is-open");
+    if (overlay) {
+      overlay.classList.add("is-open");
+      overlay.setAttribute("aria-hidden", "false");
     }
-    localStorage.setItem(STORAGE.sidebar, "closed");
-  }
-
-  function toggleSidebar() {
-    if (!sidebar) return;
-    if (isMobile()) {
-      const open = sidebar.classList.contains("is-open");
-      open ? closeSidebar() : openSidebar();
-    } else {
-      const collapsed = sidebar.classList.contains("is-collapsed");
-      collapsed ? openSidebar() : closeSidebar();
+  } else {
+    document.body.classList.remove("cp-icon");
+    if (overlay) {
+      overlay.classList.remove("is-open");
+      overlay.setAttribute("aria-hidden", "true");
     }
   }
 
-  safeOn(toggleSidebarBtn, "click", (e) => {
-    e.preventDefault();
-    toggleSidebar();
-  });
+  localStorage.setItem(STORAGE.sidebar, "open");
+  setToggleIcon();
+}
 
-  safeOn(overlay, "click", () => {
-    // fermer tout ce qui est open
-    closeSidebar();
-    closeDropdowns();
-    closeQuickPanel();
-    closeFab();
-  });
+function closeSidebar() {
+  if (!sidebar) return;
 
-  // Appliquer état sidebar au chargement (desktop)
-  function applySidebarState() {
-    if (!sidebar) return;
-    const saved = localStorage.getItem(STORAGE.sidebar);
-    if (isMobile()) {
-      // en mobile on démarre fermé (plus clean)
-      sidebar.classList.remove("is-open");
-      if (overlay) overlay.classList.remove("is-open");
-    } else {
-      if (saved === "closed") sidebar.classList.add("is-collapsed");
-      else sidebar.classList.remove("is-collapsed");
+  if (isMobile()) {
+    sidebar.classList.remove("is-open");
+    if (overlay) {
+      overlay.classList.remove("is-open");
+      overlay.setAttribute("aria-hidden", "true");
+    }
+  } else {
+    document.body.classList.add("cp-icon");
+    if (overlay) {
+      overlay.classList.remove("is-open");
+      overlay.setAttribute("aria-hidden", "true");
     }
   }
+
+  localStorage.setItem(STORAGE.sidebar, "closed");
+  setToggleIcon();
+}
+
+function toggleSidebar() {
+  if (!sidebar) return;
+
+  if (isMobile()) {
+    sidebar.classList.contains("is-open") ? closeSidebar() : openSidebar();
+  } else {
+    document.body.classList.contains("cp-icon") ? openSidebar() : closeSidebar();
+  }
+}
+
+safeOn(toggleSidebarBtn, "click", (e) => {
+  e.preventDefault();
+  toggleSidebar();
+});
+
+safeOn(overlay, "click", () => {
+  // en mobile: ferme le drawer
+  if (isMobile()) closeSidebar();
+  closeDropdowns();
+  closeQuickPanel();
+  closeFab();
+});
+
+function applySidebarState() {
+  if (!sidebar) return;
+
+  const saved = localStorage.getItem(STORAGE.sidebar) || "open";
+
+  if (isMobile()) {
+    // Mobile: drawer fermé au chargement
+    sidebar.classList.remove("is-open");
+    if (overlay) {
+      overlay.classList.remove("is-open");
+      overlay.setAttribute("aria-hidden", "true");
+    }
+    document.body.classList.remove("cp-icon");
+  } else {
+    // Desktop: saved closed => icon-only
+    if (saved === "closed") document.body.classList.add("cp-icon");
+    else document.body.classList.remove("cp-icon");
+
+    sidebar.classList.remove("is-open");
+    if (overlay) {
+      overlay.classList.remove("is-open");
+      overlay.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  setToggleIcon();
+}
+
 
   // ---------- Dropdowns ----------
   function closeDropdowns() {

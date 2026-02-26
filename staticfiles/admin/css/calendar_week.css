@@ -1,5 +1,5 @@
 /* =========================================================
-   Clean Plus Admin — RDV CALENDAR WEEK (CSS) - Optimisé
+   Clean Plus Admin — RDV CALENDAR WEEK (CSS) - Thème vert
    ========================================================= */
 
 .az-week-grid {
@@ -52,23 +52,23 @@ html[data-theme="dark"] .az-day-head {
 }
 
 .az-day-title {
-  font-weight: 700;
+  font-weight: 900;
   font-size: 14px;
   text-transform: capitalize;
-  color: var(--text-primary);
+  color: var(--text);
 }
 
 .az-day-date {
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 800;
   color: #64748b;
   padding: 4px 8px;
   border-radius: 8px;
-  background: rgba(100, 116, 139, 0.1);
+  background: rgba(42, 157, 143, 0.1);
 }
 
 html[data-theme="dark"] .az-day-date {
-  background: rgba(100, 116, 139, 0.2);
+  background: rgba(42, 157, 143, 0.2);
   color: #cbd5e1;
 }
 
@@ -113,28 +113,28 @@ html[data-theme="dark"] .az-event {
 .az-event:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-color: #cbd5e0;
+  border-color: rgba(42, 157, 143, 0.3);
 }
 
 /* Time badge */
 .az-event-time {
   min-width: 50px;
-  font-weight: 700;
+  font-weight: 900;
   font-size: 14px;
   color: #1e293b;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f1f5f9;
+  background: rgba(42, 157, 143, 0.1);
   padding: 6px;
   border-radius: 8px;
-  border: 1px solid rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(42, 157, 143, 0.2);
 }
 
 html[data-theme="dark"] .az-event-time {
-  background: #0f172a;
+  background: rgba(42, 157, 143, 0.2);
   color: #e2e8f0;
-  border-color: rgba(59, 130, 246, 0.3);
+  border-color: rgba(42, 157, 143, 0.3);
 }
 
 /* Event content */
@@ -144,9 +144,9 @@ html[data-theme="dark"] .az-event-time {
 }
 
 .az-event-title {
-  font-weight: 700;
+  font-weight: 900;
   font-size: 14px;
-  color: var(--text-primary);
+  color: var(--text);
   line-height: 1.4;
   margin-bottom: 6px;
   display: -webkit-box;
@@ -163,13 +163,14 @@ html[data-theme="dark"] .az-event-time {
   align-items: center;
   gap: 6px;
   margin-bottom: 4px;
+  font-weight: 700;
 }
 
 .az-event-sub:last-child {
   margin-bottom: 0;
 }
 
-/* Status indicator bar */
+/* Status indicator bar - Couleurs adaptées au thème vert */
 .az-event::before {
   content: "";
   position: absolute;
@@ -177,27 +178,35 @@ html[data-theme="dark"] .az-event-time {
   top: 0;
   bottom: 0;
   width: 4px;
-  background: #3b82f6;
+  background: #2a9d8f; /* Vert Clean Plus par défaut */
 }
 
-/* Status colors */
-.az-event-planifie::before { background: #f59e0b; }
-.az-event-en-cours::before { background: #3b82f6; }
-.az-event-termine::before { background: #10b981; }
-.az-event-annule::before { background: #ef4444; }
+/* Status colors avec couleurs du thème */
+.az-event-planifie::before { 
+  background: #ffc107; /* Jaune pour planifié */
+}
+.az-event-en-cours::before { 
+  background: #2a9d8f; /* Vert Clean Plus pour en cours */
+}
+.az-event-termine::before { 
+  background: #28a745; /* Vert vif pour terminé */
+}
+.az-event-annule::before { 
+  background: #dc3545; /* Rouge pour annulé */
+}
 
-/* Today highlight */
+/* Today highlight avec vert */
 .az-day.is-today {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  border-color: #2a9d8f;
+  box-shadow: 0 0 0 2px rgba(42, 157, 143, 0.2);
 }
 
 .az-day.is-today .az-day-head {
-  background: rgba(59, 130, 246, 0.1);
+  background: rgba(42, 157, 143, 0.1);
 }
 
 .az-day.is-today .az-day-date {
-  background: #3b82f6;
+  background: #2a9d8f;
   color: white;
 }
 
@@ -222,7 +231,7 @@ html[data-theme="dark"] .az-event-time {
   max-height: 400px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #cbd5e0 transparent;
+  scrollbar-color: rgba(42, 157, 143, 0.3) transparent;
 }
 
 .az-day-body::-webkit-scrollbar {
@@ -234,12 +243,12 @@ html[data-theme="dark"] .az-event-time {
 }
 
 .az-day-body::-webkit-scrollbar-thumb {
-  background: #cbd5e0;
+  background: rgba(42, 157, 143, 0.3);
   border-radius: 3px;
 }
 
 html[data-theme="dark"] .az-day-body::-webkit-scrollbar-thumb {
-  background: #475569;
+  background: rgba(42, 157, 143, 0.5);
 }
 
 /* Stats badge optionnel */
@@ -248,8 +257,9 @@ html[data-theme="dark"] .az-day-body::-webkit-scrollbar-thumb {
   color: #64748b;
   margin-top: 8px;
   padding-top: 8px;
-  border-top: 1px dashed #e2e8f0;
+  border-top: 1px dashed rgba(42, 157, 143, 0.2);
   text-align: center;
+  font-weight: 700;
 }
 
 /* Week navigation dans le header */
@@ -262,4 +272,33 @@ html[data-theme="dark"] .az-day-body::-webkit-scrollbar-thumb {
   padding: 16px 0;
   border-bottom: 1px solid var(--border);
   margin-bottom: 24px;
+}
+
+/* Améliorations pour le dark mode */
+html[data-theme="dark"] .az-day {
+  background: #1e293b;
+}
+
+html[data-theme="dark"] .az-event {
+  background: #1e293b;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme="dark"] .az-empty {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+html[data-theme="dark"] .az-event-sub {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+html[data-theme="dark"] .az-day-stats {
+  color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Couleur de hover améliorée pour dark mode */
+html[data-theme="dark"] .az-event:hover {
+  background: rgba(42, 157, 143, 0.1);
+  border-color: rgba(42, 157, 143, 0.4);
 }

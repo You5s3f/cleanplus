@@ -1,5 +1,6 @@
 /* =========================================================
    Clean Plus Admin — DEMANDES LIST (CSS)
+   Thème vert Clean Plus
    ========================================================= */
 
 .az-toolbar{
@@ -44,12 +45,12 @@
   transition: .15s ease;
 }
 html[data-theme="dark"] .az-control{
-  background: rgba(11,18,35,.72);
+  background: rgba(30,43,56,.72);
 }
 
 .az-control:focus{
   box-shadow: var(--focus);
-  border-color: rgba(37,99,235,.45);
+  border-color: rgba(42,157,143,.45);
 }
 
 /* Card + table */
@@ -61,7 +62,7 @@ html[data-theme="dark"] .az-control{
   box-shadow: var(--shadow-sm);
   overflow:hidden;
 }
-html[data-theme="dark"] .a-card{ background: rgba(11,18,35,.72); }
+html[data-theme="dark"] .a-card{ background: rgba(30,43,56,.72); }
 
 .a-table-wrap{overflow:auto}
 
@@ -94,8 +95,8 @@ html[data-theme="dark"] .a-table thead th{
   vertical-align: middle;
 }
 
-.a-row:hover{background: rgba(37,99,235,.06)}
-html[data-theme="dark"] .a-row:hover{background: rgba(96,165,250,.10)}
+.a-row:hover{background: rgba(42,157,143,.06)}
+html[data-theme="dark"] .a-row:hover{background: rgba(42,157,143,.10)}
 
 .a-id{font-weight: 1000; white-space:nowrap}
 
@@ -126,20 +127,36 @@ html[data-theme="dark"] .a-row:hover{background: rgba(96,165,250,.10)}
 }
 html[data-theme="dark"] .a-badge{ background: rgba(148,163,184,.10); }
 
-/* Statut colors (adapte selon tes values) */
+/* Statut colors - adaptées au thème vert */
 .a-badge-nouvelle,
 .a-badge-en-attente,
-.a-badge-attente{ border-color: rgba(245,158,11,.35); background: rgba(245,158,11,.14); color:#f59e0b; }
+.a-badge-attente{ 
+  border-color: rgba(255, 193, 7, .35); 
+  background: rgba(255, 193, 7, .14); 
+  color: #ffc107; 
+}
 
 .a-badge-confirmee,
-.a-badge-confirme{ border-color: rgba(96,165,250,.35); background: rgba(96,165,250,.12); color:#60a5fa; }
+.a-badge-confirme{ 
+  border-color: rgba(42, 157, 143, .35); 
+  background: rgba(42, 157, 143, .14); 
+  color: #2a9d8f; 
+}
 
 .a-badge-traitee,
 .a-badge-terminee,
-.a-badge-termine{ border-color: rgba(34,197,94,.35); background: rgba(34,197,94,.14); color:#16a34a; }
+.a-badge-termine{ 
+  border-color: rgba(40, 167, 69, .35); 
+  background: rgba(40, 167, 69, .14); 
+  color: #28a745; 
+}
 
 .a-badge-annulee,
-.a-badge-annule{ border-color: rgba(239,68,68,.35); background: rgba(239,68,68,.12); color:#ef4444; }
+.a-badge-annule{ 
+  border-color: rgba(220, 53, 69, .35); 
+  background: rgba(220, 53, 69, .12); 
+  color: #dc3545; 
+}
 
 /* Empty state (JS) */
 .a-empty{

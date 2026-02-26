@@ -1,6 +1,6 @@
 /* =========================================================
    Clean Plus Admin — RDV DAY (CSS)
-   Timeline jour (par heure) — ultra clean
+   Timeline jour (par heure) — Thème vert Clean Plus
    ========================================================= */
 
 .az-toolbar{
@@ -22,7 +22,7 @@
   padding: 14px;
 }
 html[data-theme="dark"] .az-card{
-  background: rgba(11,18,35,.72);
+  background: rgba(30,43,56,.72);
 }
 
 /* Timeline */
@@ -44,7 +44,7 @@ html[data-theme="dark"] .az-card{
   background: rgba(255,255,255,.55);
 }
 html[data-theme="dark"] .az-time-row{
-  background: rgba(11,18,35,.55);
+  background: rgba(30,43,56,.55);
 }
 
 /* Left hour */
@@ -80,7 +80,7 @@ html[data-theme="dark"] .az-time-row{
   overflow: hidden;
 }
 html[data-theme="dark"] .az-event{
-  background: rgba(11,18,35,.72);
+  background: rgba(30,43,56,.72);
 }
 
 .az-event:hover{
@@ -94,7 +94,7 @@ html[data-theme="dark"] .az-event{
   position:absolute;
   left:0; top:0; bottom:0;
   width: 6px;
-  background: rgba(37,99,235,.55);
+  background: rgba(42,157,143,.55);
 }
 
 /* Time */
@@ -140,17 +140,31 @@ html[data-theme="dark"] .az-empty{
   background: rgba(148,163,184,.06);
 }
 
-/* ---------- Statut Colors ---------- */
+/* ---------- Statut Colors avec couleurs du thème vert ---------- */
 /* Default: planifié */
-.az-event-planifié::before{ background: rgba(245,158,11,.70); }     /* warning */
-.az-event-en\ cours::before{ background: rgba(96,165,250,.75); }    /* info */
-.az-event-terminé::before{ background: rgba(34,197,94,.75); }       /* success */
-.az-event-annulé::before{ background: rgba(239,68,68,.75); }        /* danger */
+.az-event-planifié::before{ 
+  background: rgba(255, 193, 7, .70); /* Jaune warning */ 
+}
+
+/* En cours - vert Clean Plus */
+.az-event-en\ cours::before{ 
+  background: rgba(42, 157, 143, .75); /* Vert Clean Plus */ 
+}
+
+/* Terminé - vert vif */
+.az-event-terminé::before{ 
+  background: rgba(40, 167, 69, .75); /* Vert success */ 
+}
+
+/* Annulé - rouge */
+.az-event-annulé::before{ 
+  background: rgba(220, 53, 69, .75); /* Rouge danger */ 
+}
 
 /* Si r.statut renvoie "en_cours" ou "en-cours" (sécurité) */
 .az-event-en_cours::before,
 .az-event-en-cours::before{
-  background: rgba(96,165,250,.75);
+  background: rgba(42, 157, 143, .75); /* Vert Clean Plus */
 }
 
 /* Responsive */
