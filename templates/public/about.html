@@ -72,24 +72,17 @@
         letter-spacing: 0.5px;
     }
     
-    .cp-about-hero-title {
-        font-size: 4rem;
-        font-weight: 800;
-        line-height: 1.1;
-        margin-bottom: 1.5rem;
-        text-transform: uppercase;
-        color:white;
-    }
-    
-    .cp-about-hero-subtitle {
-        font-size: 1.3rem;
-        font-weight: 300;
-        max-width: 700px;
-        margin: 0 auto 3rem;
-        line-height: 1.6;
-        opacity: 0.9;
-    }
-    
+  .cp-about-hero-title{
+  font-size: clamp(28px, 5vw, 64px);
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.cp-about-hero-subtitle{
+  font-size: clamp(14px, 2vw, 20px);
+  max-width: 780px;
+  margin-inline: auto;
+}
     /* Hero stats */
     .cp-about-hero-stats {
         display: flex;
@@ -821,6 +814,244 @@
             grid-template-columns: 1fr;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ============================
+   RESPONSIVE ABOUT PAGE
+   Mobile / Tablet / Desktop
+   ============================ */
+
+/* Typo responsive (évite débordement) */
+.cp-about-hero-title{
+  font-size: clamp(26px, 5vw, 64px);
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.cp-about-hero-subtitle{
+  font-size: clamp(14px, 2.2vw, 20px);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* Overlay plus lisible (mobile surtout) */
+.cp-about-hero-overlay{
+  background: linear-gradient(
+    to bottom,
+    rgba(10,16,30,.86) 0%,
+    rgba(10,16,30,.62) 45%,
+    rgba(10,16,30,.35) 100%
+  );
+}
+
+/* HERO : espace en haut (header fixe) */
+.cp-about-hero-premium{
+  padding: 140px 0 90px;     /* desktop */
+}
+
+/* Stats et features : rendu stable */
+.cp-about-hero-stats{
+  gap: 18px;
+}
+.cp-about-stat{
+  min-width: 0;              /* important: évite overflow */
+  width: min(280px, 100%);
+}
+.cp-about-stat-number{
+  font-size: clamp(28px, 6vw, 56px);
+}
+.cp-about-feature{
+  width: fit-content;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+/* Sections : padding fluid */
+.cp-about-story,
+.cp-about-values,
+.cp-about-team,
+.cp-about-certifications,
+.cp-about-cta-premium{
+  padding: clamp(50px, 7vw, 100px) 0;
+}
+
+/* Images : garde une hauteur raisonnable */
+.cp-about-story-image{
+  height: clamp(280px, 45vw, 500px);
+}
+
+/* Mission + environmental : padding adaptatif */
+.cp-about-mission,
+.cp-about-environmental{
+  padding: clamp(22px, 5vw, 64px);
+}
+
+/* CTA text responsive */
+.cp-about-cta-title{
+  font-size: clamp(26px, 4.5vw, 56px);
+  line-height: 1.1;
+}
+.cp-about-cta-subtitle{
+  font-size: clamp(14px, 2.2vw, 20px);
+}
+
+/* ============================
+   BREAKPOINTS
+   ============================ */
+
+/* MOBILE (<= 576px) */
+@media (max-width: 576px){
+
+  .cp-about-hero-premium{
+    height: auto;
+    min-height: 620px;
+    padding: 98px 0 54px;      /* place pour header */
+    border-radius: 0 0 28px 28px;
+  }
+
+  .cp-about-hero-content{
+    padding: 0 14px;
+  }
+
+  .cp-about-hero-pill{
+    font-size: 12px;
+    padding: 10px 14px;
+    max-width: 100%;
+  }
+
+  /* Stats en colonne */
+  .cp-about-hero-stats{
+    flex-direction: column;
+    align-items: center;
+    margin: 22px auto;
+  }
+  .cp-about-stat{
+    padding: 16px;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  /* Features en colonne */
+  .cp-about-hero-features{
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .cp-about-feature{
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+  }
+
+  /* Story section */
+  .cp-about-story-grid{
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 0 14px;
+  }
+  .cp-about-story-image{
+    order: -1;
+    height: 280px;
+    border-radius: 22px;
+  }
+  .cp-about-story-content h2{
+    font-size: 2rem;
+  }
+  .cp-about-story-content p{
+    font-size: 1rem;
+  }
+  .cp-about-story-tags{
+    justify-content: center;
+  }
+
+  /* Values */
+  .cp-about-values-grid{
+    padding: 0 14px;
+    gap: 14px;
+  }
+  .cp-about-value-card{
+    padding: 18px;
+  }
+
+  /* Certifications */
+  .cp-about-certifications-grid{
+    padding: 0 14px;
+    gap: 14px;
+  }
+  .cp-about-certification-card{
+    padding: 18px;
+  }
+
+  /* Environmental */
+  .cp-about-environmental-grid{
+    grid-template-columns: 1fr;
+  }
+
+  /* CTA buttons */
+  .cp-about-cta-buttons{
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cp-about-cta-btn{
+    width: 100%;
+    justify-content: center;
+    padding: 14px 18px;
+  }
+}
+
+/* TABLET (iPad) (577px -> 1024px) */
+@media (min-width: 577px) and (max-width: 1024px){
+
+  .cp-about-hero-premium{
+    height: auto;
+    min-height: 700px;
+    padding: 130px 0 80px;
+  }
+
+  .cp-about-hero-stats{
+    gap: 16px;
+  }
+  .cp-about-stat{
+    width: 220px;
+    padding: 18px;
+  }
+
+  .cp-about-story-grid{
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .cp-about-story-image{
+    order: -1;
+    height: 380px;
+  }
+
+  .cp-about-environmental-grid{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* DESKTOP (>= 1025px) */
+@media (min-width: 1025px){
+  .cp-about-hero-premium{
+    padding: 150px 0 100px;
+  }
+}
 </style>
 {% endblock %}
 
@@ -828,12 +1059,10 @@
 
 <!-- HERO SECTION avec photo de nettoyage professionnel -->
 <section class="cp-about-hero-premium">
- <div class="cp-about-hero-bg">
-    <img src="{% static 'img/about-hero.png' %}" alt="Nettoyage professionnel Clean Plus">
+<div class="cp-about-hero-bg">
+  <img src="{% static 'img/about-hero.png' %}" alt="Nettoyage professionnel Clean Plus">
 </div>
-
-    </div>
-    <div class="cp-about-hero-overlay"></div>
+<div class="cp-about-hero-overlay"></div>
     
     <div class="cp-about-hero-content">
         <div class="cp-about-hero-pill">
@@ -842,6 +1071,11 @@
         <h1 class="cp-about-hero-title">
             L'Art du Nettoyage Parfait
         </h1>
+        <style>
+            .cp-about-hero-title {
+                color: white;
+            }
+        </style>
         <p class="cp-about-hero-subtitle">
             Depuis plus de 3 ans, Clean Plus redéfinit les standards du nettoyage avec précision, 
             rigueur et un souci du détail qui fait toute la différence.

@@ -9,8 +9,8 @@
     /* Hero premium avec photo */
     .cp-services-hero {
         position: relative;
-        height: 70vh;
-        min-height: 600px;
+        height: 72vh;
+        min-height: 520px;
         overflow: hidden;
         border-radius: 0 0 40px 40px;
         display: flex;
@@ -23,6 +23,7 @@
         left: 0;
         width: 100%;
         height: 100%;
+        filter: none;
     }
     
     .cp-services-hero-bg img {
@@ -37,17 +38,14 @@
         100% { transform: scale(1.05); }
     }
     
-    .cp-services-hero-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, 
-            rgba(23, 37, 84, 0.85) 0%, 
-            rgba(23, 37, 84, 0.7) 50%, 
-            rgba(23, 37, 84, 0.4) 100%);
-    }
+   @media (max-width: 768px) {
+  .cp-services-hero-overlay{
+    background: linear-gradient(135deg,
+      rgba(23, 37, 84, 0.92) 0%,
+      rgba(23, 37, 84, 0.78) 55%,
+      rgba(23, 37, 84, 0.45) 100%);
+  }
+}
     
     .cp-services-hero-content {
         position: relative;
@@ -493,6 +491,179 @@
             width: 100%;
         }
     }
+    @media (max-width: 768px) {
+  .cp-services-hero-pill{
+    max-width: calc(100% - 24px);
+    padding: 10px 14px;
+    font-size: .85rem;
+    line-height: 1.2;
+    white-space: normal;      /* autorise retour à la ligne */
+    text-align: center;
+  }
+
+  .cp-services-hero-pill i{
+    margin-right: 6px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ============================
+   RESPONSIVE SYSTEM (Clean Plus)
+   Mobile / Tablet / Desktop
+   ============================ */
+
+/* 1) Base: toujours safe */
+.cp-container{
+  width: min(1200px, calc(100% - 32px));
+  margin-inline: auto;
+}
+
+img{ max-width: 100%; height: auto; display: block; }
+
+/* 2) HERO: rendu stable sur tous écrans */
+.cp-services-hero{
+  position: relative;
+  overflow: hidden;
+  padding: clamp(80px, 10vh, 140px) 0;
+  border-radius: 0 0 40px 40px;
+}
+
+.cp-services-hero-content{
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding-inline: 16px;
+}
+
+/* Overlay plus lisible */
+.cp-services-hero-overlay{
+  position:absolute;
+  inset:0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 16, 30, 0.80) 0%,
+    rgba(10, 16, 30, 0.55) 45%,
+    rgba(10, 16, 30, 0.35) 100%
+  );
+}
+
+/* Titre/texte responsive */
+.cp-services-hero-title{
+  font-size: clamp(28px, 5vw, 64px);
+  line-height: 1.05;
+  letter-spacing: .5px;
+  margin: 0 0 14px;
+  text-wrap: balance;
+}
+
+.cp-services-hero-subtitle{
+  font-size: clamp(14px, 2.2vw, 20px);
+  line-height: 1.6;
+  max-width: 720px;
+  margin: 0 auto 22px;
+  opacity: .95;
+  text-wrap: pretty;
+}
+
+/* Boutons responsive */
+.cp-services-hero-buttons{
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.cp-services-hero-buttons .cp-cta-btn{
+  min-width: 220px;
+  padding: 14px 18px;
+  border-radius: 999px;
+}
+
+/* Pill responsive */
+.cp-services-hero-pill{
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  max-width: min(520px, 100%);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: clamp(12px, 1.8vw, 15px);
+  line-height: 1.2;
+  white-space: normal;
+  text-align: center;
+}
+
+/* Features responsive */
+.cp-services-hero-features{
+  display:flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.cp-hero-feature{
+  padding: 10px 14px;
+  border-radius: 999px;
+  min-width: 160px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 8px;
+}
+
+/* ============================
+   3) Breakpoints
+   ============================ */
+
+/* MOBILE (<= 576px) */
+@media (max-width: 576px){
+  .cp-services-hero{
+    padding: 90px 0 60px;
+    border-radius: 0 0 28px 28px;
+  }
+
+  .cp-services-hero-buttons .cp-cta-btn{
+    width: 100%;
+    min-width: unset;
+  }
+
+  .cp-hero-feature{
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+/* TABLET (iPad) (577px -> 1024px) */
+@media (min-width: 577px) and (max-width: 1024px){
+  .cp-services-hero{
+    padding: 110px 0 80px;
+  }
+
+  .cp-services-hero-buttons .cp-cta-btn{
+    min-width: 240px;
+  }
+}
+
+/* DESKTOP (>= 1025px) */
+@media (min-width: 1025px){
+  .cp-services-hero{
+    padding: 140px 0 100px;
+  }
+}
 </style>
 {% endblock %}
 

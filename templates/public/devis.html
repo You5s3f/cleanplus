@@ -529,6 +529,151 @@
             padding: 2rem;
         }
     }
+
+    /* ============================
+   RESPONSIVE QUOTE PAGE
+   Mobile / Tablet / Desktop
+   ============================ */
+
+/* Base safe */
+.cp-quote-hero-content{
+  padding-inline: 16px;
+}
+
+.cp-quote-hero-title{
+  font-size: clamp(28px, 5vw, 64px);
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.cp-quote-hero-subtitle{
+  font-size: clamp(14px, 2.2vw, 20px);
+  line-height: 1.6;
+  max-width: 720px;
+  margin: 0 auto 22px;
+  opacity: .95;
+  text-wrap: pretty;
+}
+
+/* Overlay plus lisible sur mobile */
+.cp-quote-hero-overlay{
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 16, 30, 0.82) 0%,
+    rgba(10, 16, 30, 0.60) 45%,
+    rgba(10, 16, 30, 0.35) 100%
+  );
+}
+
+/* Stats responsive */
+.cp-quote-hero-stats{
+  gap: 14px;
+}
+
+.cp-quote-stat{
+  min-width: 140px;
+}
+
+.cp-quote-stat-number{
+  font-size: clamp(18px, 3.8vw, 42px);
+}
+
+.cp-quote-stat-label{
+  font-size: clamp(12px, 2vw, 16px);
+}
+
+/* Form layout: meilleur sur tous écrans */
+.cp-quote-form-section{
+  padding: clamp(40px, 6vw, 100px) 0;
+}
+
+.cp-quote-form-card{
+  padding: clamp(18px, 4vw, 48px);
+}
+
+.cp-quote-side-card{
+  padding: clamp(18px, 3.5vw, 40px);
+}
+
+/* ============================
+   Breakpoints
+   ============================ */
+
+/* MOBILE (<= 576px) */
+@media (max-width: 576px){
+  .cp-quote-hero{
+    height: auto;
+    min-height: 520px;
+    padding: 92px 0 50px; /* laisse place au header */
+    border-radius: 0 0 28px 28px;
+  }
+
+  .cp-quote-hero-pill{
+    font-size: 12px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    max-width: 100%;
+  }
+
+  .cp-quote-hero-stats{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .cp-quote-stat{
+    background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 14px;
+    padding: 10px;
+    backdrop-filter: blur(6px);
+  }
+
+  .cp-quote-form-grid{
+    padding: 0 14px;
+    gap: 18px;
+  }
+
+  .cp-quote-submit-btn{
+    width: 100%;
+    justify-content: center;
+    padding: 14px 18px;
+  }
+
+  /* Champs plus confortables sur mobile */
+  .cp-quote-form-field input,
+  .cp-quote-form-field select,
+  .cp-quote-form-field textarea{
+    padding: 14px 14px;
+    font-size: 16px; /* ✅ évite zoom iPhone */
+  }
+}
+
+/* TABLET (iPad) (577px -> 1024px) */
+@media (min-width: 577px) and (max-width: 1024px){
+  .cp-quote-hero{
+    height: auto;
+    min-height: 560px;
+    padding: 120px 0 70px;
+  }
+
+  .cp-quote-form-grid{
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .cp-quote-sidebar{
+    position: static;
+  }
+}
+
+/* DESKTOP (>= 1025px) */
+@media (min-width: 1025px){
+  .cp-quote-hero{
+    padding: 140px 0 90px;
+  }
+}
 </style>
 {% endblock %}
 

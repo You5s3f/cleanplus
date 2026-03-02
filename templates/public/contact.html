@@ -699,6 +699,216 @@
             justify-content: center;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ============================
+   RESPONSIVE CONTACT PAGE
+   Mobile / Tablet / Desktop
+   ============================ */
+
+/* Texte responsive (évite débordement) */
+.cp-contact-hero-title{
+  font-size: clamp(28px, 5vw, 64px);
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.cp-contact-hero-subtitle{
+  font-size: clamp(14px, 2.2vw, 20px);
+  line-height: 1.6;
+  max-width: 560px;
+  opacity: .95;
+  text-wrap: pretty;
+}
+
+/* Overlay plus lisible sur mobile */
+.cp-contact-hero-overlay{
+  background: linear-gradient(
+    to bottom,
+    rgba(10,16,30,.84) 0%,
+    rgba(10,16,30,.60) 45%,
+    rgba(10,16,30,.35) 100%
+  );
+}
+
+/* Boutons qui s’adaptent */
+.cp-contact-hero-buttons{
+  gap: 12px;
+}
+.cp-contact-btn{
+  white-space: nowrap;
+}
+
+/* Hero : padding sûr pour éviter que le header cache le texte */
+.cp-contact-hero-premium{
+  padding: 120px 0 70px;   /* desktop/tablet */
+}
+
+/* Main section spacing */
+.cp-contact-main{
+  padding: clamp(40px, 6vw, 100px) 0;
+}
+
+/* Form : évite zoom iPhone */
+.cp-contact-form-field input,
+.cp-contact-form-field select,
+.cp-contact-form-field textarea{
+  font-size: 16px;
+}
+
+/* ============================
+   BREAKPOINTS
+   ============================ */
+
+/* MOBILE (<= 576px) */
+@media (max-width: 576px){
+
+  .cp-contact-hero-premium{
+    height: auto;
+    min-height: 560px;
+    padding: 92px 0 48px;       /* laisse place au header */
+    border-radius: 0 0 28px 28px;
+  }
+
+  .cp-contact-hero-content{
+    grid-template-columns: 1fr;
+    gap: 18px;
+    text-align: center;
+    padding: 0 14px;
+  }
+
+  .cp-contact-hero-pill{
+    font-size: 12px;
+    padding: 10px 14px;
+    max-width: 100%;
+  }
+
+  .cp-contact-hero-buttons{
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cp-contact-btn{
+    width: 100%;
+    justify-content: center;
+    padding: 14px 18px;
+    font-size: 1rem;
+  }
+
+  /* Card hero (à droite) en dessous */
+  .cp-contact-hero-card{
+    padding: 18px;
+  }
+  .cp-contact-feature{
+    gap: 12px;
+    padding: 12px;
+  }
+  .cp-contact-feature-icon{
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+    border-radius: 12px;
+  }
+
+  /* Grid principal */
+  .cp-contact-grid{
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 0 14px;
+  }
+
+  .cp-contact-sidebar{
+    position: static;
+  }
+
+  /* Form */
+  .cp-contact-form-card{
+    padding: 18px;
+  }
+
+  .cp-contact-form-header h2{
+    font-size: 1.8rem;
+    line-height: 1.1;
+  }
+
+  .cp-contact-form-grid{
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .cp-contact-form-actions{
+    flex-direction: column;
+  }
+
+  .cp-contact-submit-btn,
+  .cp-contact-reset-btn{
+    width: 100%;
+    justify-content: center;
+    padding: 14px 18px;
+  }
+
+  /* FAQ */
+  .cp-contact-faq-card{
+    padding: 18px;
+  }
+}
+
+/* TABLET (iPad) (577px -> 1024px) */
+@media (min-width: 577px) and (max-width: 1024px){
+
+  .cp-contact-hero-premium{
+    height: auto;
+    min-height: 620px;
+    padding: 120px 0 70px;
+  }
+
+  .cp-contact-hero-content{
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: center;
+  }
+
+  .cp-contact-hero-subtitle{
+    max-width: 680px;
+    margin: 0 auto 22px;
+  }
+
+  .cp-contact-grid{
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .cp-contact-sidebar{
+    position: static;
+  }
+
+  .cp-contact-form-card{
+    padding: 32px;
+  }
+}
+
+/* DESKTOP (>= 1025px) */
+@media (min-width: 1025px){
+  .cp-contact-hero-premium{
+    padding: 140px 0 90px;
+  }
+}
 </style>
 {% endblock %}
 
